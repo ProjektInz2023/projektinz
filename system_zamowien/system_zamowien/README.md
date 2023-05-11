@@ -12,7 +12,7 @@ cd projektinz/
 Moves inside directory. 
 
 ```
-python3 -m venv venv
+py -m venv venv
 ```
 Creates a virtual environment, that allows you to manage separate package installations for this project.
 
