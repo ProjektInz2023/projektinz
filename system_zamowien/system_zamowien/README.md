@@ -12,12 +12,14 @@ cd projektinz/
 Moves inside directory. 
 
 ```
-py -m venv venv
+py -m venv venv (windows)
+python3 -m venv venv (linux)
 ```
 Creates a virtual environment, that allows you to manage separate package installations for this project.
 
 ```
-source venv/bin/activate
+\venv\Scripts\activate (windows)
+source venv/bin/activate (linux)
 ```
 Activate a virtual environment which puts the virtual environment-specific python and pip executables into your shell’s PATH.
 
