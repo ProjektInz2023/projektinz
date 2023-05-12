@@ -1,7 +1,7 @@
 <template>
   <div class="welcome">
     <FloatingWindow>
-      <LoginForm></LoginForm>
+      <LoginForm @success='LogIn($event)'></LoginForm>
     </FloatingWindow>
   </div>
 </template>
@@ -10,11 +10,18 @@
 import { defineComponent } from 'vue'
 import FloatingWindow from '@/components/FloatingWindow.vue'
 import LoginForm from '@/components/LoginForm.vue'
+import router from '@/router'
 export default defineComponent({
   name: 'HomeView',
   components: {
     FloatingWindow,
     LoginForm
+  },
+  methods: {
+    LogIn (event:Event) {
+      router.push({ name: 'account' })
+      console.log(event)
+    }
   }
 })
 </script>

@@ -22,7 +22,11 @@
   </div>
 </template>
 <script lang='ts'>
+/* eslint @typescript-eslint/no-var-requires: "off" */
 import { defineComponent } from 'vue'
+import axios from 'axios'
+import router from '@/router'
+const $cookie = require('vue-cookies')
 export default defineComponent({
   data: function () {
     return {
@@ -57,7 +61,32 @@ export default defineComponent({
     Wyslij: function () {
       if ((!this.email) || (this.email.length === 0 && !this.password) || (this.password.length === 0)) {
         this.error_highlight = true
+      } else {
+        this.login()
+        this.email = ''
+        this.password = ''
       }
+    },
+    async login () {
+      axios.post('http://localhost:8000/login', {
+        headers: {
+          Authorization: 'login'
+        },
+        password: this.password,
+        email: this.email
+      }).then(function (response) {
+        if (response.status === 200 && 'token' in response.data.body) {
+          $cookie.set('token', response.data.token)
+          console.log($cookie.get('token'))
+          router.push('/account')
+        }
+      }, function (err) {
+        console.log('err', err)
+        /* to be deleted */
+        $cookie.set('token', 'xd')
+        console.log($cookie.get('token'))
+        router.push('/account')
+      })
     }
   }
 })
