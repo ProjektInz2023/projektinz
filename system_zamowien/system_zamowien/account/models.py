@@ -5,14 +5,13 @@ from django.db import models
 from django.utils import timezone
 
 
-
 class CustomUserManager (UserManager):
     def _create_user (self, name, email, password, **extra_fields):
         if not email:
             raise ValueError("Wpisz poprawny adres e-mail")
         
         email = self.normalize_email(email)
-        username = self.model(email = email, name = name, **extra_fields)
+        name = self.model(email = email, name = name, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
 
@@ -39,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
 
-    objects = CustomUserManager
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
