@@ -7,7 +7,7 @@
             <h2 class="hero-text">Welcome</h2>
           </legend>
           <div class="line"></div>
-          <input id="email" autocomplete="off" placeholder="name@blum.com" name="login" type="text" v-model="email"
+          <input id="email" autocomplete="off" placeholder="name" name="login" type="text" v-model="email"
             maxlength="20" v-bind:class="{ hasError: error_highlight }">
         </fieldset>
       </div>
@@ -56,7 +56,8 @@ export default defineComponent({
     },
     validEmail: function (email: string) {
       const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(email)
+      // return re.test(email)
+      return true
     },
     Wyslij: function () {
       if ((!this.email) || (this.email.length === 0 && !this.password) || (this.password.length === 0)) {
@@ -68,24 +69,26 @@ export default defineComponent({
       }
     },
     async login () {
-      axios.post('http://localhost:8000/login', {
+      axios.post('http://127.0.0.1:8000/login/', {
         headers: {
-          Authorization: 'login'
+          'Content-Type': 'application/json',
+          Authorization: 'Authorization'
         },
-        password: this.password,
-        email: this.email
+        password: this.password as string,
+        username: this.email as string
       }).then(function (response) {
-        if (response.status === 200 && 'token' in response.data.body) {
-          $cookie.set('token', response.data.token)
-          console.log($cookie.get('token'))
+        if (response.status === 200 && response.data.access) {
+          console.log(response)
+          $cookie.set('token', response.data.access)
           router.push('/account')
         }
       }, function (err) {
         console.log('err', err)
-        /* to be deleted */
+        /* to be deleted
         $cookie.set('token', 'xd')
         console.log($cookie.get('token'))
         router.push('/account')
+        */
       })
     }
   }
