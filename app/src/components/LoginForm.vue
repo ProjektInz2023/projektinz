@@ -72,23 +72,18 @@ export default defineComponent({
       axios.post('http://127.0.0.1:8000/login/', {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Authorization'
+          Authorization: 'login'
         },
         password: this.password as string,
         username: this.email as string
       }).then(function (response) {
         if (response.status === 200 && response.data.access) {
           console.log(response)
-          $cookie.set('token', response.data.access)
+          $cookie.set('token', response.data.access,60*60*24)
           router.push('/account')
         }
       }, function (err) {
         console.log('err', err)
-        /* to be deleted
-        $cookie.set('token', 'xd')
-        console.log($cookie.get('token'))
-        router.push('/account')
-        */
       })
     }
   }
