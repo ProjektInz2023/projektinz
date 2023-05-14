@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'kantyna'
 ]
 
 MIDDLEWARE = [
@@ -73,18 +74,7 @@ WSGI_APPLICATION = 'system_zamowien.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# from config import DB_PASSWORD, DB_PORT, DB_URL, DB_USER, DB_NAME
-
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-# Database connector variables
-DB_URL = os.getenv("DB_URL")
-DB_PORT = int(os.getenv("DB_PORT"))
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_NAME = os.getenv("DB_NAME")
+from system_zamowien.config import DB_NAME, DB_PASSWORD, DB_URL, DB_USER, DB_PORT
 
 DATABASES = {
     'default': {
