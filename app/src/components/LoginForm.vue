@@ -7,7 +7,7 @@
             <h2 class="hero-text">Welcome</h2>
           </legend>
           <div class="line"></div>
-          <input id="email" autocomplete="off" placeholder="name" name="login" type="text" v-model="email"
+          <input id="email" autocomplete="off" placeholder="name@blum.com" name="login" type="text" v-model="email"
             maxlength="20" v-bind:class="{ hasError: error_highlight }">
         </fieldset>
       </div>
@@ -69,13 +69,13 @@ export default defineComponent({
       }
     },
     async login () {
-      axios.post('http://127.0.0.1:8000/login/', {
+      axios.post('http://127.0.0.1:8000/api/login/', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'login'
         },
         password: this.password as string,
-        username: this.email as string
+        email: this.email as string
       }).then(function (response) {
         if (response.status === 200 && response.data.access) {
           console.log(response)
