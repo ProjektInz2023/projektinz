@@ -27,6 +27,7 @@ import { defineComponent } from 'vue'
 import axios from 'axios'
 import router from '@/router'
 const $cookie = require('vue-cookies')
+axios.defaults.withCredentials = true
 export default defineComponent({
   data: function () {
     return {

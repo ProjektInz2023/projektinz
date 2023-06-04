@@ -29,3 +29,5 @@ pip install -r requirements.txt
 Install the packages with for a specified version.
 
 Note that it might be necessary to execute `python` instead of `python3`, depending on unix-like distributions.
+
+Run server -> py manage.py runserver
