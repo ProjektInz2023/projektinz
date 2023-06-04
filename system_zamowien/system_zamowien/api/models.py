@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Group
 from django.utils import timezone
 
 class MainCourse(models.Model):
@@ -67,7 +67,7 @@ class MyUserManager(BaseUserManager):
     
 class Staff(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name="email address",
+        verbose_name="email",
         max_length=255,
         unique=True
     )
@@ -76,6 +76,7 @@ class Staff(AbstractBaseUser):
     created = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    role = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
 
     objects = MyUserManager()
 
