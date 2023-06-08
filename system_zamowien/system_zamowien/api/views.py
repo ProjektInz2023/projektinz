@@ -4,7 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.conf import settings
-from rest_framework import status
+from rest_framework import status, permissions
+
+from .models import Order
+from .serializers import OrderSerializer
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -38,3 +41,12 @@ class LoginView(APIView):
                 return Response({"No active" : "This account is not active!!"}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({"Invalid" : "Invalid username or password!!"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class OrderView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def getAllOrders(self, request, *args, **kwargs):
+        orders = Order.objects.filter()
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
