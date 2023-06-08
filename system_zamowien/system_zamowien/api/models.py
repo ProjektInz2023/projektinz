@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Group
 from django.utils import timezone
 
+
 class MainCourse(models.Model):
     mainCourseId = models.AutoField(primary_key=True, db_column='mainCourseId')
     name = models.CharField(max_length=255)
@@ -34,6 +35,21 @@ class MainCourse(models.Model):
     def delete_main_course(self):
         self.delete()
 
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('Aktywne', 'Aktywne'),
+        ('Gotowe', 'Gotowe'),
+        ('Zakonczone', 'Zakonczone'),
+    )
+
+    orderId = models.AutoField(primary_key=True, unique=True)
+    user = models.CharField(max_length=100)
+    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET("Danie usuniete"))
+    date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return self.user
 
 
 class MyUserManager(BaseUserManager):
