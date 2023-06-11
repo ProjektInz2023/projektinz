@@ -3,6 +3,9 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Order
 from .serializers import OrderSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import  permissions
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -18,7 +21,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
   
 class OrderView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def getAllOrders(self, request, *args, **kwargs):
         orders = Order.objects.filter()
