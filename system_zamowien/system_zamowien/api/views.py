@@ -22,8 +22,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
   
 class OrderView(APIView):
     #permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = []
 
-    def getAllOrders(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         orders = Order.objects.filter()
         serializer = OrderSerializer(orders, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data)
