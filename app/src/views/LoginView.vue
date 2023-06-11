@@ -25,10 +25,11 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="css">
+<style lang="css" scoped>
 .welcome{
   width: 100vw;
   height: 100vh;
   display:block;
+  text-align: center;
 }
 </style>
