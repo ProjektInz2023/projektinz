@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from api.models import Staff
+from api.models import Staff, MainCourse, Order
 
 class UserCreationForm(forms.ModelForm):
 
@@ -47,12 +47,12 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ["email", "name", "surname", "created", "is_admin"]
+    list_display = ["email", "name", "surname", "created", "is_admin", "role"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
         ("Personal info", {"fields": ["name", "surname", "created"]}),
-        ("Permissions", {"fields": ["is_admin"]}),
+        ("Permissions", {"fields": ["is_admin", "role"]}),
     ]
 
     add_fieldsets = [
@@ -68,5 +68,15 @@ class UserAdmin(BaseUserAdmin):
     ordering = ["email"]
     filter_horizontal = []
 
+class MainCourseAdmin(admin.ModelAdmin):
+    list_display = ["mainCourseId", "name", "description", "price"]
+    ordering = ["mainCourseId"]
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ["orderId", "user", "mainCourse", "date", "status"]
+    ordering = ["-date"]
+    list_filter = ["status"]
+
 admin.site.register(Staff, UserAdmin)
-admin.site.unregister(Group)
+admin.site.register(MainCourse, MainCourseAdmin)
+admin.site.register(Order, OrderAdmin)

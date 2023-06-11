@@ -31,7 +31,7 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    #'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -39,7 +39,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://192.168.0.69:8080",
@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account',
     'api',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -94,18 +93,7 @@ WSGI_APPLICATION = 'system_zamowien.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# from config import DB_PASSWORD, DB_PORT, DB_URL, DB_USER, DB_NAME
-
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-# Database connector variables
-DB_URL = os.getenv("DB_URL")
-DB_PORT = int(os.getenv("DB_PORT"))
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_NAME = os.getenv("DB_NAME")
+from system_zamowien.config import DB_NAME, DB_PASSWORD, DB_URL, DB_USER, DB_PORT
 
 DATABASES = {
     'default': {
@@ -141,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
 

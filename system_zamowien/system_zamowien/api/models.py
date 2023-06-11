@@ -1,7 +1,55 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Group
 from django.utils import timezone
 
+
+class MainCourse(models.Model):
+    mainCourseId = models.AutoField(primary_key=True, db_column='mainCourseId')
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    price = models.FloatField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'main_course'
+        
+    @staticmethod
+    def get_main_course(main_course_id: int):
+        try:
+            main_course = MainCourse.objects.get(mainCourseId=main_course_id)
+            return main_course
+        except MainCourse.DoesNotExist:
+            return None
+
+    def update_main_course(self, name=None, description=None, price=None):
+        if name:
+            self.name = name
+        if description:
+            self.description = description
+        if price:
+            self.price = price
+        self.save()
+
+    def delete_main_course(self):
+        self.delete()
+
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('Aktywne', 'Aktywne'),
+        ('Gotowe', 'Gotowe'),
+        ('Zakonczone', 'Zakonczone'),
+    )
+
+    orderId = models.AutoField(primary_key=True, unique=True)
+    user = models.CharField(max_length=100)
+    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET("Danie usuniete"))
+    date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return self.user
 
 
 class MyUserManager(BaseUserManager):
@@ -35,7 +83,7 @@ class MyUserManager(BaseUserManager):
     
 class Staff(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name="email address",
+        verbose_name="email",
         max_length=255,
         unique=True
     )
@@ -44,6 +92,7 @@ class Staff(AbstractBaseUser):
     created = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    role = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
 
     objects = MyUserManager()
 
