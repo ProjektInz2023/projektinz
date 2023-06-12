@@ -29,6 +29,7 @@ import router from '@/router'
 const $cookie = require('vue-cookies')
 axios.defaults.withCredentials = true
 export default defineComponent({
+  name: 'LoginForm',
   data: function () {
     return {
       send: 'Log in',
@@ -191,6 +192,7 @@ button
     background:rgba(255,255,255,0.9);
     color: rgba(255,103,31,1);
     cursor: pointer;
+    color:black;
 }
 .special-btn{
     margin-top:25px;
