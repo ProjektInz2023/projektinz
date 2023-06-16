@@ -1,85 +1,23 @@
 <template>
   <div class="user">
-    <span class="hero-text">Welcome user</span>
+    <span class="hero-text">Welcome {{ activeUser.name }}</span>
     <div class="orders">
-  <section class="active">
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
+  <section class="active" >
+    <div v-for="item in ordersActive" class="small-tile" :key="item">
+      <FloatingWindow :ref="item.mainCourse" :class="{'visible': big === item.mainCourse,'invisible': big !== item.mainCourse }">
+        <OrderSpecifications :name="item.user" :course="item.mainCourse" :mode="'Gotowe'" @closed="bigWindow(item.mainCourse, key)"></OrderSpecifications>
+      </FloatingWindow>
+      <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">{{ item.user }}</p>
+      <span>{{ item.mainCourse }}</span></div>
     </div>
   </section>
   <section class="finalized">
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
-    </div>
-    <div class="small-tile">
-      <p>Title</p>
-      <span>Descr</span>
+    <div v-for="item in ordersReady" class="small-tile" :key="item" >
+      <FloatingWindow :ref="item.mainCourse" :class="{'visible': big === item.mainCourse,'invisible': big !== item.mainCourse }">
+        <OrderSpecifications :name="item.user" :course="item.mainCourse" :mode="'Wydaj'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
+      </FloatingWindow>
+      <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">{{ item.user }}</p>
+      <span>{{ item.mainCourse }}</span></div>
     </div>
   </section>
 </div>
@@ -88,21 +26,96 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import router from '@/router'
+import store from '@/store'
 import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
+import FloatingWindow from '@/components/FloatingWindow.vue'
+import OrderSpecifications from '@/components/OrderSpecification.vue'
+
 const $cookie = require('vue-cookies')
 export default defineComponent({
   name: 'AccountView',
   data () {
     return {
-      userid: Number
+      userid: Number,
+      big: ' '
+    }
+  },
+  components: {
+    FloatingWindow,
+    OrderSpecifications
+  },
+  beforeMount () {
+    if ($cookie.get('token')) {
+      // console.log('token is present')
+      const token = $cookie.get('token')
+      store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
+    } else {
+    //  console.log('token not present')
+      router.push({ name: '404' })
     }
   },
   mounted () {
-    if ($cookie.get('token')) {
-      console.log('token is present')
-    } else {
-      console.log('token not present')
-      // router.push({ name: '404' })
+    axios.get('http://127.0.0.1:8000/api/orders/', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {
+        format: 'json'
+      }
+    }).then(function (response) {
+      if (response.status === 200) {
+        store.dispatch('insertOrders', response.data)
+        console.log('xd')
+        console.log(store.state.Orders)
+      }
+    }, function (err) {
+      console.log('err', err)
+    })
+  },
+  methods: {
+    ...mapActions(['insertOrders']),
+    bigWindow (id:string, key:boolean) {
+      if (key) {
+        this.big = ''
+      } else {
+        if (this.big === id) {
+          this.big = ''
+        } else {
+          this.big = id
+        }
+      }
+    },
+    close () {
+      this.big = ''
+    },
+    parseJwt (token:any) {
+      var base64Url = token.split('.')[1]
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+
+      return JSON.parse(jsonPayload)
+    }
+  },
+  computed: {
+    ordersReady () {
+      function ready (order:any) {
+        if (order.status === 'Gotowe') return true
+      }
+      console.log(store.state.Orders.filter(ready))
+      return store.state.Orders.filter(ready)
+    },
+    ordersActive () {
+      function ready (order:any) {
+        if (order.status === 'Aktywne') return true
+      }
+      console.log(store.state.Orders.filter(ready))
+      return store.state.Orders.filter(ready)
+    },
+    activeUser () {
+      return store.state.User
     }
   }
 })
@@ -113,6 +126,9 @@ p{
   padding: 5px;
   position: relative;
 }
+.spaced{
+  padding: 10px;
+}
 .user{
   position: relative;
   top:15%;
@@ -120,25 +136,30 @@ p{
 }
 .hero-text{
   margin: 0 auto;
+  margin-bottom: 25px;
   display: block;
   position: relative;
   width: 50%;
   text-align: center;
+  color:white;
 }
 .small-tile{
   display: block;
   margin: 15px auto;
   box-sizing: border-box;
-  box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
   background:rgb(85, 85, 85);
   width:80%;
   height:10%;
   text-align: center;
-  padding: 5px;
   cursor: pointer;
 }
-.small-tile:hover{
-  box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.2);
+.fill-tile{
+  width: 100%;
+  height: 100%;
+}
+.fill-tile:hover{
+  box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
   background:rgb(105, 105, 105);
 }
 .orders{
@@ -152,16 +173,29 @@ p{
 padding: 5px;
 background:rgba(255, 255, 255,0.5);
 box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
-width:30vw;
+width:35vw;
 height:80vh;
 overflow-y: scroll;
+overflow: auto;
+border-radius: 5px;
 }
 .finalized{
 padding: 5px;
 background:rgba(255, 255, 255,0.5);
 box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
-width:30vw;
+width:35vw;
 height:80vh;
 overflow-y: scroll;
+overflow: auto;
+border-radius: 5px;
+}
+.invisible{
+  display: none;
+}
+/*##################################### Floating window style override ################################################*/
+.blurb{
+  width:50%;
+  height: 70%;
+  cursor: default;
 }
 </style>

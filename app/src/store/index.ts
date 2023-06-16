@@ -5,21 +5,13 @@ export default createStore({
     userid: 0 as number,
     response: Object,
     Orders: [
-      {
-        id: 0 as number,
-        title: 'title1' as string,
-        description: 'desc2' as string
-      },
-      {
-        id: 1 as number,
-        title: 'title2'as string,
-        description: 'desc2' as string
-      }
+    ],
+    User: [
+
     ]
   },
   getters: {
-    currentUser: (state) => state.userid,
-    currentOrders: (state) => state.Orders
+    currentUser: (state) => state.userid
   },
   mutations: {
     logout_session (state) {
@@ -27,6 +19,12 @@ export default createStore({
     },
     register_session (state, id) {
       state.userid = id
+    },
+    insert_orders (state, payload) {
+      state.Orders = payload
+    },
+    insert_user (state, payload) {
+      state.User = payload
     }
   },
   actions: {
@@ -35,6 +33,12 @@ export default createStore({
     },
     registerSession ({ commit }) {
       commit('register_session')
+    },
+    insertOrders ({ commit }, data) {
+      commit('insert_orders', data)
+    },
+    insertUser ({ commit }, data) {
+      commit('insert_user', data)
     }
   },
   modules: {

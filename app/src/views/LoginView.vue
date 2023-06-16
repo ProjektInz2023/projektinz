@@ -19,17 +19,16 @@ export default defineComponent({
   },
   methods: {
     LogIn (event:Event) {
-      router.push({ name: 'account' })
+      router.push({ name: 'Account' })
       console.log(event)
     }
   }
 })
 </script>
-<style lang="css" scoped>
+<style lang="css">
 .welcome{
   width: 100vw;
   height: 100vh;
   display:block;
-  text-align: center;
 }
 </style>

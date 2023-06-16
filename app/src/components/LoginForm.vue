@@ -27,7 +27,9 @@ import { defineComponent } from 'vue'
 import axios from 'axios'
 import router from '@/router'
 const $cookie = require('vue-cookies')
+axios.defaults.withCredentials = true
 export default defineComponent({
+  name: 'LoginForm',
   data: function () {
     return {
       send: 'Log in',
@@ -95,11 +97,8 @@ export default defineComponent({
 }
 .form-container{
  padding: 0%;
- width:100%;
- height:100%;
- position: relative;
- top:-40%;
- left:-50%;
+ width:50%;
+ height:50%;
 }
 .smaller{
     font-size:160%;
@@ -111,13 +110,13 @@ input{
     border:0px;
     border-radius:0px;
     text-indent:20px;
-    width:90%;
-    height:55px;
+    width:100%;
+    height:70px;
     font-size: 150%;
     background-color: rgba(244,244,244,1);
     z-index: 1;
     transition: all 0.3s ease-in;
-    margin:10px;
+    margin:0 auto;
     padding:0px;
     padding-left: 2%;
     padding-right: 2%;
@@ -183,42 +182,17 @@ button
     border-radius:0px;
     font-size:110%;
     color:rgba(255,255,255,1);
-    width:200px;
-    height:55px;
+    width:240px;
+    height:65px;
     background:rgba(255,103,31,1);
     border: 0px;
-    overflow: hidden;
-    position: relative;
 }
-.btn::before {
-    content: '';
-    display: block;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.5);
-    width: 60px;
-    height: 100%;
-    top: 0;
-    filter: blur(30px);
-    transform: translateX(-100px) skewX(-15deg);
-  }
-  .btn::after {
-    content: '';
-    display: block;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.2);
-    width: 30px;
-    height: 100%;
-    top: 0;
-    filter: blur(5px);
-    transform: translateX(-100px) skewX(-15deg);
-  }
 .btn:hover{
     transition: all 0.3s ease-in;
+    background:rgba(255,255,255,0.9);
+    color: rgba(255,103,31,1);
     cursor: pointer;
-}
-.btn:hover::before,.btn:hover::after{
-  transform: translateX(300px) skewX(-15deg);
-  transition: 0.7s;
+    color:black;
 }
 .special-btn{
     margin-top:25px;
@@ -229,7 +203,6 @@ button
     height:45px;
     background:rgba(255,255,255,1);
     margin-left:6%;
-    overflow: hidden;
 }
 .special-send{
     margin-top:25px;
@@ -240,7 +213,6 @@ button
     height:45px;
     background:rgba(255,255,255,1);
     margin-left:0%;
-    overflow: hidden;
 }
 .hasError{
     box-shadow: 0px 0px 4px 2px rgba(223, 21, 88,1);
