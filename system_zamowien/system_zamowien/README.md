@@ -1,4 +1,4 @@
-# Running the project
+# Running the backend
 In order to download and run the project on your local machine follow these steps:
 
 ```
@@ -6,7 +6,7 @@ git clone https://github.com/ProjektInz2023/projektinz.git
 ```
 Creates a copy of the repository.
 ```
-cd projektinz/
+cd system_zamowien\system_zamowien
 ```
 
 Moves inside directory. 

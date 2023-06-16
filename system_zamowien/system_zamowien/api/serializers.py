@@ -9,5 +9,6 @@ class OrderSerializer(serializers.ModelSerializer):
         slug_field = "name"
     )
     class Meta:
-        model = Order      
-        fields = ('user', 'mainCourse', 'date', 'status')
+        model = Order
+        fields = '__all__'      
+        #fields = ('user', 'mainCourse', 'date', 'status')
