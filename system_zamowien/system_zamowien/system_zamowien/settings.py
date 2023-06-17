@@ -89,6 +89,11 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/'),
+]
+
+
 WSGI_APPLICATION = 'system_zamowien.wsgi.application'
 
 
