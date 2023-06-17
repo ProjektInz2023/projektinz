@@ -15,11 +15,108 @@
     {% block extrastyle %}
     <style>
         :root {
-            --primary: #ff671e;
+            --primary: #f56921;
             --secondary: #232220;
-            --link-fg: #f56921;
+            --link-fg: #ece2dc;
             --link-selected-fg: #8f5bb2;
+            --body-fg: #ece2dc;
         }
+        html[data-theme="light"],
+        :root {
+            --primary: #f56921;
+            --secondary: #232220;
+            --accent: #ece2dc;
+            --primary-fg: #fff;
+
+            --body-fg: #333;
+            --body-bg: #fff;
+            --body-quiet-color: #666;
+            --body-loud-color: #000;
+
+            --header-color: #ffc;
+            --header-branding-color: #ece2dc;
+            --header-bg: #f56921;
+            --header-link-color: #fff;
+
+            --breadcrumbs-fg: #666666;
+            --breadcrumbs-link-fg: #f56921;
+            --breadcrumbs-bg: #e8e8e8;
+
+            --link-fg: #333333FF;
+            --link-hover-color: #036;
+            --link-selected-fg: #f56921;
+
+            --hairline-color: #e8e8e8;
+            --border-color: #ccc;
+
+            --error-fg: #ba2121;
+
+            --message-success-bg: #dfd;
+            --message-warning-bg: #ffc;
+            --message-error-bg: #ffefef;
+
+            --darkened-bg: #f6f2f2; /* A bit darker than --body-bg */
+            --selected-bg: #e8e8e8; /* E.g. selected table cells */
+            --selected-row: #e8e8e8;
+
+            --button-fg: #fff;
+            --button-bg: #62696c;
+            --button-hover-bg: #609ab6;
+            --default-button-bg: #a28d84;
+            --default-button-hover-bg: #30373a;
+            --close-button-bg: #747474;
+            --close-button-hover-bg: #333;
+            --delete-button-bg: #ba2121;
+            --delete-button-hover-bg: #a41515;
+
+            --object-tools-fg: #fff;
+            --object-tools-bg: #747474;
+            --object-tools-hover-bg: #333;
+        }
+
+        html[data-theme="dark"],
+        :root {
+            --primary: #f56921;
+            --secondary: #232220;
+            --accent: #121212;
+            --primary-fg: #f7f7f7;
+
+            --body-fg: #eeeeee;
+            --body-bg: #121212;
+            --body-quiet-color: #e0e0e0;
+            --body-loud-color: #ffffff;
+
+            --breadcrumbs-fg: #e8a783;
+            --breadcrumbs-link-fg: #fff;
+            --breadcrumbs-bg: #212121;
+
+            --header-color: #121212;
+            --header-branding-color: #121212;
+            --header-bg: #f56921;
+            --header-link-color: #121212;
+
+            --link-fg: #e0e0e0;
+            --link-hover-color: #f56921;
+            --link-selected-fg: #f56921;
+
+            --hairline-color: #272727;
+            --border-color: #353535;
+
+            --error-fg: #e35f5f;
+            --message-success-bg: #006b1b;
+            --message-warning-bg: #000000;
+            --message-error-bg: #570808;
+
+            --darkened-bg: #212121;
+            --selected-bg: #1b1b1b;
+            --selected-row: #333333FF;
+
+            --close-button-bg: #333333;
+            --close-button-hover-bg: #666666;
+            --default-button-bg: #f56921;
+        }
+
+
     </style>
     {% endblock %}
     {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}

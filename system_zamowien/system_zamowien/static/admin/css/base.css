@@ -5,9 +5,9 @@
 /* VARIABLE DEFINITIONS */
 html[data-theme="light"],
 :root {
-    --primary: #f56921;
-    --secondary: #232220;
-    --accent: #000000;
+    --primary: #62696c;
+    --secondary: #cbb4aa;
+    --accent: #ece2dc;
     --primary-fg: #fff;
 
     --body-fg: #333;
@@ -24,9 +24,9 @@ html[data-theme="light"],
     --breadcrumbs-link-fg: var(--body-bg);
     --breadcrumbs-bg: var(--primary);
 
-    --link-fg: #c4dce8;
-    --link-hover-color: #121212;
-    --link-selected-fg: #000000;
+    --link-fg: #f56921;
+    --link-hover-color: #036;
+    --link-selected-fg: #5b80b2;
 
     --hairline-color: #e8e8e8;
     --border-color: #ccc;
@@ -43,7 +43,7 @@ html[data-theme="light"],
 
     --button-fg: #fff;
     --button-bg: var(--primary);
-    --button-hover-bg: #c4dce8;
+    --button-hover-bg: #609ab6;
     --default-button-bg: var(--secondary);
     --default-button-hover-bg: #30373a;
     --close-button-bg: #747474;
@@ -56,36 +56,36 @@ html[data-theme="light"],
     --object-tools-hover-bg: var(--close-button-hover-bg);
 
     --font-family-primary:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        system-ui,
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif,
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji";
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            system-ui,
+            Roboto,
+            "Helvetica Neue",
+            Arial,
+            sans-serif,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol",
+            "Noto Color Emoji";
     --font-family-monospace:
-        ui-monospace,
-        Menlo,
-        Monaco,
-        "Cascadia Mono",
-        "Segoe UI Mono",
-        "Roboto Mono",
-        "Oxygen Mono",
-        "Ubuntu Monospace",
-        "Source Code Pro",
-        "Fira Mono",
-        "Droid Sans Mono",
-        "Courier New",
-        monospace,
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji";
+            ui-monospace,
+            Menlo,
+            Monaco,
+            "Cascadia Mono",
+            "Segoe UI Mono",
+            "Roboto Mono",
+            "Oxygen Mono",
+            "Ubuntu Monospace",
+            "Source Code Pro",
+            "Fira Mono",
+            "Droid Sans Mono",
+            "Courier New",
+            monospace,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol",
+            "Noto Color Emoji";
 }
 
 html, body {
@@ -104,13 +104,13 @@ body {
 /* LINKS */
 
 a:link, a:visited {
-    color: var(--primary);
+    color: var(--link-fg);
     text-decoration: none;
     transition: color 0.15s, background 0.15s;
 }
 
 a:focus, a:hover {
-    color: var(--secondary);
+    color: var(--link-hover-color);
 }
 
 a:focus {
@@ -122,7 +122,7 @@ a img {
 }
 
 a.section:link, a.section:visited {
-    color: var(--accent);
+    color: var(--header-link-color);
     text-decoration: none;
 }
 
@@ -132,23 +132,16 @@ a.section:focus, a.section:hover {
 
 /* GLOBAL DEFAULTS */
 
-p,
-ol,
-ul,
-dl {
-    margin: 0.2em 0 0.8em 0;
+p, ol, ul, dl {
+    margin: .2em 0 .8em 0;
 }
 
 p {
     padding: 0;
-    line-height: 1.4;
+    line-height: 140%;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1,h2,h3,h4,h5 {
     font-weight: bold;
 }
 
@@ -161,7 +154,7 @@ h1 {
 
 h2 {
     font-size: 1rem;
-    margin: 1em 0 0.5em 0;
+    margin: 1em 0 .5em 0;
 }
 
 h2.subhead {
@@ -171,20 +164,20 @@ h2.subhead {
 
 h3 {
     font-size: 0.875rem;
-    margin: 0.8em 0 0.3em 0;
+    margin: .8em 0 .3em 0;
     color: var(--body-quiet-color);
     font-weight: bold;
 }
 
 h4 {
     font-size: 0.75rem;
-    margin: 1em 0 0.8em 0;
+    margin: 1em 0 .8em 0;
     padding-bottom: 3px;
 }
 
 h5 {
     font-size: 0.625rem;
-    margin: 1.5em 0 0.5em 0;
+    margin: 1.5em 0 .5em 0;
     color: var(--body-quiet-color);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -199,9 +192,7 @@ li ul {
     margin-bottom: 0;
 }
 
-li,
-dt,
-dd {
+li, dt, dd {
     font-size: 0.8125rem;
     line-height: 1.25rem;
 }
@@ -236,8 +227,7 @@ blockquote {
     border-left: 5px solid #ddd;
 }
 
-code,
-pre {
+code, pre {
     font-family: var(--font-family-monospace);
     color: var(--body-quiet-color);
     font-size: 0.75rem;
@@ -265,7 +255,6 @@ hr {
     line-height: 1px;
 }
 
-
 /* TEXT STYLES & MODIFIERS */
 
 .small {
@@ -276,12 +265,7 @@ hr {
     font-size: 0.625rem;
 }
 
-.help,
-p.help,
-form p.help,
-div.help,
-form div.help,
-div.help li {
+.help, p.help, form p.help, div.help, form div.help, div.help li {
     font-size: 0.6875rem;
     color: var(--body-quiet-color);
 }
@@ -294,18 +278,11 @@ div.help ul {
     cursor: help;
 }
 
-p img,
-h1 img,
-h2 img,
-h3 img,
-h4 img,
-td img {
+p img, h1 img, h2 img, h3 img, h4 img, td img {
     vertical-align: middle;
 }
 
-.quiet,
-a.quiet:link,
-a.quiet:visited {
+.quiet, a.quiet:link, a.quiet:visited {
     color: var(--body-quiet-color);
     font-weight: normal;
 }
@@ -329,8 +306,7 @@ table {
     border-color: var(--border-color);
 }
 
-td,
-th {
+td, th {
     font-size: 0.8125rem;
     line-height: 1rem;
     border-bottom: 1px solid var(--hairline-color);
@@ -367,8 +343,7 @@ tr.alt {
     background: var(--darkened-bg);
 }
 
-tr:nth-child(odd),
-.row-form-errors {
+tr:nth-child(odd), .row-form-errors {
     background: var(--body-bg);
 }
 
@@ -379,7 +354,6 @@ tr:nth-child(odd) + .row-form-errors .errorlist {
     background: var(--darkened-bg);
 }
 
-
 /* SORTABLE TABLES */
 
 thead th {
@@ -389,8 +363,7 @@ thead th {
     background: var(--darkened-bg);
 }
 
-thead th a:link,
-thead th a:visited {
+thead th a:link, thead th a:visited {
     color: var(--body-quiet-color);
 }
 
@@ -413,8 +386,7 @@ table thead th .text a {
     padding: 8px 10px;
 }
 
-table thead th .text a:focus,
-table thead th .text a:hover {
+table thead th .text a:focus, table thead th .text a:hover {
     background: var(--selected-bg);
 }
 
@@ -434,7 +406,7 @@ table thead th.sorted .sortoptions {
 }
 
 table thead th.sorted .sortpriority {
-    font-size: 0.8em;
+    font-size: .8em;
     min-width: 12px;
     text-align: center;
     vertical-align: 3px;
@@ -447,7 +419,7 @@ table thead th.sorted .sortoptions a {
     width: 14px;
     height: 14px;
     display: inline-block;
-    background: url(../../../templates/img/sorting-icons.svg) 0 0 no-repeat;
+    background: url(../img/sorting-icons.svg) 0 0 no-repeat;
     background-size: 14px auto;
 }
 
@@ -642,19 +614,19 @@ ul.messagelist li {
     font-size: 0.8125rem;
     padding: 10px 10px 10px 65px;
     margin: 0 0 10px 0;
-    background: var(--message-success-bg) url(../../../templates/img/icon-yes.svg) 40px 12px no-repeat;
+    background: var(--message-success-bg) url(../img/icon-yes.svg) 40px 12px no-repeat;
     background-size: 16px auto;
     color: var(--body-fg);
     word-break: break-word;
 }
 
 ul.messagelist li.warning {
-    background: var(--message-warning-bg) url(../../../templates/img/icon-alert.svg) 40px 14px no-repeat;
+    background: var(--message-warning-bg) url(../img/icon-alert.svg) 40px 14px no-repeat;
     background-size: 14px auto;
 }
 
 ul.messagelist li.error {
-    background: var(--message-error-bg) url(../../../templates/img/icon-no.svg) 40px 12px no-repeat;
+    background: var(--message-error-bg) url(../img/icon-no.svg) 40px 12px no-repeat;
     background-size: 16px auto;
 }
 
@@ -747,22 +719,22 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
 
 .viewlink, .inlineviewlink {
     padding-left: 16px;
-    background: url(../../../templates/img/icon-viewlink.svg) 0 1px no-repeat;
+    background: url(../img/icon-viewlink.svg) 0 1px no-repeat;
 }
 
 .addlink {
     padding-left: 16px;
-    background: url(../../../templates/img/icon-addlink.svg) 0 1px no-repeat;
+    background: url(../img/icon-addlink.svg) 0 1px no-repeat;
 }
 
 .changelink, .inlinechangelink {
     padding-left: 16px;
-    background: url(../../../templates/img/icon-changelink.svg) 0 1px no-repeat;
+    background: url(../img/icon-changelink.svg) 0 1px no-repeat;
 }
 
 .deletelink {
     padding-left: 16px;
-    background: url(../../../templates/img/icon-deletelink.svg) 0 1px no-repeat;
+    background: url(../img/icon-deletelink.svg) 0 1px no-repeat;
 }
 
 a.deletelink:link, a.deletelink:visited {
@@ -823,11 +795,11 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 .object-tools a.viewsitelink {
-    background-image: url(../../../templates/img/tooltag-arrowright.svg);
+    background-image: url(../img/tooltag-arrowright.svg);
 }
 
 .object-tools a.addlink {
-    background-image: url(../../../templates/img/tooltag-add.svg);
+    background-image: url(../img/tooltag-add.svg);
 }
 
 /* OBJECT HISTORY */
@@ -869,7 +841,7 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 .main > .content {
-    flex: 1 0;
+    flex:  1 0;
     max-width: 100%;
 }
 
@@ -893,24 +865,24 @@ a.deletelink:focus, a.deletelink:hover {
 
 .dashboard #content {
     width: 600px;
-    margin: 0 auto;
 }
 
 #content-main {
+    float: left;
     width: 100%;
 }
 
 #content-related {
+    float: right;
     width: 260px;
     position: relative;
-    margin-left: auto;
+    margin-right: -300px;
 }
 
 #footer {
     clear: both;
     padding: 10px;
 }
-
 
 /* COLUMN TYPES */
 
