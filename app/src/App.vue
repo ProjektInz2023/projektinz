@@ -6,10 +6,54 @@
         System Obsługi zamówień
       </h1>
     </div>
+    <div class="userSpace" v-if="logged">
+      <span id="name" ref="name">{{user.name}}</span>
+      <i class="fa fa-sign-out out" aria-hidden="true"  @click="LogOut"></i>
+    </div>
   </header>
   <div class="bg-image"></div>
-  <router-view/>
+  <router-view @UserActionLogin='LogIn' />
 </template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import router from '@/router'
+import LoginForm from './components/LoginForm.vue'
+import store from '@/store'
+const $cookie = require('vue-cookies')
+export default defineComponent({
+  name: 'App',
+  data () {
+    return {
+      logged: false as boolean,
+      user: {}
+    }
+  },
+  methods: {
+    LogOut () {
+      if ($cookie.get('token')) {
+        $cookie.remove('token')
+        this.logged = false
+        // eslint-disable-next-line
+        // @ts-ignore
+        router.push({ name: 'Welcome' })
+      }
+    },
+    LogIn () {
+      this.logged = true
+      console.log('in')
+      this.user = { name: 'xd' }
+      this.user = store.state.User
+    }
+  },
+  beforeMount () {
+    if ($cookie.get('token')) {
+      this.logged = true
+    } else {
+      this.logged = false
+    }
+  }
+})
+</script>
 <style lang="css">
 html,body,form{
   padding:0px;
@@ -57,7 +101,7 @@ router-view{
 transform: translate(50%, 50%);
 }
 .logo-img{
-  width:100px;
+  width:5%;
   height:100%;
   align-items: start;
 }
@@ -65,12 +109,34 @@ transform: translate(50%, 50%);
   height:100px;
   align-items: start;
   margin-left: 1%;
+  width: 80%;
 }
 .nav-hero-text{
   font-weight: 400;
   padding: 0px;
   margin: 0px;
   font-size: 220%;
+  text-align: left;
+}
+.userSpace{
+  align-items: end;
+  font-weight: 200;
+  padding: 0px;
+  margin: 0px;
+  font-size: 120%;
+  width:15%;
+  height: 100%;
+  text-align: center;
+  padding-top:15px;
+  padding-bottom:10px;
+  height: 35px;
+}
+.out{
+  margin-left: 5%;
+}
+.out:hover{
+  cursor: pointer;
+  color: red;
 }
 .line{
   display: block;

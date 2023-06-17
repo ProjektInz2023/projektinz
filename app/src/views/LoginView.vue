@@ -11,6 +11,7 @@ import { defineComponent } from 'vue'
 import FloatingWindow from '@/components/FloatingWindow.vue'
 import LoginForm from '@/components/LoginForm.vue'
 import router from '@/router'
+const $cookie = require('vue-cookies')
 export default defineComponent({
   name: 'HomeView',
   components: {
@@ -21,6 +22,13 @@ export default defineComponent({
     LogIn (event:Event) {
       router.push({ name: 'Account' })
       console.log(event)
+    }
+  },
+  mounted () {
+    if ($cookie.get('token')) {
+      router.push({ name: 'Account' })
+    } else {
+      router.push({ name: 'Welcome' })
     }
   }
 })
