@@ -1,22 +1,23 @@
 <template>
   <div class="user">
-    <span class="hero-text">Welcome user</span>
     <div class="orders">
   <section class="active">
+    <span class="hero-text">Aktywne</span>
     <div v-for="item in ordersActive" class="small-tile" :key="item">
       <FloatingWindow :ref="item.mainCourse" :class="{'visible': big === item.mainCourse,'invisible': big !== item.mainCourse }">
-        <OrderSpecifications :name="item.user" :course="item.mainCourse" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
+        <OrderSpecifications :id="item.orderId" :name="item.user" :course="item.mainCourse" :mode="'Gotowe'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
       </FloatingWindow>
-      <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">{{ item.user }}</p>
+      <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">Zamowienie nr {{ item.orderId }}</p>
       <span>{{ item.mainCourse }}</span></div>
     </div>
   </section>
   <section class="finalized">
+    <span class="hero-text">Gotowe</span>
     <div v-for="item in ordersReady" class="small-tile" :key="item" >
       <FloatingWindow :ref="item.mainCourse" :class="{'visible': big === item.mainCourse,'invisible': big !== item.mainCourse }">
-        <OrderSpecifications :name="item.user" :course="item.mainCourse" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
+        <OrderSpecifications :id="item.orderId" :name="item.user" :course="item.mainCourse" :mode="'Wydaj'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
       </FloatingWindow>
-      <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">{{ item.user }}</p>
+      <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">Zamowienie nr {{ item.orderId }}</p>
       <span>{{ item.mainCourse }}</span></div>
     </div>
   </section>
@@ -46,38 +47,61 @@ export default defineComponent({
   },
   beforeMount () {
     if ($cookie.get('token')) {
-      console.log('token is present')
+      // console.log('token is present')
+      const token = $cookie.get('token')
+      store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
+      this.$emit('UserActionLogin')
     } else {
-      console.log('token not present')
+    //  console.log('token not present')
       router.push({ name: '404' })
     }
   },
   mounted () {
-    axios.get('http://127.0.0.1:8000/api/orders/', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: {
-        format: 'json'
-      }
-    }).then(function (response) {
-      if (response.status === 200) {
-        store.dispatch('insertOrders', response.data)
-        console.log('xd')
-        console.log(store.state.Orders)
-      }
-    }, function (err) {
-      console.log('err', err)
-    })
+    function update () {
+      axios.get('http://127.0.0.1:8000/api/orders/', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        /* params: {
+          format: 'json'
+        } */
+      }).then(function (response) {
+        if (response.status === 200) {
+          console.log(response.data)
+          store.dispatch('insertOrders', response.data)
+          console.log(store.state.Orders)
+        }
+      }, function (err) {
+        console.log('err', err)
+      })
+    }
+    update()
+    const timer: ReturnType<typeof setTimeout> = setInterval(() => update(), 30000)
   },
   methods: {
     ...mapActions(['insertOrders']),
-    bigWindow (id:string) {
-      if (this.big === id) {
+    bigWindow (id:string, key:boolean) {
+      if (key) {
         this.big = ''
       } else {
-        this.big = id
+        if (this.big === id) {
+          this.big = ''
+        } else {
+          this.big = id
+        }
       }
+    },
+    close () {
+      this.big = ''
+    },
+    parseJwt (token:any) {
+      var base64Url = token.split('.')[1]
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+
+      return JSON.parse(jsonPayload)
     }
   },
   computed: {
@@ -94,6 +118,9 @@ export default defineComponent({
       }
       console.log(store.state.Orders.filter(ready))
       return store.state.Orders.filter(ready)
+    },
+    activeUser () {
+      return store.state.User
     }
   }
 })
@@ -114,10 +141,19 @@ p{
 }
 .hero-text{
   margin: 0 auto;
+  margin-bottom: 25px;
   display: block;
   position: relative;
-  width: 50%;
+  width: 70%;
+  height: 20px;
+  padding: 5px;
+  padding-bottom: 10px;
   text-align: center;
+  color:rgba(0, 0, 0, 1);
+  font-size: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 .small-tile{
   display: block;
@@ -147,8 +183,9 @@ p{
 }
 .active{
 padding: 5px;
+padding-top: 0px;
 background:rgba(255, 255, 255,0.5);
-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
+box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.2);
 width:35vw;
 height:80vh;
 overflow-y: scroll;
@@ -157,8 +194,9 @@ border-radius: 5px;
 }
 .finalized{
 padding: 5px;
+padding-top: 0px;
 background:rgba(255, 255, 255,0.5);
-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
+box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.2);
 width:35vw;
 height:80vh;
 overflow-y: scroll;
@@ -172,5 +210,7 @@ border-radius: 5px;
 .blurb{
   width:50%;
   height: 70%;
+  cursor: default;
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.1);
 }
 </style>

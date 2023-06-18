@@ -19,6 +19,11 @@
       </div>
       <button type="submit" class="btn">{{ send }}</button>
       </form>
+      <a href="http://127.0.0.1:8000/admin">
+      <legend>
+            <h2 class="hero-text smaller">Admin Login</h2>
+          </legend>
+      </a>
   </div>
 </template>
 <script lang='ts'>
@@ -92,8 +97,18 @@ export default defineComponent({
 })
 </script>
 <style lang="css" scoped>
+a{
+  text-decoration: none;
+}
+a:active{
+  text-decoration: none;
+}
 .hero-text{
   font-weight: 400;
+}
+.smaller{
+  margin-top:30px;
+  font-size: 100% !important;
 }
 .form-container{
  padding: 0%;
@@ -110,13 +125,13 @@ input{
     border:0px;
     border-radius:0px;
     text-indent:20px;
-    width:90%;
+    width:100%;
     height:70px;
     font-size: 150%;
     background-color: rgba(244,244,244,1);
     z-index: 1;
     transition: all 0.3s ease-in;
-    margin:10px;
+    margin:0 auto;
     padding:0px;
     padding-left: 2%;
     padding-right: 2%;

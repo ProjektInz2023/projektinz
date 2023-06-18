@@ -5,6 +5,8 @@ export default createStore({
     userid: 0 as number,
     response: Object,
     Orders: [
+    ],
+    User: [
     ]
   },
   getters: {
@@ -19,6 +21,9 @@ export default createStore({
     },
     insert_orders (state, payload) {
       state.Orders = payload
+    },
+    insert_user (state, payload) {
+      state.User = payload
     }
   },
   actions: {
@@ -30,6 +35,9 @@ export default createStore({
     },
     insertOrders ({ commit }, data) {
       commit('insert_orders', data)
+    },
+    insertUser ({ commit }, data) {
+      commit('insert_user', data)
     }
   },
   modules: {
