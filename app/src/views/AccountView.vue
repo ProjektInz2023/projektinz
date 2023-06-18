@@ -32,7 +32,6 @@ import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
 import FloatingWindow from '@/components/FloatingWindow.vue'
 import OrderSpecifications from '@/components/OrderSpecification.vue'
-
 const $cookie = require('vue-cookies')
 export default defineComponent({
   name: 'AccountView',

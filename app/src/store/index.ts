@@ -7,7 +7,6 @@ export default createStore({
     Orders: [
     ],
     User: [
-
     ]
   },
   getters: {
