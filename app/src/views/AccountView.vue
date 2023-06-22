@@ -150,7 +150,7 @@ p{
   padding: 5px;
   padding-bottom: 10px;
   text-align: center;
-  color:rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 1);
   font-size: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 15px;
