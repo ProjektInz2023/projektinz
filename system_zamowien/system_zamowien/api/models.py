@@ -92,7 +92,7 @@ class Staff(AbstractBaseUser):
     created = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    role = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
+    #role = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
 
     objects = MyUserManager()
 

@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-ognuj2_(paaj+d!(+q7qxwsjkon=ang^&abp!@m9ly(%qva(!f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 AUTH_USER_MODEL = "api.Staff"
 
@@ -102,12 +102,15 @@ from system_zamowien.config import DB_NAME, DB_PASSWORD, DB_URL, DB_USER, DB_POR
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mssql',
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_URL,
         'PORT': DB_PORT,
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     }
 }
 
