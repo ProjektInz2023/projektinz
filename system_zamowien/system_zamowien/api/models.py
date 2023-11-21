@@ -35,23 +35,6 @@ class MainCourse(models.Model):
     def delete_main_course(self):
         self.delete()
 
-class Order(models.Model):
-    STATUS_CHOICES = (
-        ('Aktywne', 'Aktywne'),
-        ('Gotowe', 'Gotowe'),
-        ('Zakonczone', 'Zakonczone'),
-    )
-
-    orderId = models.AutoField(primary_key=True, unique=True)
-    user = models.CharField(max_length=100)
-    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET("Danie usuniete"))
-    date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=32, choices=STATUS_CHOICES)
-
-    def __str__(self):
-        return self.user
-
-
 class MyUserManager(BaseUserManager):
     
     def create_user(self, email, name, surname, password=None):
@@ -92,7 +75,7 @@ class Staff(AbstractBaseUser):
     created = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    #role = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
+    role = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
 
     objects = MyUserManager()
 
@@ -114,3 +97,22 @@ class Staff(AbstractBaseUser):
     def is_staff(self):
 
         return self.is_admin
+    
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('Aktywne', 'Aktywne'),
+        ('Gotowe', 'Gotowe'),
+        ('Zakonczone', 'Zakonczone'),
+    )
+
+    orderId = models.AutoField(primary_key=True, unique=True)
+    user = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET("Danie usuniete"))
+    date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return self.user
+    
+    def __str__(self):
+        return f"Order #{self.pk} - {self.user.email}"

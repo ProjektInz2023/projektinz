@@ -19,19 +19,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-  
-
-
-@api_view(['GET'])
-def ApiOverview(request):
-    api_urls = {
-        'all_items': '/orders',
-        'Search by User': '/?user=username',
-        'Search by orderid': '/?orderid=orderid',
-        'Update': '/update/pk',
-        'Delete': '/item/pk/delete'
-    }
-    return Response(api_urls)
 
 @api_view(['GET'])
 def all_orders(request):

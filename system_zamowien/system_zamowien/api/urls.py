@@ -8,7 +8,7 @@ from api.views import MyTokenObtainPairView
 urlpatterns = [
     path('login/', MyTokenObtainPairView.as_view(), name='token_obtain'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('', views.ApiOverview, name='api-home'),
+    #path('', views.ApiOverview, name='api-home'),
     path('orders/', views.all_orders, name='orders'),
     path('orders/<int:pk>/', views.update_order, name='update-order'),
     path('orders/<int:pk>/delete', views.delete_order, name='delete-order'),
