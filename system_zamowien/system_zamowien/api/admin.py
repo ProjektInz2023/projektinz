@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from api.models import Staff, MainCourse, Order
+from api.models import Alergen, Staff, MainCourse, Order
 
 class UserCreationForm(forms.ModelForm):
 
@@ -69,8 +69,11 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = []
 
 class MainCourseAdmin(admin.ModelAdmin):
-    list_display = ["mainCourseId", "name", "description", "price"]
+    list_display = ["mainCourseId", "name", "description", "display_alergeny", "price"]
     ordering = ["mainCourseId"]
+    def display_alergeny(self, obj):
+        return ", ".join([alergen.name for alergen in obj.alergens.all()])
+    display_alergeny.short_description = 'Alergeny'
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ["orderId", "user", "mainCourse", "date", "status"]
@@ -80,3 +83,4 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Staff, UserAdmin)
 admin.site.register(MainCourse, MainCourseAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Alergen)
