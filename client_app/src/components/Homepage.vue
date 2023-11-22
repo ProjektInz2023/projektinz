@@ -1,18 +1,7 @@
 <template>
-  <v-layout class="rounded rounded-md">
-    <v-app-bar title="Application bar"></v-app-bar>
-    <v-navigation-drawer>
-      <v-list>
-        <router-link v-for="item in items" :to="item.route" :key="item.route">
-        <v-list-item  :title="item.title" :key="item.title"></v-list-item>
-      </router-link>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      Main Content
+      <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      Zamów!
     </v-main>
-  </v-layout>
 </template>
 
 <script lang='ts'>
@@ -23,11 +12,7 @@ export default defineComponent({
 
   data () {
     return {
-      menu: ['zamów', 'ustawienia'],
-      items: [
-        { icon: '1', title: 'Zamów', route: '/zamow' },
-        { icon: '2', title: 'Ustawienia', route: '/ustawienia' }
-      ]
+      menu: ['zamów', 'ustawienia']
     }
   }
 })
