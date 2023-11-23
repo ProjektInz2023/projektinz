@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .models import Order
-from .serializers import OrderSerializer
+from .models import MainCourse, Order, Staff
+from rest_framework import status
+from .serializers import MainCourseSerializer, OrderSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -62,3 +67,27 @@ def delete_order(request, pk):
     item = get_object_or_404(Order, pk=pk)
     item.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
+
+class MainCourseList(APIView):
+    def get(self, request, *args, **kwargs):
+        main_courses = MainCourse.objects.all()
+        serializer = MainCourseSerializer(main_courses, many=True)
+        return Response(serializer.data)
+    
+class UserOrders(APIView):
+    def get(self, request, email, *args, **kwargs):
+        orders = Order.objects.filter(user__email=email)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_order(request):
+    serializer = OrderSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.validated_data['user'] = request.user
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
