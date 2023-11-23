@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: HomeView
+    name: 'LandingPage',
+    component: LoginView
   },
   {
-    path: '/zamow',
+    path: '/order',
     name: 'Zamow',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -16,9 +16,9 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
   },
   {
-    path: '/ustawienia',
-    name: 'Ustawienia',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SettingsView.vue')
+    path: '/history',
+    name: 'Historia',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HistoryView.vue')
   }
 ]
 

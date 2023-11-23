@@ -1,18 +1,18 @@
 <template>
-  <settings/>
+  <history/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 // Components
-import settings from '../components/Settings.vue'
+import history from '../components/History.vue'
 
 export default defineComponent({
-  name: 'SettingsView',
+  name: 'HistoryView',
 
   components: {
-    settings
+    history
   }
 })
 </script>
