@@ -26,7 +26,7 @@ export default defineComponent({
     return {
       items: [
         { icon: '1', title: 'Zamów', route: '/zamow' },
-        { icon: '2', title: 'Ustawienia', route: '/ustawienia' }
+        { icon: '2', title: 'Historia', route: '/historia' }
       ]
     }
   }

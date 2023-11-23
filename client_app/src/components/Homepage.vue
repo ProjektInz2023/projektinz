@@ -12,7 +12,7 @@ export default defineComponent({
 
   data () {
     return {
-      menu: ['zamów', 'ustawienia']
+      menu: ['zamów', 'historia']
     }
   }
 })
