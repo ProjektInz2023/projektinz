@@ -113,13 +113,10 @@ class Order(models.Model):
     )
 
     orderId = models.AutoField(primary_key=True, unique=True)
-    user = models.ForeignKey(Staff, on_delete=models.CASCADE)
-    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET("Danie usuniete"))
+    user = models.ForeignKey(Staff, on_delete=models.CASCADE) 
+    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=32, choices=STATUS_CHOICES)
-
-    def __str__(self):
-        return self.user
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default="aktywne")
     
     def __str__(self):
         return f"Order #{self.pk} - {self.user.email}"
