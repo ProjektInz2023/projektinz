@@ -1,12 +1,20 @@
 <template>
-  <div>
-    <h2>Lista zamówień:</h2>
-    <ul>
-      <li v-for="(order, index) in ordersData" :key="index">
-        {{ order.orderId }} - {{ order.status }} - {{ formatDate(order.date) }}
-      </li>
-    </ul>
-  </div>
+  <v-main class="d-flex align-center  flex-column " style="min-height: 300px;">
+    <v-container class="bg-background">
+      <v-row cols="10" class="d-flex align-center justify-center">
+        <v-col class="justify-center" lg="6">
+          <div class="text-h5 text-center">Lista zamówień</div>
+          <v-list>
+              <v-list-item v-for="(order, index) in ordersData" :key="index">
+                  <v-list-item-title class="text-center">{{ order.orderId }}</v-list-item-title>
+                  <v-list-item-subtitle class="text-center">{{ order.status }}</v-list-item-subtitle>
+                  <v-list-item-subtitle class="text-center">{{ formatDate(order.date) }}</v-list-item-subtitle>
+              </v-list-item>
+          </v-list>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
 <script lang='ts'>
 import { defineComponent } from 'vue'
@@ -48,8 +56,11 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-a{
-text-decoration: none;
-color: black;
+.bg-background{
+  background: rgba(255,255,255,0.6) !important;
+  width: 60% !important;
+  max-height: 90vh !important;
+  overflow-y: auto;
+  margin-top:15px;
 }
 </style>
