@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
-
+import VueCookies from 'vue-cookies'
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -24,4 +24,5 @@ createApp(App)
   .use(router)
   .use(store)
   .use(vuetify)
+  .use(VueCookies)
   .mount('#app')

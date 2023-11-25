@@ -9,7 +9,9 @@ max-width="255"
 ></v-img></v-app-bar>
         <v-navigation-drawer
         rail
-        expand-on-hover>
+        expand-on-hover
+        v-if="login">
+        <v-list-item>{{user.name}}</v-list-item>
           <v-list>
               <v-list-item v-for="item in items" :key="item.title" :to="item.route" >
                 <font-awesome-icon icon="fa-regular fa-bookmark " class="special-icon"/>
@@ -17,13 +19,17 @@ max-width="255"
               </v-list-item>
           </v-list>
     </v-navigation-drawer>
-    <router-view/>
+    <router-view @loginPage="login = false" @otherPage="login = true" @UserActionLogin="LogIn()"/>
   </v-layout>
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import router from '@/router'
+import store from '@/store'
+// eslint-disable-next-line
+const $cookie = require('vue-cookies')
 export default defineComponent({
   name: 'App',
   data () {
@@ -31,7 +37,24 @@ export default defineComponent({
       items: [
         { icon: 'receipt', title: 'Zamów', route: '/order' },
         { icon: 'bookmark', title: 'Historia Zamówień', route: '/history' }
-      ]
+      ],
+      user: {},
+      login: true as boolean
+    }
+  },
+  methods: {
+    LogOut () {
+      if ($cookie.get('token')) {
+        $cookie.remove('token')
+        // eslint-disable-next-line
+        // @ts-ignore
+        router.push({ name: 'Welcome' })
+      }
+    },
+    LogIn () {
+      console.log('in')
+      this.user = { name: 'xd' }
+      this.user = store.state.User
     }
   }
 })
@@ -58,6 +81,9 @@ export default defineComponent({
   font-size: 25px;
   padding-top: 10px;
   float: left;
+}
+.center-horiz{
+transform: translate(50%, 50%);
 }
 html, body {margin: 0; height: 100%; overflow: hidden}
 </style>

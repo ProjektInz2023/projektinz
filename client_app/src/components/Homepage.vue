@@ -99,7 +99,11 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-
+import axios from 'axios'
+import router from '@/router'
+import store from '@/store'
+// eslint-disable-next-line
+const $cookie = require('vue-cookies')
 export default defineComponent({
   name: 'HomePage',
 
@@ -114,6 +118,49 @@ export default defineComponent({
     }
   },
   methods: {
+    // eslint-disable-next-line
+    parseJwt (token:any) {
+      const base64Url = token.split('.')[1]
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+
+      return JSON.parse(jsonPayload)
+    }
+  },
+  beforeMount () {
+    if ($cookie.get('data')) {
+      console.log('data ok')
+    } else {
+      router.push({ name: 'LandingPage' })
+    }
+    if ($cookie.get('token')) {
+      // console.log('token is present')
+      const token = $cookie.get('token')
+      store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
+      this.$emit('UserActionLogin')
+    } else {
+    //  console.log('token not present')
+      router.push({ name: 'LandingPage' })
+    }
+  },
+  mounted () {
+    this.$emit('otherPage')
+    axios.get('http://127.0.0.1:8000/api/maincourses', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'login'
+      }
+    }).then((response) => {
+      if (response.status === 200) {
+        console.log(response)
+      } else {
+        console.log('aaaaa')
+      }
+    }, function (err) {
+      console.log('err', err)
+    })
   }
 })
 </script>
