@@ -69,7 +69,7 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = []
 
 class MainCourseAdmin(admin.ModelAdmin):
-    list_display = ["mainCourseId", "name", "description", "display_alergeny", "price"]
+    list_display = ["mainCourseId", "name", "description", "display_alergeny", "price", "image"]
     ordering = ["mainCourseId"]
     def display_alergeny(self, obj):
         return ", ".join([alergen.name for alergen in obj.alergens.all()])

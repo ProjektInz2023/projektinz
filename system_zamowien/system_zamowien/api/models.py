@@ -15,6 +15,7 @@ class MainCourse(models.Model):
     description = models.CharField(max_length=255)
     alergens = models.ManyToManyField(Alergen, blank=True)
     price = models.FloatField()
+    image = models.ImageField(upload_to='main_course_images/', null=True, blank=True)
 
     def __str__(self):
         return self.name
