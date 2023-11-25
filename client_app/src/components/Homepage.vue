@@ -4,7 +4,7 @@
         <v-row cols="12" >
         <v-col sm="4"></v-col>
         <v-col class="justify-center"  sm="6">
-      <div class="text-h5">Dania Obiadowe</div>
+      <div class="text-h5 text-center">Dania Obiadowe</div>
       <v-dialog width="25%" v-for="item in items" :key="item.title" display="inline-block" persistent  class="align-self-md-center">
   <template v-slot:activator="{ props }">
     <v-card v-bind="props" :text="item.title" height="200" :elevation="8"  class="ma-3 pa-3 text-center d-flex" >
@@ -149,8 +149,7 @@ export default defineComponent({
     this.$emit('otherPage')
     axios.get('http://127.0.0.1:8000/api/maincourses', {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'login'
+        'Content-Type': 'application/json'
       }
     }).then((response) => {
       if (response.status === 200) {
@@ -169,13 +168,12 @@ export default defineComponent({
   flex:1 !important;
 }
 .bg-background{
-  background: rgba(255,255,255,0.6) !important;
+  background: rgba(255,255,255,0.9) !important;
   width:60% !important;
-  max-height:"100vh" !important;
   overflow-y: scroll;
 }
 #orderContainer{
   margin-top:15px;
-  height: 100vh;
+  height: 95vh;
 }
 </style>

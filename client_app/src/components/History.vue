@@ -5,10 +5,12 @@
         <v-col class="justify-center" lg="6">
           <div class="text-h5 text-center">Lista zamówień</div>
             <v-list v-for="(order, index) in ordersData" :key="index">
-              <v-divider v-show="index !== 0"></v-divider>
-                <v-list-item-title class="text-center">{{ order.orderId }}</v-list-item-title>
-                <v-list-item-subtitle class="text-center">{{ order.status }}</v-list-item-subtitle>
-                <v-list-item-subtitle class="text-center">{{ formatDate(order.date) }}</v-list-item-subtitle>
+              <v-divider style="margin: 5px;" v-show="index !== 0"></v-divider>
+                <v-list>
+                  <v-list-item-title class="text-center">{{ order.orderId }}</v-list-item-title>
+                  <v-list-item-subtitle class="text-center">{{ order.status }}</v-list-item-subtitle>
+                  <v-list-item-subtitle class="text-center">{{ formatDate(order.date) }}</v-list-item-subtitle>
+                </v-list>
             </v-list>
         </v-col>
       </v-row>
@@ -87,9 +89,9 @@ export default defineComponent({
 </script>
 <style scoped>
 .bg-background{
-  background: rgba(255,255,255,0.6) !important;
+  background: rgba(255,255,255,0.9) !important;
   width: 60% !important;
-  max-height: 90vh !important;
+  height: 95vh !important;
   overflow-y: auto;
   margin-top:15px;
 }
