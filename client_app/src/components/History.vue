@@ -1,16 +1,15 @@
 <template>
-  <v-main class="d-flex align-center  flex-column " style="min-height: 300px;">
+  <v-main class="d-flex align-center flex-column" style="min-height: 300px;">
     <v-container class="bg-background">
       <v-row cols="10" class="d-flex align-center justify-center">
         <v-col class="justify-center" lg="6">
           <div class="text-h5 text-center">Lista zamówień</div>
-          <v-list>
-              <v-list-item v-for="(order, index) in ordersData" :key="index">
-                  <v-list-item-title class="text-center">{{ order.orderId }}</v-list-item-title>
-                  <v-list-item-subtitle class="text-center">{{ order.status }}</v-list-item-subtitle>
-                  <v-list-item-subtitle class="text-center">{{ formatDate(order.date) }}</v-list-item-subtitle>
-              </v-list-item>
-          </v-list>
+            <v-list v-for="(order, index) in ordersData" :key="index">
+              <v-divider v-show="index !== 0"></v-divider>
+                <v-list-item-title class="text-center">{{ order.orderId }}</v-list-item-title>
+                <v-list-item-subtitle class="text-center">{{ order.status }}</v-list-item-subtitle>
+                <v-list-item-subtitle class="text-center">{{ formatDate(order.date) }}</v-list-item-subtitle>
+            </v-list>
         </v-col>
       </v-row>
     </v-container>
@@ -31,10 +30,16 @@ export default defineComponent({
         { icon: '1', title: 'Zamów', route: '/zamow' },
         { icon: '2', title: 'Historia', route: '/historia' }
       ],
-      ordersData: []
+      ordersData: [],
+      dataMail: ''
     }
   },
   beforeMount () {
+    if ($cookie.get('data')) {
+      this.dataMail = $cookie.get('data')
+    } else {
+      router.push({ name: 'LandingPage' })
+    }
     if ($cookie.get('token')) {
       // console.log('token is present')
       const token = $cookie.get('token')
@@ -46,7 +51,7 @@ export default defineComponent({
     }
   },
   mounted () {
-    axios.get('http://127.0.0.1:8000/api/orders/kamilberenhard@wp.pl/', {
+    axios.get(`http://127.0.0.1:8000/api/orders/${this.dataMail}/`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'login'
