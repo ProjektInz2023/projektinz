@@ -5,33 +5,41 @@
         <v-col sm="4"></v-col>
         <v-col class="justify-center"  sm="6">
       <div class="text-h5 text-center">Dania Obiadowe</div>
-      <v-dialog width="25%" v-for="item in items" :key="item.title" display="inline-block" persistent  class="align-self-md-center">
+      <v-dialog width="25%" v-for="item in menu" :key="item.name" display="inline-block" persistent  class="align-self-md-center">
   <template v-slot:activator="{ props }">
-    <v-card v-bind="props" :text="item.title" height="200" :elevation="8"  class="ma-3 pa-3 text-center d-flex" >
+    <v-card v-bind="props" :text="item.name" height="200" :elevation="8"  class="ma-3 pa-3 text-center d-flex">
       <v-img
       width="100" height="200"
       cover
-      :src="require('@/assets/' + item.icon +'.jpg')"></v-img>
+      :src="require('@/assets/' + item.image +'.jpg')"></v-img>
     </v-card>
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto"  :title="item.title"  :elevation="8">
+    <v-card class="justify-center mt-auto"  :title="item.name"  :elevation="8">
+      <v-card-text class="text-black">
+        {{item.description}}
+      </v-card-text>
       <v-img
         height="500"
         width="1000"
-        :src="require('@/assets/' + item.icon +'.jpg')"
+        :src="require('@/assets/' + item.image +'.jpg')"
         ></v-img>
-      <v-card-text>
-        zawiera alergeny:
+        <v-divider style="margin-top: 15px;"></v-divider>
+      <v-card-text class="text-black text-overline-special">
+        zawiera cechy:
       </v-card-text>
-      <v-card-text>
-        kurczak, ryż
+      <v-row>
+      <div class="indented text-overline" v-for="alergen in item.alergens" :key="alergen" style="display: inline-block;">
+        {{ alergen }}
+      </div>
+    </v-row>
+    <v-divider style="margin-top: 15px;"></v-divider>
+    <v-divider style="margin-top: 25px;" ></v-divider>
+      <v-card-text class="text-h5 text-overline-special-2">
+        Cena {{item.price}}zł
       </v-card-text>
-      <v-card-text>
-        Cena 15zl
-      </v-card-text>
-
+      <v-divider style="margin: 5px;" ></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
 
@@ -41,55 +49,13 @@
         ></v-btn>
         <v-btn
           text="Zamów"
-          @click="isActive.value = false"
+          @click="newOrder()"
         ></v-btn>
       </v-card-actions>
     </v-card>
   </template>
 </v-dialog>
 <!--######################################-->
-<v-dialog width="25%" v-for="item in items" :key="item.title" display="inline-block" persistent  class="align-self-md-center">
-  <template v-slot:activator="{ props }">
-    <v-card v-bind="props" :text="item.title" height="200" :elevation="8"  class="ma-3 pa-3 text-center d-flex" >
-      <v-img
-      width="100" height="200"
-      cover
-      :src="require('@/assets/' + item.icon +'.jpg')"></v-img>
-    </v-card>
-  </template>
-
-  <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto"  :title="item.title"  :elevation="8">
-      <v-img
-        height="500"
-        width="1000"
-        :src="require('@/assets/' + item.icon +'.jpg')"
-        ></v-img>
-      <v-card-text>
-        zawiera alergeny:
-      </v-card-text>
-      <v-card-text>
-        kurczak, ryż
-      </v-card-text>
-      <v-card-text>
-        Cena 15zl
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-
-        <v-btn
-          text="Zamknij"
-          @click="isActive.value = false"
-        ></v-btn>
-        <v-btn
-          text="Zamów"
-          @click="isActive.value = false"
-        ></v-btn>
-      </v-card-actions>
-    </v-card>
-  </template>
-</v-dialog>
 </v-col>
 <v-col sm="4"></v-col>
 </v-row>
@@ -109,12 +75,12 @@ export default defineComponent({
 
   data () {
     return {
-      menu: ['zamów', 'ustawienia'],
       items: [
-        { icon: 'chicken', title: 'Kurczak z ryżem', description: 'kurczak ryż' },
+        { icon: 'kurczak', title: 'Kurczak z ryżem', description: 'kurczak ryż' },
         { icon: 'fish', title: 'Ryba z frytkami', description: 'Ryba, frytki' },
         { icon: 'placek', title: 'Placek po Węgiersku', description: 'Placek, Węgier' }
-      ]
+      ],
+      menu: []
     }
   },
   methods: {
@@ -127,6 +93,24 @@ export default defineComponent({
       }).join(''))
 
       return JSON.parse(jsonPayload)
+    },
+    async newOrder () {
+      axios.post('http://127.0.0.1:8000/api/addorder/', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: $cookie.get('token')
+        },
+        mainCourse: 4
+      }).then(function (response) {
+        console.log(response)
+        if (response.status === 200 && response.data.access) {
+          console.log(response)
+          $cookie.set('token', response.data.access, 60 * 60 * 24)
+          router.push('/order')
+        }
+      }, function (err) {
+        console.log('err', err)
+      })
     }
   },
   beforeMount () {
@@ -153,9 +137,11 @@ export default defineComponent({
       }
     }).then((response) => {
       if (response.status === 200) {
-        console.log(response)
+        console.log(response.data)
+        this.menu = response.data
+        console.log(this.menu)
       } else {
-        console.log('aaaaa')
+        console.log('couldnt fetch menu')
       }
     }, function (err) {
       console.log('err', err)
@@ -167,9 +153,29 @@ export default defineComponent({
 .v-col-sm-4{
   flex:1 !important;
 }
+.indented{
+  margin-left: 35px;
+  color:#EF6C00;
+}
+.text-overline-special{
+  font-size: 0.85rem !important;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0.1666666667em !important;
+  font-family: "Roboto", sans-serif !important;
+  text-transform: uppercase !important;
+}
+.text-overline-special-2{
+  font-size: 1.3rem !important;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0.1666666667em !important;
+  font-family: "Roboto", sans-serif !important;
+  text-transform: uppercase !important;
+}
 .bg-background{
   background: rgba(255,255,255,0.9) !important;
-  width:60% !important;
+  width:70% !important;
   overflow-y: scroll;
 }
 #orderContainer{

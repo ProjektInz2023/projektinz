@@ -7,9 +7,9 @@
             <v-list v-for="(order, index) in ordersData" :key="index">
               <v-divider style="margin: 5px;" v-show="index !== 0"></v-divider>
                 <v-list>
-                  <v-list-item-title class="text-center">{{ order.orderId }}</v-list-item-title>
-                  <v-list-item-subtitle class="text-center">{{ order.status }}</v-list-item-subtitle>
-                  <v-list-item-subtitle class="text-center">{{ formatDate(order.date) }}</v-list-item-subtitle>
+                  <v-list-item-title class="text-center">Numer zamówienia {{ order.orderId }}</v-list-item-title>
+                  <v-list-item-subtitle class="text-center">Status zamówienia: {{ order.status }}</v-list-item-subtitle>
+                  <v-list-item-subtitle class="text-center">Data: {{ formatDate(order.date) }}</v-list-item-subtitle>
                 </v-list>
             </v-list>
         </v-col>
@@ -90,7 +90,7 @@ export default defineComponent({
 <style scoped>
 .bg-background{
   background: rgba(255,255,255,0.9) !important;
-  width: 60% !important;
+  width: 70% !important;
   height: 95vh !important;
   overflow-y: auto;
   margin-top:15px;

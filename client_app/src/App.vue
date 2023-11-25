@@ -20,7 +20,7 @@ max-width="255"
           </v-list>
           <template v-slot:append>
           <div class="pa-4 ">
-            <v-btn block class="bg-orange-darken-3" @click="LogOut()">
+            <v-btn block class="bg-orange-darken-3" @click="LogOut()" style="margin-bottom:15px">
               Logout
             </v-btn>
           </div>
@@ -109,5 +109,6 @@ transform: translate(50%, 50%);
 #Username{
   box-shadow: 0px 2px 2px 1px black;
 }
-html, body {margin: 0; height: 100%; overflow: hidden}
+html, body {margin: 0; height: 100%; overflow: hidden;
+  font-family: "Roboto", sans-serif }
 </style>
