@@ -19,6 +19,10 @@
 <script lang='ts'>
 import { defineComponent } from 'vue'
 import axios from 'axios'
+import router from '@/router'
+import store from '@/store'
+// eslint-disable-next-line
+const $cookie = require('vue-cookies')
 export default defineComponent({
   name: 'HistoryComponent',
   data () {
@@ -30,8 +34,19 @@ export default defineComponent({
       ordersData: []
     }
   },
+  beforeMount () {
+    if ($cookie.get('token')) {
+      // console.log('token is present')
+      const token = $cookie.get('token')
+      store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
+      this.$emit('UserActionLogin')
+    } else {
+    //  console.log('token not present')
+      router.push({ name: '404' })
+    }
+  },
   mounted () {
-    axios.get('http://127.0.0.1:8000/api/orders/user@user.pl/', {
+    axios.get('http://127.0.0.1:8000/api/orders/kamilberenhard@wp.pl/', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'login'
@@ -51,6 +66,16 @@ export default defineComponent({
     formatDate (date: string | number | Date) {
       const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }
       return new Date(date).toLocaleDateString('pl-PL', options)
+    },
+    // eslint-disable-next-line
+    parseJwt (token:any) {
+      const base64Url = token.split('.')[1]
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+
+      return JSON.parse(jsonPayload)
     }
   }
 })
