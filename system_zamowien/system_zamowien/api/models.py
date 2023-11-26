@@ -117,7 +117,7 @@ class Order(models.Model):
     user = models.ForeignKey(Staff, on_delete=models.CASCADE) 
     mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default="aktywne")
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default="Aktywne")
     
     def __str__(self):
         return f"Order #{self.pk} - {self.user.email}"

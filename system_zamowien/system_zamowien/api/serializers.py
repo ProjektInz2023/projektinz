@@ -7,7 +7,7 @@ class OrderSerializer(serializers.ModelSerializer):
     #mainCourse = serializers.SlugRelatedField(
     #    slug_field = "name", queryset=MainCourse.objects.all()
     #)
-    mainCourse = serializers.PrimaryKeyRelatedField(queryset=MainCourse.objects.all())
+    #mainCourse = serializers.PrimaryKeyRelatedField(queryset=MainCourse.objects.all())
     user = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all())
     class Meta:
         model = Order

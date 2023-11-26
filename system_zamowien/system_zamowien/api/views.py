@@ -81,12 +81,10 @@ class UserOrders(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
 def add_order(request):
     serializer = OrderSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.validated_data['user'] = request.user
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
