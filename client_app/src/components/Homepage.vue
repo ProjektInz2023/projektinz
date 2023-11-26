@@ -100,7 +100,8 @@ export default defineComponent({
           'Content-Type': 'application/json',
           Authorization: $cookie.get('token')
         },
-        mainCourse: 4
+        mainCourse: 5,
+        user: 8
       }).then(function (response) {
         console.log(response)
         if (response.status === 200 && response.data.access) {
