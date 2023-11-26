@@ -49,7 +49,7 @@
         ></v-btn>
         <v-btn
           text="Zamów"
-          @click="newOrder()"
+          @click="newOrder(item.mainCourseId)"
         ></v-btn>
       </v-card-actions>
     </v-card>
@@ -80,7 +80,8 @@ export default defineComponent({
         { icon: 'fish', title: 'Ryba z frytkami', description: 'Ryba, frytki' },
         { icon: 'placek', title: 'Placek po Węgiersku', description: 'Placek, Węgier' }
       ],
-      menu: []
+      menu: [],
+      userid: Number
     }
   },
   methods: {
@@ -94,14 +95,14 @@ export default defineComponent({
 
       return JSON.parse(jsonPayload)
     },
-    async newOrder () {
+    async newOrder (id: number) {
       axios.post('http://127.0.0.1:8000/api/addorder/', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: $cookie.get('token')
         },
-        mainCourse: 5,
-        user: 8
+        mainCourse: id,
+        user: this.userid
       }).then(function (response) {
         console.log(response)
         if (response.status === 200 && response.data.access) {
@@ -123,6 +124,8 @@ export default defineComponent({
     if ($cookie.get('token')) {
       // console.log('token is present')
       const token = $cookie.get('token')
+      this.userid = this.parseJwt(token).user_id
+      console.log(this.userid)
       store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
       this.$emit('UserActionLogin')
     } else {
