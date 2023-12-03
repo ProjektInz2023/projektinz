@@ -2,16 +2,13 @@
   <v-main class="d-flex align-center flex-column" style="min-height: 300px;">
     <v-container class="bg-background">
       <v-row cols="10" class="d-flex align-center justify-center">
-        <v-col class="justify-center" lg="6">
-          <div class="text-h5 text-center">Lista zamówień</div>
-            <v-list v-for="(order, index) in ordersData" :key="index">
-              <v-divider style="margin: 5px;" v-show="index !== 0"></v-divider>
-                <v-list>
-                  <v-list-item-title class="text-center">Numer zamówienia {{ order.orderId }}</v-list-item-title>
-                  <v-list-item-subtitle class="text-center">Status zamówienia: {{ order.status }}</v-list-item-subtitle>
-                  <v-list-item-subtitle class="text-center">Data: {{ formatDate(order.date) }}</v-list-item-subtitle>
-                </v-list>
-            </v-list>
+        <v-col class="justify-center text-center" lg="6">
+          <div class="text-h5 mb-4">Lista zamówień</div>
+          <v-card v-for="(order, index) in ordersData" :key="index" class="mb-4">
+            <v-card-title class="headline">{{ order.orderId }}</v-card-title>
+            <v-card-subtitle>{{ order.status }}</v-card-subtitle>
+            <v-card-text>{{ formatDate(order.date) }}</v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
