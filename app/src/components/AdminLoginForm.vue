@@ -4,46 +4,56 @@
       <div class="form-group">
         <fieldset>
           <legend>
-            <h2 class="hero-text">Welcome</h2>
+            <h2 class="hero-text">Admin Login</h2>
           </legend>
           <div class="line"></div>
-          <input id="email" autocomplete="off" placeholder="name@blum.com" name="login" type="text" v-model="email"
-                 maxlength="20" v-bind:class="{ hasError: error_highlight }">
+          <input
+            id="email"
+            autocomplete="off"
+            placeholder="admin@blum.com"
+            name="login"
+            type="text"
+            v-model="email"
+            maxlength="20"
+            v-bind:class="{ hasError: error_highlight }"
+          />
         </fieldset>
       </div>
       <div class="form-group">
         <fieldset>
-          <input id="password" type="password" autocomplete="off" placeholder="password" name="pass"
-                 v-model="password" maxlength="20" v-bind:class="{ hasError: error_highlight }">
+          <input
+            id="password"
+            type="password"
+            autocomplete="off"
+            placeholder="adminpassword"
+            name="pass"
+            v-model="password"
+            maxlength="20"
+            v-bind:class="{ hasError: error_highlight }"
+          />
         </fieldset>
       </div>
       <button type="submit" class="btn">{{ send }}</button>
     </form>
-    <a @click="redirectToAdminLogin">
-      <legend>
-        <h2 class="hero-text smaller">Admin Login</h2>
-      </legend>
-    </a>
   </div>
 </template>
-<script lang='ts'>
-/* eslint @typescript-eslint/no-var-requires: "off" */
+
+<script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
 import router from '@/router'
 const $cookie = require('vue-cookies')
 axios.defaults.withCredentials = true
+
 export default defineComponent({
-  name: 'LoginForm',
+  name: 'AdminLoginForm',
   data: function () {
     return {
       send: 'Log in',
-      Page: 'cc-login',
       email: '',
       password: '',
       errors: [] as string[],
-      error_highlight: false,
-      konto: 'konto'
+      error_highlight: false
     }
   },
   methods: {
@@ -52,7 +62,7 @@ export default defineComponent({
       if (!this.email) {
         this.errors.push('Email required.')
       } else if (!this.validEmail(this.email)) {
-        this.errors.push('Valid email required. ex."mail@mail.com"')
+        this.errors.push('Valid email required. ex."admin@mail.com"')
       }
       if (!(this.errors.length > 0)) {
         this.error_highlight = false
@@ -61,12 +71,12 @@ export default defineComponent({
         this.error_highlight = true
       }
     },
-    validEmail: function (email: string) {
+    validEmail (email: string) {
       const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       // return re.test(email)
       return true
     },
-    Wyslij: function () {
+    Wyslij () {
       if ((!this.email) || (this.email.length === 0 && !this.password) || (this.password.length === 0)) {
         this.error_highlight = true
       } else {
@@ -76,29 +86,27 @@ export default defineComponent({
       }
     },
     async login () {
-      axios.post('http://127.0.0.1:8000/api/login/', {
+      axios.post('http://127.0.0.1:8000/api/admin-login/', {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'login'
+          Authorization: 'admin-login'
         },
         password: this.password as string,
         email: this.email as string
       }).then(function (response) {
         if (response.status === 200 && response.data.access) {
           console.log(response)
-          $cookie.set('token', response.data.access, 60 * 60 * 24)
-          router.push('/account')
+          $cookie.set('adminToken', response.data.access, 60 * 60 * 24)
+          router.push('/admin-account')
         }
       }, function (err) {
         console.log('err', err)
       })
-    },
-    redirectToAdminLogin () {
-      router.push('/admin-login')
     }
   }
 })
 </script>
+
 <style lang="css" scoped>
 a{
   text-decoration: none;
