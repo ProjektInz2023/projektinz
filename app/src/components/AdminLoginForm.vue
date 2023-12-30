@@ -35,6 +35,11 @@
       </div>
       <button type="submit" class="btn">{{ send }}</button>
     </form>
+    <a @click="redirectToCookLogin">
+      <legend>
+        <h2 class="hero-text smaller">Cook Login</h2>
+      </legend>
+    </a>
   </div>
 </template>
 
@@ -102,12 +107,20 @@ export default defineComponent({
       }, function (err) {
         console.log('err', err)
       })
+    },
+    redirectToCookLogin () {
+      router.push('/')
     }
   }
 })
 </script>
 
 <style lang="css" scoped>
+.form-container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 a{
   text-decoration: none;
 }
