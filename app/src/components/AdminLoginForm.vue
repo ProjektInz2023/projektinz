@@ -91,7 +91,7 @@ export default defineComponent({
       }
     },
     async login () {
-      axios.post('http://127.0.0.1:8000/api/admin-login/', { // TODO: ???
+      axios.post('http://127.0.0.1:8000/api/login/', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'admin-login'
