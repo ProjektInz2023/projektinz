@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Alergen, Order, MainCourse, Staff
+from django.contrib.auth.models import Group
 
 
 
@@ -46,3 +47,27 @@ class MainCourseSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = ('id', 'email', 'name', 'surname', 'role')
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    role_name = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Staff
+        fields = ('email', 'name', 'surname', 'password', 'role_name')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        role_name = validated_data.pop('role_name', None)
+        user = Staff.objects.create_user(**validated_data)
+
+        if role_name:
+            role, _ = Group.objects.get_or_create(name=role_name)
+            user.role = role
+            user.save()
+
+        return user
