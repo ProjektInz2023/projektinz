@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import generics
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import MainCourse, Order, Staff
@@ -73,6 +74,35 @@ class MainCourseList(APIView):
         main_courses = MainCourse.objects.all()
         serializer = MainCourseSerializer(main_courses, many=True)
         return Response(serializer.data)
+    
+
+class MainCourseListCreateView(generics.ListCreateAPIView):
+    queryset = MainCourse.objects.all()
+    serializer_class = MainCourseSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = MainCourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MainCourseRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    queryset = MainCourse.objects.all()
+    serializer_class = MainCourseSerializer
+
+    def put(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = MainCourseSerializer(instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class MainCourseRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MainCourse.objects.all()
+    serializer_class = MainCourseSerializer
+
     
 class UserOrders(APIView):
     def get(self, request, email, *args, **kwargs):
