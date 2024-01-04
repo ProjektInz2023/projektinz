@@ -5,7 +5,6 @@
         <div>
           <section class="main-courses-section">
             <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
-            <h2 class="main-courses-caption">Lista dań: </h2>
             <div style="color: white; text-align: left;">
               <ul>
                 <li v-for="mainCourse in mainCourses" :key="mainCourse.id">
@@ -22,6 +21,7 @@
                 </li>
               </ul>
             </div>
+            <button @click="addDish">Dodaj danie</button>
           </section>
         </div>
       </BackPanel>
@@ -33,6 +33,7 @@
 import { defineComponent } from 'vue'
 import axios from 'axios'
 import BackPanel from '@/components/BackPanel.vue'
+import router from '@/router'
 
 const $cookie = require('vue-cookies')
 
@@ -49,6 +50,9 @@ export default defineComponent({
   methods: {
     goBack () {
       this.$router.go(-1)
+    },
+    addDish () {
+      router.push('/add-dish')
     }
   },
   beforeMount () {
@@ -75,17 +79,10 @@ p, .main-course-name, .dish-name {
   color: white !important;
   margin: 0 !important;
   padding: 5px !important;
-  position: relative !important;
 }
 
 ul {
   list-style-type: none;
-}
-
-.main-courses-caption {
-  color: white;
-  width: 150px;
-  cursor: pointer;
 }
 
 .main-course-box, .dish-box {
@@ -115,4 +112,14 @@ button {
   cursor: pointer;
   color: white;
 }
+
+button {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 </style>
