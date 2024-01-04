@@ -27,7 +27,7 @@ export default defineComponent({
   },
   mounted () {
     if ($cookie.get('adminToken')) {
-      router.push({ name: 'Admin-Login' }) // TODO: Appropriate route
+      router.push({ name: 'Admin-Login' })
     } else {
       router.push({ name: 'Admin-Login' })
     }

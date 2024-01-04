@@ -94,7 +94,7 @@ export default defineComponent({
       axios.post('http://127.0.0.1:8000/api/login/', {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'admin-login'
+          Authorization: 'login'
         },
         password: this.password as string,
         email: this.email as string
