@@ -2,26 +2,14 @@
   <div class="admin-account-view">
     <div class="dishes">
       <Back>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-          <h2 @click="toggleMainCourses" class="main-courses-caption">Main Courses</h2>
-          <div style="color: white;">
-            <ul v-if="showContent">
-              <li v-for="mainCourse in mainCourses" :key="mainCourse.id">
-                <div class="main-course-box">
-                  <span class="main-course-name">{{ mainCourse.name }}</span>
-                  <ul>
-                    <li v-for="dish in mainCourse.dishes" :key="dish.id">
-                      <div class="dish-box">
-                        <span class="dish-name">{{ dish.name }}</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-            <button @click="addDish" style="color: white;">Add Dish</button>
-          </div>
-        </div>
+        <a @click="directToMainDishes" class="link-container">
+          <legend class="clickable-button">
+            <h1 class="hero-text smaller">Dania główne</h1>
+          </legend>
+        </a>
+        <legend class="clickable-button">
+          <h1 class="hero-text smaller">Użytkownicy</h1>
+        </legend>
       </Back>
     </div>
   </div>
@@ -30,7 +18,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
-import Back from '@/components/Back.vue'
+import Back from '@/components/BackPanel.vue'
+import router from '@/router'
 
 const $cookie = require('vue-cookies')
 
@@ -43,12 +32,8 @@ export default defineComponent({
     }
   },
   methods: {
-    toggleMainCourses () {
-      this.showContent = !this.showContent
-    },
-    addDish () {
-      // Add logic to handle adding a dish
-      console.log('Dish added!')
+    directToMainDishes () {
+      router.push('/main-dishes')
     }
   },
   components: {
@@ -73,35 +58,36 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-p, .main-course-name, .dish-name {
-  color: white !important;
-  margin: 0 !important;
-  padding: 5px !important;
-  position: relative !important;
+h1 {
+  color: whitesmoke;
+  margin-bottom: 70px;
+  margin-top: 70px;
 }
 
-ul {
-  list-style-type: none;
+.admin-account-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.main-courses-caption {
-  color: white;
-  width: 150px; /* Set a fixed width to prevent expansion */
+.dishes {
+  text-align: center;
+}
+
+.link-container {
+  text-decoration: none;
+}
+
+.clickable-button {
+  border: 2px solid white;
+  border-radius: 5px;
   cursor: pointer;
+  margin: 20px;
+  width: 300px;
 }
 
-.main-course-box, .dish-box {
-  border: 1px solid white;
-  margin-bottom: 5px;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-button {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
+.clickable-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 </style>

@@ -27,8 +27,8 @@ export default defineComponent({
   margin: auto;
   padding: 1%;
   display: flex;
-  width:70%;
-  height:80%;
+  width:60%;
+  height:75%;
   box-sizing: border-box;
   box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.1);
   background: rgb(105, 105, 105);
@@ -38,6 +38,8 @@ export default defineComponent({
   transform: translate(-50%, -50%);
   z-index:10;
   border-radius: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 .really-big{
