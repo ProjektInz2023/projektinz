@@ -73,7 +73,7 @@ class AdminLoginView(TokenObtainPairView):
             # Extract user information from the response data
             user_data = response.data.get('user', {})
             role_name = user_data.get('role', {}).get('name')
-            if role_name and role_name != 'Admin':
+            if role_name and role_name != 'Manager':
                 return Response({"detail": "Invalid credentials"}, status=403)
         return response
     
