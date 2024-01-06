@@ -5,18 +5,12 @@
         <div>
           <section class="main-courses-section">
             <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
-            <div style="color: white; text-align: left;">
+            <div style="color: white;">
               <ul>
                 <li v-for="mainCourse in mainCourses" :key="mainCourse.id">
                   <div class="main-course-box">
                     <span class="main-course-name">{{ mainCourse.name }}</span>
-                    <ul>
-                      <li v-for="dish in mainCourse.dishes" :key="dish.id">
-                        <div class="dish-box">
-                          <span class="dish-name">{{ dish.name }}</span>
-                        </div>
-                      </li>
-                    </ul>
+                    <i class="fas fa-trash delete-icon" @click="deleteDish(mainCourse.mainCourseId)"></i>
                   </div>
                 </li>
               </ul>
@@ -53,7 +47,22 @@ export default defineComponent({
     },
     addDish () {
       router.push('/add-dish')
+    },
+    deleteDish (dishid: any) {
+      console.log('dishid before deleteDish:', dishid)
+
+      if (confirm('Czy na pewno chcesz usunąć to danie?')) {
+        axios
+          .delete(`http://127.0.0.1:8000/api/deletemaincourse/${dishid}`)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.error('Error deleting dish:', error)
+          })
+      }
     }
+
   },
   beforeMount () {
     if ($cookie.get('adminToken')) {
@@ -61,6 +70,7 @@ export default defineComponent({
       axios
         .get('http://127.0.0.1:8000/api/maincourses/', {})
         .then((response) => {
+          console.log(response)
           this.mainCourses = response.data
         })
         .catch((error) => {
@@ -75,7 +85,7 @@ export default defineComponent({
 
 <style lang="css" scoped>
 
-p, .main-course-name, .dish-name {
+p, .main-course-name {
   color: white !important;
   margin: 0 !important;
   padding: 5px !important;
@@ -85,7 +95,7 @@ ul {
   list-style-type: none;
 }
 
-.main-course-box, .dish-box {
+.main-course-box {
   border: 1px solid white;
   margin-bottom: 5px;
   padding: 5px;
