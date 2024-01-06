@@ -13,8 +13,9 @@
                     <div class="main-course-box">
                       <span class="main-course-name">{{ mainCourse.name }}</span>
                     </div>
-                    <div class="additional-box">
-                      <a class="fas fa-trash delete-icon" @click="deleteDish(mainCourse.mainCourseId)"></a>
+                    <div class="action-icons">
+                      <div class="fas fa-edit edit-icon" style="cursor: pointer;" @click="editDish(mainCourse.mainCourseId)"></div>
+                      <div class="fas fa-trash delete-icon" style="cursor: pointer;" @click="deleteDish(mainCourse.mainCourseId)"></div>
                     </div>
                   </div>
                 </li>
@@ -33,6 +34,8 @@ import { defineComponent } from 'vue'
 import axios from 'axios'
 import BackPanel from '@/components/BackPanel.vue'
 import router from '@/router'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const $cookie = require('vue-cookies')
 
@@ -48,29 +51,53 @@ export default defineComponent({
   },
   methods: {
     goBack () {
-      this.$router.go(-1)
+      router.push('/admin-account')
+    },
+    editDish (dishId: never) {
+      router.push(`/edit-dish/${dishId}`)
     },
     addDish () {
       router.push('/add-dish')
     },
-    deleteDish (dishid: any) {
-      if (confirm('Czy na pewno chcesz usunąć to danie?')) {
-        axios
-          .delete(`http://127.0.0.1:8000/api/deletemaincourse/${dishid}`)
-          .then((response) => {
-            console.log(response.data)
-            location.reload()
-          })
-          .catch((error) => {
-            console.error('Error deleting dish:', error)
-          })
+    async deleteDish (dishid: never) {
+      if (await this.confirmDelete()) {
+        try {
+          const response = await axios.delete(`http://127.0.0.1:8000/api/deletemaincourse/${dishid}`)
+          console.log(response.data)
+          this.showSuccessNotification()
+          this.delayedReload(1500)
+        } catch (error) {
+          console.error('Error deleting dish:', error)
+        }
       }
+    },
+    async confirmDelete () {
+      const result = await Swal.fire({
+        title: 'Czy na pewno chcesz usunąć to danie?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Tak, usuń',
+        cancelButtonText: 'Anuluj'
+      })
+      return result.isConfirmed
+    },
+    showSuccessNotification () {
+      Swal.fire({
+        icon: 'success',
+        title: 'Danie zostało pomyślnie usunięte!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    },
+    delayedReload (time: number) {
+      setTimeout(() => {
+        location.reload()
+      }, time)
     }
-
   },
   beforeMount () {
     if ($cookie.get('adminToken')) {
-      const token = $cookie.get('adminToken')
+      $cookie.get('adminToken')
       axios
         .get('http://127.0.0.1:8000/api/maincourses/', {})
         .then((response) => {
@@ -171,8 +198,8 @@ button:hover {
   color: #333
 }
 
-.additional-box {
-  margin-right: 10px;
+.action-icons {
+  margin-right: 8px;
   margin-bottom: 5px;
 }
 

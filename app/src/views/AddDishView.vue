@@ -33,6 +33,9 @@
 import { defineComponent } from 'vue'
 import axios from 'axios'
 import BackPanel from '@/components/BackPanel.vue'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
+import router from '@/router'
 
 const $cookie = require('vue-cookies')
 
@@ -57,29 +60,47 @@ export default defineComponent({
     goBack () {
       this.$router.go(-1)
     },
-    submitDishForm () {
-      axios
-        .post('http://127.0.0.1:8000/api/addmaincourse/', this.newDish)
-        .then((response) => {
-          console.log('Danie dodane:', response.data)
-        })
-        .catch((error) => {
-          console.log(this.newDish)
-          console.error('Błąd dodawania dania:', error)
-        })
+    async submitDishForm () {
+      if ($cookie.get('adminToken')) {
+        if (await this.confirmAddition()) {
+          axios
+            .post('http://127.0.0.1:8000/api/addmaincourse/', this.newDish)
+            .then((response) => {
+              console.log('Danie dodane:', response.data)
+              this.showSuccessNotification()
+            })
+            .catch((error) => {
+              console.error('Błąd dodawania dania:', error)
+            })
+        } else {
+          this.$router.push({ name: '404' })
+        }
+      }
+    },
+    async confirmAddition () {
+      const result = await Swal.fire({
+        title: 'Czy na pewno chcesz dodać to danie?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Tak, dodaj',
+        cancelButtonText: 'Anuluj'
+      })
+      return result.isConfirmed
+    },
+    showSuccessNotification () {
+      Swal.fire({
+        icon: 'success',
+        title: 'Danie zostało pomyślnie dodane!',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
+        router.push('/main-dishes')
+      })
     }
   },
   beforeMount () {
     if ($cookie.get('adminToken')) {
-      const token = $cookie.get('adminToken')
-      axios
-        .get('http://127.0.0.1:8000/api/maincourses/', {})
-        .then((response) => {
-          this.mainCourses = response.data // TODO: confirmation of addition/error
-        })
-        .catch((error) => {
-          console.error('Error fetching main courses:', error)
-        })
+      $cookie.get('adminToken')
     } else {
       this.$router.push({ name: '404' })
     }
