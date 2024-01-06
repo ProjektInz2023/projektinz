@@ -42,12 +42,4 @@ export default defineComponent({
   align-items: center;
 }
 
-.really-big{
-  position: absolute;
-  width: 300vw;
-  height: 300vh;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: -1;
-}
 </style>

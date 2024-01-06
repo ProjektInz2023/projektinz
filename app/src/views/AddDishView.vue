@@ -94,6 +94,7 @@ export default defineComponent({
   margin-top: 20px;
   border-radius: 10px;
   width: 280px;
+  color: white;
 }
 
 .add-dish-form h2 {
