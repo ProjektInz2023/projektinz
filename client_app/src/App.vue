@@ -91,6 +91,7 @@ export default defineComponent({
  url('./assets/bgimage.jpg') no-repeat center fixed;
  background-blend-mode: saturation;
   background-size: cover;
+  overflow: scroll;
 }
 .special-icon{
   width:30px;

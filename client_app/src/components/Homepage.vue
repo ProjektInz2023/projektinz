@@ -29,7 +29,7 @@
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto"  :title="item.name"  :elevation="8" style="width: 150%;">
+    <v-card class="justify-center mt-auto"  :title="item.name"  :elevation="8" style="width: 150%;overflow: hidden;">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
@@ -55,7 +55,6 @@
       <v-divider style="margin: 5px;" ></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-
         <v-btn
           text="Zamknij"
           @click="isActive.value = false"
@@ -183,19 +182,19 @@ export default defineComponent({
 .confirm-icon{
   width: 100px;
   height: 50px;
-  padding:20px ;
+  padding:10px ;
   color: rgb(255, 255, 255,0.9);
 }
 .confirmation-text{
   font-size: 250%;
-  padding: 20px;
+  padding: 10px;
 }
 .v-col-sm-4{
   flex:1 !important;
 }
 .indented{
   margin-left: 35px;
-  color:#EF6C00;
+  color:rgba(239, 108, 0,1)
 }
 .text-overline-special{
   font-size: 0.85rem !important;
@@ -215,7 +214,6 @@ export default defineComponent({
 .bg-background{
   background: rgba(255,255,255,0) !important;
   width:70% !important;
-  overflow-y: scroll;
 }
 .list-image{
   height: 100%;
@@ -240,12 +238,13 @@ export default defineComponent({
 .bottom-baner{
   position: fixed;
   height: 100px;
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
-  background-color: #EF6C00;
-  bottom: 0px;
+  background-color: rgba(239, 108, 0,0.9);
+  bottom: 10px;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
+  border-radius: 15px;
   line-height: 2rem;
   font-family: "Roboto", sans-serif !important;
 }

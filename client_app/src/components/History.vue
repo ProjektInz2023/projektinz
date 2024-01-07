@@ -100,7 +100,6 @@ export default defineComponent({
 .bg-background{
   background: rgba(255,255,255,0) !important;
   width:70% !important;
-  overflow-y: scroll;
 }
 .custom-background{
   height: 100%;
