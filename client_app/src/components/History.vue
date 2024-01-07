@@ -1,6 +1,7 @@
 <template>
   <v-main class="d-flex flex-column" style="min-height: 300px;">
     <div class="bg-background"  id="orderContainer">
+      <div class="custom-background"></div>
           <div class="text-h5 text-center category-text">Historia Zamówień</div>
               <v-card v-for="(order, index) in ordersData.slice().reverse()" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card">
       <v-row cols="12">
@@ -97,16 +98,16 @@ export default defineComponent({
   padding: 0 !important;
 }
 .bg-background{
-  background: rgba(255,255,255,1) !important;
+  background: rgba(255,255,255,0) !important;
   width:70% !important;
   overflow-y: scroll;
 }
 .custom-background{
   height: 100%;
-  width:800px;
+  width:1137px;
   position: absolute;
   background: rgba(255,255,255,0.8);
-  left: 437px;
+  /*left: 437px;*/
   border-top-right-radius: 155px;
   border-top-left-radius: 155px;
 }
