@@ -29,13 +29,13 @@
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8" style="width: 150%;">
+    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8" style="width: 130%;">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
       <v-img
-        height="672"
-        width="720"
+        height="500"
+        width="620"
         :src="require('@/assets/' + item.image +'.jpg')"
         ></v-img>
         <v-divider style="margin-top: 15px;"></v-divider>
@@ -44,7 +44,7 @@
       </v-card-text>
       <v-row>
       <div class="indented text-overline" v-for="alergen in item.alergens" :key="alergen" style="display: inline-block;">
-        {{ alergen }}
+        {{ alergen.name }}
       </div>
     </v-row>
     <v-divider style="margin-top: 15px;"></v-divider>
