@@ -2,7 +2,7 @@
   <v-main class="d-flex flex-column" style="min-height: 300px;">
     <div class="bg-background"  id="orderContainer">
           <div class="text-h5 text-center category-text">Historia Zamówień</div>
-              <v-card v-for="(order, index) in ordersData" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card">
+              <v-card v-for="(order, index) in ordersData.slice().reverse()" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card">
       <v-row cols="12">
         <v-col cols="3">
     </v-col>
