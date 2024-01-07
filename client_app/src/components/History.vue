@@ -103,10 +103,10 @@ export default defineComponent({
 }
 .custom-background{
   height: 100%;
-  width:1137px;
+  width:1064px;
   position: absolute;
   background: rgba(255,255,255,0.8);
-  /*left: 437px;*/
+  left: 305px;
   border-top-right-radius: 155px;
   border-top-left-radius: 155px;
 }

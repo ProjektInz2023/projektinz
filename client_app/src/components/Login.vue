@@ -50,6 +50,7 @@
 import { defineComponent } from 'vue'
 import axios from 'axios'
 import router from '@/router'
+import store from '@/store'
 // eslint-disable-next-line
 const $cookie = require('vue-cookies')
 axios.defaults.withCredentials = true
@@ -92,6 +93,8 @@ export default defineComponent({
         console.log(response)
         if (response.status === 200 && response.data.access) {
           console.log(response)
+          store.dispatch('insertUser', { name: response.data.name, surname: response.data.surname })
+          $cookie.set('userdata', response.data.name, 60 * 60 * 24)
           $cookie.set('token', response.data.access, 60 * 60 * 24)
           router.push('/order')
         }

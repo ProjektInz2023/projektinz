@@ -10,7 +10,7 @@ max-width="255"
 ></v-img></v-app-bar>
         <v-navigation-drawer
         v-if="login">
-        <v-list-item  class="text-center" style="margin-top: 5px;" >Witaj <span style="text-transform: capitalize;">{{user.name}} </span></v-list-item>
+        <v-list-item  class="text-center" style="margin-top: 5px;" >Witaj <span style="text-transform: capitalize;">{{user}} </span></v-list-item>
         <v-divider></v-divider>
           <v-list>
               <v-list-item style="min-height: 35px;" v-for="item in items" :key="item.title" :to="item.route" >
@@ -68,8 +68,7 @@ export default defineComponent({
     },
     LogIn () {
       console.log('in')
-      this.user = { name: 'xd' }
-      this.user = store.state.User
+      this.user = $cookie.get('userdata')
     }
   }
 })

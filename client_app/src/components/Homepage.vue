@@ -152,7 +152,6 @@ export default defineComponent({
       const token = $cookie.get('token')
       this.userid = this.parseJwt(token).user_id
       console.log(this.userid)
-      store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
       this.$emit('UserActionLogin')
     } else {
     //  console.log('token not present')
