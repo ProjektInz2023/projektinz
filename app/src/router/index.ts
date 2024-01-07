@@ -24,20 +24,20 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/PageNotFoundView.vue')
   },
   {
-    path: '/admin-login',
-    name: 'Admin-Login',
+    path: '/manager-login',
+    name: 'Manager-Login',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminLoginView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ManagerLoginView.vue')
   },
   {
-    path: '/admin-account',
-    name: 'Admin-Account',
+    path: '/manager-account',
+    name: 'Manager-Account',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminAccountView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ManagerAccountView.vue')
   },
   {
     path: '/main-dishes',
@@ -62,6 +62,22 @@ const routes: Array<RouteRecordRaw> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/EditDishView.vue')
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/UsersView.vue')
+  },
+  {
+    path: '/add-user',
+    name: 'Add-User',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/AddUserView.vue')
   }
 ]
 

@@ -30,8 +30,9 @@ export default defineComponent({
   },
   methods: {
     LogOut () {
-      if ($cookie.get('token')) {
+      if ($cookie.get('token') || $cookie.get('managerToken')) {
         $cookie.remove('token')
+        $cookie.remove('managerToken')
         this.logged = false
         // eslint-disable-next-line
         // @ts-ignore
@@ -46,7 +47,7 @@ export default defineComponent({
     }
   },
   beforeMount () {
-    if ($cookie.get('token')) {
+    if ($cookie.get('token') || $cookie.get('managerToken')) {
       this.logged = true
     } else {
       this.logged = false

@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-account-view">
+  <div class="manager-account-view">
     <div class="dishes">
       <Back>
         <a @click="directToMainDishes" class="link-container">
@@ -7,9 +7,11 @@
             <h1 class="hero-text smaller">Dania główne</h1>
           </legend>
         </a>
-        <legend class="clickable-button">
-          <h1 class="hero-text smaller">Użytkownicy</h1>
-        </legend>
+        <a @click="directToUsers" class="link-container">
+          <legend class="clickable-button">
+            <h1 class="hero-text smaller">Użytkownicy</h1>
+          </legend>
+        </a>
       </Back>
     </div>
   </div>
@@ -24,7 +26,7 @@ import router from '@/router'
 const $cookie = require('vue-cookies')
 
 export default defineComponent({
-  name: 'AdminAccountView',
+  name: 'ManagerAccountView',
   data () {
     return {
       showContent: false,
@@ -34,22 +36,17 @@ export default defineComponent({
   methods: {
     directToMainDishes () {
       router.push('/main-dishes')
+    },
+    directToUsers () {
+      router.push('/users')
     }
   },
   components: {
     Back
   },
   beforeMount () {
-    if ($cookie.get('adminToken')) {
-      const token = $cookie.get('adminToken')
-      axios
-        .get('http://127.0.0.1:8000/api/maincourses/', {})
-        .then((response) => {
-          this.mainCourses = response.data
-        })
-        .catch((error) => {
-          console.error('Error fetching main courses:', error)
-        })
+    if ($cookie.get('managerToken')) {
+      const token = $cookie.get('managerToken')
     } else {
       this.$router.push({ name: '404' })
     }

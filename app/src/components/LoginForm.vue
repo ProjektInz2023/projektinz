@@ -19,9 +19,9 @@
       </div>
       <button type="submit" class="btn">{{ send }}</button>
     </form>
-    <a @click="redirectToAdminLogin">
+    <a @click="redirectToManagerLogin">
       <legend>
-        <h2 class="hero-text smaller">Admin Login</h2>
+        <h2 class="hero-text smaller">Manager Login</h2>
       </legend>
     </a>
   </div>
@@ -93,8 +93,8 @@ export default defineComponent({
         console.log('err', err)
       })
     },
-    redirectToAdminLogin () {
-      router.push('/admin-login')
+    redirectToManagerLogin () {
+      router.push('/manager-login')
     }
   }
 })

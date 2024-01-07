@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-account-view">
+  <div class="manager-account-view">
     <div class="dishes">
       <BackPanel>
         <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
@@ -10,7 +10,7 @@
             <input v-model="newDish.name" required />
 
             <label>Opis dania:</label>
-            <textarea v-model="newDish.description" required></textarea>
+            <input v-model="newDish.description" required />
 
             <label>Cena:</label>
             <input type="number" v-model="newDish.price" required />
@@ -40,7 +40,7 @@ import router from '@/router'
 const $cookie = require('vue-cookies')
 
 export default defineComponent({
-  name: 'AdminAccountView',
+  name: 'ManagerAccountView',
   data () {
     return {
       mainCourses: [],
@@ -61,7 +61,7 @@ export default defineComponent({
       this.$router.go(-1)
     },
     async submitDishForm () {
-      if ($cookie.get('adminToken')) {
+      if ($cookie.get('managerToken')) {
         if (await this.confirmAddition()) {
           axios
             .post('http://127.0.0.1:8000/api/addmaincourse/', this.newDish)
@@ -73,7 +73,7 @@ export default defineComponent({
               console.error('Błąd dodawania dania:', error)
             })
         } else {
-          this.$router.push({ name: '404' })
+          this.$router.push({ name: 'Add-Dish' })
         }
       }
     },
@@ -99,8 +99,8 @@ export default defineComponent({
     }
   },
   beforeMount () {
-    if ($cookie.get('adminToken')) {
-      $cookie.get('adminToken')
+    if ($cookie.get('managerToken')) {
+      $cookie.get('managerToken')
     } else {
       this.$router.push({ name: '404' })
     }
@@ -131,7 +131,7 @@ export default defineComponent({
 .add-dish-form input,
 .add-dish-form textarea {
   height: 25px;
-
+  width: 200px;
 }
 .add-dish-form button {
   margin-top: 10px;

@@ -4,13 +4,13 @@
       <div class="form-group">
         <fieldset>
           <legend>
-            <h2 class="hero-text">Admin Login</h2>
+            <h2 class="hero-text">Manager Login</h2>
           </legend>
           <div class="line"></div>
           <input
             id="email"
             autocomplete="off"
-            placeholder="admin@blum.com"
+            placeholder="manager@blum.com"
             name="login"
             type="text"
             v-model="email"
@@ -25,7 +25,7 @@
             id="password"
             type="password"
             autocomplete="off"
-            placeholder="adminpassword"
+            placeholder="managerpassword"
             name="pass"
             v-model="password"
             maxlength="20"
@@ -51,7 +51,7 @@ const $cookie = require('vue-cookies')
 axios.defaults.withCredentials = true
 
 export default defineComponent({
-  name: 'AdminLoginForm',
+  name: 'ManagerLoginForm',
   data: function () {
     return {
       send: 'Log in',
@@ -67,7 +67,7 @@ export default defineComponent({
       if (!this.email) {
         this.errors.push('Email required.')
       } else if (!this.validEmail(this.email)) {
-        this.errors.push('Valid email required. ex."admin@mail.com"')
+        this.errors.push('Valid email required. ex."manager@mail.com"')
       }
       if (!(this.errors.length > 0)) {
         this.error_highlight = false
@@ -101,8 +101,8 @@ export default defineComponent({
       }).then(function (response) {
         if (response.status === 200 && response.data.access) {
           console.log(response)
-          $cookie.set('adminToken', response.data.access, 60 * 60 * 24)
-          router.push('/admin-account')
+          $cookie.set('managerToken', response.data.access, 60 * 60 * 24)
+          router.push('/manager-account')
         }
       }, function (err) {
         console.log('err', err)

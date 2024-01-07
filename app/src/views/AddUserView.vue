@@ -4,25 +4,30 @@
       <BackPanel>
         <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
         <div class="add-dish-form">
-          <h2>Edytuj danie</h2>
-          <form @submit.prevent="submitDishForm">
-            <label>Nazwa dania:</label>
-            <input v-model="newDish.name" required />
+          <h2>Dodaj osobę</h2>
+          <form @submit.prevent="submitUserForm">
+            <label>Imię:</label>
+            <input v-model="newPerson.name" required />
 
-            <label>Opis dania:</label>
-            <textarea v-model="newDish.description" required></textarea>
+            <label>Nazwisko:</label>
+            <input v-model="newPerson.surname" required />
 
-            <label>Cena:</label>
-            <input type="number" v-model="newDish.price" required />
+            <label>Email:</label>
+            <input v-model="newPerson.email" required />
 
-            <label>Alergeny:</label>
-            <input v-model="newDish.alergens[0].name" />
+            <label>Hasło:</label>
+            <input v-model="newPerson.password" required/>
 
-            <label>Obrazek (URL):</label>
-            <input v-model="newDish.image" />
+            <label>Rola:</label>
+            <select v-model="newPerson.role_name" required class="wide-select">
+              <option value="Admin">Admin</option>
+              <option value="Cook">Kucharz</option>
+              <option value="Manager">Manager</option>
+              <option value="User">Użytkownik</option>
+            </select>
           </form>
 
-          <button type="submit" @click="submitDishForm">Zapisz zmiany</button>
+          <button type="submit" @click="submitUserForm">Dodaj osobę</button>
         </div>
       </BackPanel>
     </div>
@@ -43,13 +48,13 @@ export default defineComponent({
   name: 'ManagerAccountView',
   data () {
     return {
-      dishId: null as string | null,
-      newDish: {
+      mainCourses: [],
+      newPerson: {
+        email: '',
         name: '',
-        description: '',
-        price: 0,
-        alergens: [{ name: '' }],
-        image: ''
+        surname: '',
+        password: '',
+        role_name: ''
       }
     }
   },
@@ -60,29 +65,29 @@ export default defineComponent({
     goBack () {
       this.$router.go(-1)
     },
-    async submitDishForm () {
+    async submitUserForm () {
       if ($cookie.get('managerToken')) {
-        if (await this.confirmEdition()) {
+        if (await this.confirmAddition()) {
           axios
-            .put(`http://127.0.0.1:8000/api/maincourses/${this.dishId}/`, this.newDish)
+            .post('http://127.0.0.1:8000/api/addstaff/', this.newPerson)
             .then((response) => {
-              console.log('Danie dodane:', response.data)
+              console.log('Osoba dodana:', response.data)
               this.showSuccessNotification()
             })
             .catch((error) => {
               console.error('Błąd dodawania dania:', error)
             })
+        } else {
+          this.$router.push({ name: 'Add-User' })
         }
-      } else {
-        this.$router.push({ name: 'Edit-Dish' })
       }
     },
-    async confirmEdition () {
+    async confirmAddition () {
       const result = await Swal.fire({
-        title: 'Czy na pewno chcesz zaktualizować to danie?',
+        title: 'Czy na pewno chcesz dodać tę osobę?',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Tak, zaktualizuj',
+        confirmButtonText: 'Tak, dodaj',
         cancelButtonText: 'Anuluj'
       })
       return result.isConfirmed
@@ -90,32 +95,17 @@ export default defineComponent({
     showSuccessNotification () {
       Swal.fire({
         icon: 'success',
-        title: 'Danie zostało pomyślnie zaktualizowane!',
+        title: 'Osoba została pomyślnie dodana!',
         showConfirmButton: false,
         timer: 1500
       }).then(() => {
-        router.push('/main-dishes')
+        router.push('/users')
       })
-    },
-    async fetchDishData () {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/maincourses/${this.dishId}`)
-        const dishData = response.data
-
-        this.newDish.name = dishData.name
-        this.newDish.description = dishData.description
-        this.newDish.price = dishData.price
-        this.newDish.alergens[0].name = dishData.alergens[0].name
-        this.newDish.image = dishData.image
-      } catch (error) {
-        console.error('Error fetching dish data:', error)
-      }
     }
   },
   beforeMount () {
     if ($cookie.get('managerToken')) {
-      this.dishId = this.$route.params.dishId as string | null
-      this.fetchDishData()
+      $cookie.get('managerToken')
     } else {
       this.$router.push({ name: '404' })
     }
@@ -146,8 +136,14 @@ export default defineComponent({
 .add-dish-form input,
 .add-dish-form textarea {
   height: 25px;
-
+  width: 200px;
 }
+
+.wide-select {
+  height: 25px;
+  width: 200px;
+}
+
 .add-dish-form button {
   margin-top: 10px;
 }

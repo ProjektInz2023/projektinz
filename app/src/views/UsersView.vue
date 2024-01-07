@@ -1,27 +1,28 @@
 <template>
   <div class="manager-account-view">
-    <div class="dishes">
+    <div class="users">
       <BackPanel>
         <div>
-          <section class="main-courses-section">
+          <section class="users-section">
             <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
-            <h1 class="section-title">Dania główne</h1>
+            <h1 class="section-title">Użytkownicy</h1>
             <div style="color: white;">
-              <ul class="dish-list">
-                <li v-for="mainCourse in mainCourses" :key="mainCourse.id">
-                  <div class="course-container">
-                    <div class="main-course-box">
-                      <span class="main-course-name">{{ mainCourse.name }}</span>
+              <ul class="user-list">
+                <li v-for="user in users" :key="user.id">
+                  <div class="user-container">
+                    <div class="user-box">
+                      <span class="user-name">{{ user.name }}</span>
+                      <span class="user-email">{{ user.email }}</span>
                     </div>
                     <div class="action-icons">
-                      <div class="fas fa-edit edit-icon" style="cursor: pointer;" @click="editDish(mainCourse.mainCourseId)"></div>
-                      <div class="fas fa-trash delete-icon" style="cursor: pointer;" @click="deleteDish(mainCourse.mainCourseId)"></div>
+                      <div class="fas fa-edit edit-icon" style="cursor: pointer;" @click="editUser(user.mainCourseId)"></div>
+                      <div class="fas fa-trash delete-icon" style="cursor: pointer;" @click="deleteUser(user.email)"></div>
                     </div>
                   </div>
                 </li>
               </ul>
             </div>
-            <button @click="addDish">Dodaj danie</button>
+            <button @click="addUser">Dodaj osobę</button>
           </section>
         </div>
       </BackPanel>
@@ -43,7 +44,7 @@ export default defineComponent({
   name: 'ManagerAccountView',
   data () {
     return {
-      mainCourses: []
+      users: []
     }
   },
   components: {
@@ -53,27 +54,27 @@ export default defineComponent({
     goBack () {
       router.push('/manager-account')
     },
-    editDish (dishId: never) {
+    editUser (dishId: never) {
       router.push(`/edit-dish/${dishId}`)
     },
-    addDish () {
-      router.push('/add-dish')
+    addUser () {
+      router.push('/add-user')
     },
-    async deleteDish (dishid: never) {
+    async deleteUser (userEmail: never) {
       if (await this.confirmDelete()) {
         try {
-          const response = await axios.delete(`http://127.0.0.1:8000/api/deletemaincourse/${dishid}`)
+          const response = await axios.delete(`http://127.0.0.1:8000/api/delete_staff/${userEmail}`)
           console.log(response.data)
           this.showSuccessNotification()
           this.delayedReload(1500)
         } catch (error) {
-          console.error('Error deleting dish:', error)
+          console.error('Error deleting user:', error)
         }
       }
     },
     async confirmDelete () {
       const result = await Swal.fire({
-        title: 'Czy na pewno chcesz usunąć to danie?',
+        title: 'Czy na pewno chcesz usunąć tę osobę?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Tak, usuń',
@@ -84,7 +85,7 @@ export default defineComponent({
     showSuccessNotification () {
       Swal.fire({
         icon: 'success',
-        title: 'Danie zostało pomyślnie usunięte!',
+        title: 'Osoba została pomyślnie usunięta!',
         showConfirmButton: false,
         timer: 1500
       })
@@ -99,13 +100,13 @@ export default defineComponent({
     if ($cookie.get('managerToken')) {
       $cookie.get('managerToken')
       axios
-        .get('http://127.0.0.1:8000/api/maincourses/', {})
+        .get('http://127.0.0.1:8000/api/staff/', {})
         .then((response) => {
           console.log(response)
-          this.mainCourses = response.data
+          this.users = response.data
         })
         .catch((error) => {
-          console.error('Error fetching main courses:', error)
+          console.error('Error fetching users:', error)
         })
     } else {
       this.$router.push({ name: '404' })
@@ -116,13 +117,13 @@ export default defineComponent({
 
 <style lang="css" scoped>
 
-.course-container {
+.user-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.main-courses-section {
+.users-section {
   background-color: grey;
   padding: 20px;
   margin-top: 20px;
@@ -130,7 +131,7 @@ export default defineComponent({
   width: 360px;
 }
 
-p, .main-course-name {
+p, .user-name {
   color: white !important;
   margin: 0 !important;
   padding: 5px !important;
@@ -140,12 +141,24 @@ ul {
   list-style-type: none;
 }
 
-.main-course-box {
+.user-box {
   border: 1px solid white;
   margin-bottom: 8px;
   padding: 5px;
   box-sizing: border-box;
   margin-right: 10px;
+  width: min-content;
+  min-width: 160px;
+}
+
+.user-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-email {
+  font-size: 12px;
+  color: lightgray;
 }
 
 button {
@@ -156,7 +169,7 @@ button {
   cursor: pointer;
 }
 
-.main-courses-section {
+.users-section {
   margin-bottom: 30px;
 }
 
@@ -187,7 +200,7 @@ button:hover {
   margin-left: 10px;
 }
 
-.dish-list {
+.user-list {
   max-height: 300px;
   overflow-y: auto;
 }
