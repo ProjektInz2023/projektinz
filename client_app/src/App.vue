@@ -1,5 +1,6 @@
 <template>
   <v-app class="text-primary ">
+    <page-loader></page-loader>
       <v-layout class="rounded rounded-md">
         <v-app-bar title="">
 <v-img
@@ -35,6 +36,7 @@ max-width="255"
 import { defineComponent } from 'vue'
 import router from '@/router'
 import store from '@/store'
+import PageLoader from './components/PageLoader.vue'
 // eslint-disable-next-line
 const $cookie = require('vue-cookies')
 export default defineComponent({
@@ -48,6 +50,9 @@ export default defineComponent({
       user: {},
       login: true as boolean
     }
+  },
+  components: {
+    PageLoader
   },
   methods: {
     LogOut () {
@@ -86,6 +91,7 @@ export default defineComponent({
  url('./assets/bgimage.jpg') no-repeat center fixed;
  background-blend-mode: saturation;
   background-size: cover;
+  overflow: scroll;
 }
 .special-icon{
   width:30px;

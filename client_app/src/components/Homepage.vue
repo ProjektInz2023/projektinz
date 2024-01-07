@@ -1,28 +1,41 @@
 <template>
-    <v-main class="d-flex align-center  flex-column " style="min-height: 300px;">
-      <v-container class="bg-background" id="orderContainer" >
-        <v-row cols="12" >
-        <v-col sm="4"></v-col>
-        <v-col class="justify-center"  sm="6">
-      <div class="text-h5 text-center">Dania Obiadowe</div>
-      <v-dialog width="25%" v-for="item in menu" :key="item.name" display="inline-block" persistent  class="align-self-md-center">
+    <v-main class="d-flex  flex-column " style="min-height: 300px;">
+      <div class="bg-background" id="orderContainer" >
+        <div class="custom-background"></div>
+      <div class="text-h5 text-center category-text">Dania Obiadowe</div>
+      <v-dialog width="25%" v-for="item in menu" :key="item.name" display="inline-block" persistent  class="align-self-md-center"  >
   <template v-slot:activator="{ props }">
-    <v-card v-bind="props" :text="item.name" height="200" :elevation="8"  class="ma-3 pa-3 text-center d-flex">
+    <v-card v-bind="props" height="200" :elevation="8"  class="ma-3 pa-3 d-flex">
+      <v-row cols="12">
+        <v-col cols="2">
       <v-img
-      width="100" height="200"
+      height="176"
       cover
       :src="require('@/assets/' + item.image +'.jpg')"></v-img>
+    </v-col>
+    <v-col>
+      <span class="item-name">
+        {{ item.name }}
+      </span>
+      <div class="d-flex flex-row mb-6 specifications">
+      <v-sheet  v-for="alergen in item.alergens" :key="alergen" class="ma-2 pa-2 text-orange-darken-3">{{ alergen }}</v-sheet>
+    </div>
+      <v-card-text class="text-overline-special-2">
+      {{item.price}}.00zł
+      </v-card-text>
+    </v-col>
+    </v-row>
     </v-card>
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto"  :title="item.name"  :elevation="8">
+    <v-card class="justify-center mt-auto"  :title="item.name"  :elevation="8" style="width: 150%;overflow: hidden;">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
       <v-img
-        height="500"
-        width="1000"
+        height="720"
+        width="720"
         :src="require('@/assets/' + item.image +'.jpg')"
         ></v-img>
         <v-divider style="margin-top: 15px;"></v-divider>
@@ -37,29 +50,33 @@
     <v-divider style="margin-top: 15px;"></v-divider>
     <v-divider style="margin-top: 25px;" ></v-divider>
       <v-card-text class="text-h5 text-overline-special-2">
-        Cena {{item.price}}zł
+        Cena {{item.price}}.00zł
       </v-card-text>
       <v-divider style="margin: 5px;" ></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-
         <v-btn
           text="Zamknij"
           @click="isActive.value = false"
         ></v-btn>
         <v-btn
           text="Zamów"
-          @click="newOrder(item.mainCourseId)"
+          @click="isActive.value = false; newOrder(item.mainCourseId)"
         ></v-btn>
       </v-card-actions>
     </v-card>
   </template>
 </v-dialog>
 <!--######################################-->
-</v-col>
-<v-col sm="4"></v-col>
-</v-row>
-</v-container>
+</div>
+<v-slide-y-reverse-transition>
+<v-banner class="bottom-baner" :elevation="8"  v-if="orderplaced">
+  <font-awesome-icon icon="fa-solid fa-check" class="confirm-icon"/>
+  <v-banner-text class="confirmation-text">
+      Zamówienie złożone!
+    </v-banner-text>
+</v-banner>
+</v-slide-y-reverse-transition>
     </v-main>
 </template>
 
@@ -81,10 +98,14 @@ export default defineComponent({
         { icon: 'placek', title: 'Placek po Węgiersku', description: 'Placek, Węgier' }
       ],
       menu: [],
-      userid: Number
+      userid: Number,
+      orderplaced: false
     }
   },
   methods: {
+    delay (time : number) {
+      return new Promise(resolve => setTimeout(resolve, time))
+    },
     // eslint-disable-next-line
     parseJwt (token:any) {
       const base64Url = token.split('.')[1]
@@ -96,6 +117,10 @@ export default defineComponent({
       return JSON.parse(jsonPayload)
     },
     async newOrder (id: number) {
+      this.orderplaced = true
+      this.delay(3000).then(() => {
+        this.orderplaced = false
+      })
       axios.post('http://127.0.0.1:8000/api/addorder/', {
         headers: {
           'Content-Type': 'application/json',
@@ -154,12 +179,22 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+.confirm-icon{
+  width: 100px;
+  height: 50px;
+  padding:10px ;
+  color: rgb(255, 255, 255,0.9);
+}
+.confirmation-text{
+  font-size: 250%;
+  padding: 10px;
+}
 .v-col-sm-4{
   flex:1 !important;
 }
 .indented{
   margin-left: 35px;
-  color:#EF6C00;
+  color:rgba(239, 108, 0,1)
 }
 .text-overline-special{
   font-size: 0.85rem !important;
@@ -171,16 +206,47 @@ export default defineComponent({
 }
 .text-overline-special-2{
   font-size: 1.3rem !important;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 2rem;
   letter-spacing: 0.1666666667em !important;
   font-family: "Roboto", sans-serif !important;
-  text-transform: uppercase !important;
 }
 .bg-background{
-  background: rgba(255,255,255,0.9) !important;
+  background: rgba(255,255,255,0) !important;
   width:70% !important;
-  overflow-y: scroll;
+}
+.list-image{
+  height: 100%;
+  width: 100%;
+}
+.specifications{
+  height:50px;
+}
+.category-text{
+  position: relative;
+  top:10px;
+}
+.custom-background{
+  height: 100%;
+  width:1137px;
+  position: absolute;
+  background: rgba(255,255,255,0.8);
+  /*left: 437px;*/
+  border-top-right-radius: 155px;
+  border-top-left-radius: 155px;
+}
+.bottom-baner{
+  position: fixed;
+  height: 100px;
+  width: 60%;
+  margin: 0 auto;
+  background-color: rgba(239, 108, 0,0.9);
+  bottom: 10px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-radius: 15px;
+  line-height: 2rem;
+  font-family: "Roboto", sans-serif !important;
 }
 #orderContainer{
   margin-top:15px;

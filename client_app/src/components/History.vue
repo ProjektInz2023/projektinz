@@ -1,17 +1,28 @@
 <template>
-  <v-main class="d-flex align-center flex-column" style="min-height: 300px;">
-    <v-container class="bg-background">
-      <v-row cols="10" class="d-flex align-center justify-center">
-        <v-col class="justify-center text-center" lg="6">
-          <div class="text-h5 mb-4">Lista zamówień</div>
-          <v-card v-for="(order, index) in ordersData" :key="index" class="mb-4">
-            <v-card-title class="headline">{{ order.orderId }}</v-card-title>
-            <v-card-subtitle>{{ order.status }}</v-card-subtitle>
-            <v-card-text>{{ formatDate(order.date) }}</v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-main class="d-flex flex-column" style="min-height: 300px;">
+    <div class="bg-background"  id="orderContainer">
+      <div class="custom-background"></div>
+          <div class="text-h5 text-center category-text">Historia Zamówień</div>
+              <v-card v-for="(order, index) in ordersData.slice().reverse()" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card">
+      <v-row cols="12">
+        <v-col cols="3">
+    </v-col>
+    <v-col>
+      <span class="item-name">
+        Numer zamówienia {{ order.orderId }}
+      </span>
+      <v-card-text class="text-overline-special-2">
+        Status zamówienia: {{ order.status }}
+      </v-card-text>
+      <v-card-text class="text-overline-special-2">
+        Data: {{ formatDate(order.date) }}
+      </v-card-text>
+    </v-col>
+    <v-col cols="3"></v-col>
+    </v-row>
+    </v-card>
+
+    </div>
   </v-main>
 </template>
 <script lang='ts'>
@@ -25,10 +36,6 @@ export default defineComponent({
   name: 'HistoryComponent',
   data () {
     return {
-      items: [
-        { icon: '1', title: 'Zamów', route: '/zamow' },
-        { icon: '2', title: 'Historia', route: '/historia' }
-      ],
       ordersData: [],
       dataMail: ''
     }
@@ -85,11 +92,31 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+.text-overline-special-2{
+  font-weight: 400;
+  line-height: 2rem;
+  padding: 0 !important;
+}
 .bg-background{
-  background: rgba(255,255,255,0.9) !important;
-  width: 70% !important;
-  height: 95vh !important;
-  overflow-y: auto;
-  margin-top:15px;
+  background: rgba(255,255,255,0) !important;
+  width:70% !important;
+}
+.custom-background{
+  height: 100%;
+  width:1137px;
+  position: absolute;
+  background: rgba(255,255,255,0.8);
+  /*left: 437px;*/
+  border-top-right-radius: 155px;
+  border-top-left-radius: 155px;
+}
+.category-text{
+  position: relative;
+  top:10px;
+}
+
+#orderContainer{
+  padding-top:15px;
+  height: 95vh;
 }
 </style>
