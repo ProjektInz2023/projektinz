@@ -18,7 +18,7 @@
         {{ item.name }}
       </span>
       <div class="d-flex flex-row mb-6 specifications">
-      <v-sheet  v-for="alergen in item.alergens" :key="alergen" class="ma-2 pa-2 text-orange-darken-3">{{ alergen }}</v-sheet>
+      <v-sheet  v-for="alergen in item.alergens" :key="alergen" class="ma-2 pa-2 text-orange-darken-3">{{ alergen.name }}</v-sheet>
     </div>
       <v-card-text class="text-overline-special-2">
       {{item.price}}.00zł
@@ -29,12 +29,12 @@
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto"  :title="item.name"  :elevation="8" style="width: 150%;overflow: hidden;">
+    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8" style="width: 150%;">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
       <v-img
-        height="720"
+        height="672"
         width="720"
         :src="require('@/assets/' + item.image +'.jpg')"
         ></v-img>
@@ -247,6 +247,9 @@ export default defineComponent({
   border-radius: 15px;
   line-height: 2rem;
   font-family: "Roboto", sans-serif !important;
+}
+.popupcard{
+  overflow-y: scroll !important;
 }
 #orderContainer{
   margin-top:15px;
