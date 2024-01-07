@@ -15,7 +15,7 @@
                       <span class="user-email">{{ user.email }}</span>
                     </div>
                     <div class="action-icons">
-                      <div class="fas fa-edit edit-icon" style="cursor: pointer;" @click="editUser(user.mainCourseId)"></div>
+                      <div class="fas fa-edit edit-icon" style="cursor: pointer;" @click="editUser(user.email)"></div>
                       <div class="fas fa-trash delete-icon" style="cursor: pointer;" @click="deleteUser(user.email)"></div>
                     </div>
                   </div>
@@ -54,8 +54,8 @@ export default defineComponent({
     goBack () {
       router.push('/manager-account')
     },
-    editUser (dishId: never) {
-      router.push(`/edit-dish/${dishId}`)
+    editUser (userEmail: never) {
+      router.push(`/edit-user/${userEmail}`)
     },
     addUser () {
       router.push('/add-user')

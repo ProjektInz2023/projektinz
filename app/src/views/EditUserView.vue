@@ -4,7 +4,7 @@
       <BackPanel>
         <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
         <div class="add-dish-form">
-          <h2>Dodaj osobę</h2>
+          <h2>Edytuj osobę</h2>
           <form @submit.prevent="submitUserForm">
             <label>Imię:</label>
             <input v-model="newPerson.name" required />
@@ -15,19 +15,9 @@
             <label>Email:</label>
             <input v-model="newPerson.email" required />
 
-            <label>Hasło:</label>
-            <input v-model="newPerson.password" required/>
-
-            <label>Rola:</label>
-            <select v-model="newPerson.role_name" required class="wide-select">
-              <option value="Admin">Admin</option>
-              <option value="Cook">Kucharz</option>
-              <option value="Manager">Manager</option>
-              <option value="User">Użytkownik</option>
-            </select>
           </form>
 
-          <button type="submit" @click="submitUserForm">Dodaj osobę</button>
+          <button type="submit" @click="submitUserForm">Edytuj osobę</button>
         </div>
       </BackPanel>
     </div>
@@ -48,13 +38,11 @@ export default defineComponent({
   name: 'ManagerAccountView',
   data () {
     return {
-      mainCourses: [],
+      userEmail: null as string | null,
       newPerson: {
         email: '',
         name: '',
-        surname: '',
-        password: '',
-        role_name: ''
+        surname: ''
       }
     }
   },
@@ -67,27 +55,27 @@ export default defineComponent({
     },
     async submitUserForm () {
       if ($cookie.get('managerToken')) {
-        if (await this.confirmAddition()) {
+        if (await this.confirmEdition()) {
           axios
-            .post('http://127.0.0.1:8000/api/addstaff/', this.newPerson)
+            .put(`http://127.0.0.1:8000/api/edit_staff/${this.newPerson.email}/`, this.newPerson)
             .then((response) => {
-              console.log('Osoba dodana:', response.data)
+              console.log('Osoba zmieniona:', response.data)
               this.showSuccessNotification()
             })
             .catch((error) => {
-              console.error('Błąd dodawania osoby:', error)
+              console.error('Błąd edytowania osoby:', error)
             })
-        } else {
-          this.$router.push({ name: 'Add-User' })
         }
+      } else {
+        this.$router.push({ name: 'Edit-User' })
       }
     },
-    async confirmAddition () {
+    async confirmEdition () {
       const result = await Swal.fire({
-        title: 'Czy na pewno chcesz dodać tę osobę?',
+        title: 'Czy na pewno chcesz zaktualizować tę osobę?',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Tak, dodaj',
+        confirmButtonText: 'Tak, zaktualizuj',
         cancelButtonText: 'Anuluj'
       })
       return result.isConfirmed
@@ -95,17 +83,31 @@ export default defineComponent({
     showSuccessNotification () {
       Swal.fire({
         icon: 'success',
-        title: 'Osoba została pomyślnie dodana!',
+        title: 'Osoba została pomyślnie zaktualizowana!',
         showConfirmButton: false,
         timer: 1500
       }).then(() => {
         router.push('/users')
       })
+    },
+    async fetchDishData () {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/staff/${this.userEmail}/`)
+        const personData = response.data
+        console.log(personData)
+
+        this.newPerson.email = personData.email
+        this.newPerson.name = personData.name
+        this.newPerson.surname = personData.surname
+      } catch (error) {
+        console.error('Error fetching person data:', error)
+      }
     }
   },
   beforeMount () {
     if ($cookie.get('managerToken')) {
-      $cookie.get('managerToken')
+      this.userEmail = this.$route.params.userEmail as string | null
+      this.fetchDishData()
     } else {
       this.$router.push({ name: '404' })
     }
@@ -135,11 +137,6 @@ export default defineComponent({
 
 .add-dish-form input,
 .add-dish-form textarea {
-  height: 25px;
-  width: 200px;
-}
-
-.wide-select {
   height: 25px;
   width: 200px;
 }
