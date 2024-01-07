@@ -4,11 +4,6 @@ from django.contrib.auth.models import Group
 
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all())
-    class Meta:
-        model = Order
-        fields = '__all__' 
 
 class AlergenSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,6 +47,19 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
         fields = ('id', 'email', 'name', 'surname', 'role')
+
+class OrderSerializer(serializers.ModelSerializer):
+    #user = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all())
+    #class Meta:
+     #   model = Order
+      #  fields = '__all__' 
+    user = UserSerializer()
+    mainCourse = MainCourseSerializer()
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
 
 class CreateUserSerializer(serializers.ModelSerializer):
     role_name = serializers.CharField(write_only=True)
