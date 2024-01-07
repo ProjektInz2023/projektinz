@@ -86,7 +86,7 @@ export default defineComponent({
       }).then(function (response) {
         if (response.status === 200 && response.data.access) {
           console.log(response)
-          $cookie.set('token', response.data.access, 60 * 60 * 24)
+          $cookie.set('usertoken', response.data.access, 60 * 60 * 24)
           router.push('/account')
         }
       }, function (err) {

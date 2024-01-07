@@ -25,7 +25,7 @@ export default defineComponent({
     }
   },
   mounted () {
-    if ($cookie.get('token')) {
+    if ($cookie.get('usertoken')) {
       router.push({ name: 'Account' })
     } else {
       router.push({ name: 'Welcome' })

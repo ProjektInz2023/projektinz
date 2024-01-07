@@ -29,13 +29,14 @@
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8" style="width: 130%;">
+    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8" style="width: 120%;">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
       <v-img
         height="500"
-        width="620"
+        width="576"
+        cover
         :src="require('@/assets/' + item.image +'.jpg')"
         ></v-img>
         <v-divider style="margin-top: 15px;"></v-divider>

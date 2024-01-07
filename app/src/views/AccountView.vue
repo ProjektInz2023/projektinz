@@ -47,9 +47,9 @@ export default defineComponent({
     OrderSpecifications
   },
   beforeMount () {
-    if ($cookie.get('token')) {
+    if ($cookie.get('usertoken')) {
       // console.log('token is present')
-      const token = $cookie.get('token')
+      const token = $cookie.get('usertoken')
       store.dispatch('insertUser', { name: this.parseJwt(token).name, surname: this.parseJwt(token).surname })
       this.$emit('UserActionLogin')
     } else {
