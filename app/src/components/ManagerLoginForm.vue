@@ -76,12 +76,12 @@ export default defineComponent({
         this.error_highlight = true
       }
     },
-    validEmail (email: string) {
+    validEmail: function (email: string) {
       const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       // return re.test(email)
       return true
     },
-    Wyslij () {
+    Wyslij: function () {
       if ((!this.email) || (this.email.length === 0 && !this.password) || (this.password.length === 0)) {
         this.error_highlight = true
       } else {
