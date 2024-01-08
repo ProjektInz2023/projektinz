@@ -116,7 +116,7 @@ a:active{
 .form-container{
   padding: 0%;
   width:50%;
-  height:50%;
+  height:20%;
 }
 .smaller{
   font-size:160%;

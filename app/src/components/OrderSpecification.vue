@@ -10,7 +10,7 @@
         <div class="line down"></div>
         <span>Zamawiający:</span>
         <p class="hero-text">{{ name }}</p>
-        <button class="btn" v-if="mode === 'Wydaj'" @click="action('return')">Cofnij Status</button>
+        <button class="btn" v-if="mode === 'Wydaj'" @click="action('return')" style="margin-left: 0;">Cofnij Status</button>
         <button class="btn" @click="action()">{{mode}}</button>
     </div>
   </template>
@@ -137,7 +137,7 @@ position: relative;
     margin-bottom: 5%;
 }
 .btn{
-    margin-top:25%;
+    margin-top:20%;
     border-radius:0px;
     font-size:110%;
     color:rgba(255,255,255,1);
