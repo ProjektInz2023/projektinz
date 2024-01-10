@@ -2,15 +2,15 @@
   <div class="manager-account-view">
     <div class="dishes">
       <BackPanel>
-        <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
-        <div class="add-dish-form">
-          <h2>Edytuj danie</h2>
+        <div class="edit-dish-form">
+          <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
+          <h1 class="section-title">Edytuj danie</h1>
           <form @submit.prevent="submitDishForm">
             <label>Nazwa dania:</label>
             <input v-model="newDish.name" required />
 
             <label>Opis dania:</label>
-            <textarea v-model="newDish.description" required></textarea>
+            <input v-model="newDish.description" required />
 
             <label>Cena:</label>
             <input type="number" v-model="newDish.price" required />
@@ -83,7 +83,8 @@ export default defineComponent({
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Tak, zaktualizuj',
-        cancelButtonText: 'Anuluj'
+        cancelButtonText: 'Anuluj',
+        confirmButtonColor: '#007bff'
       })
       return result.isConfirmed
     },
@@ -124,62 +125,51 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-.add-dish-form {
-  background-color: grey;
+.edit-dish-form {
+  background-color: #f2f2f2;
   padding: 20px;
-  margin-top: 20px;
   border-radius: 10px;
-  width: 280px;
-  color: white;
-}
-
-.add-dish-form h2 {
+  width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
-  margin-bottom: 10px;
 }
 
-.add-dish-form label {
+.edit-dish-form h1 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.edit-dish-form label {
   display: block;
   margin-top: 10px;
 }
 
-.add-dish-form input,
-.add-dish-form textarea {
-  height: 25px;
+.edit-dish-form input,
+.edit-dish-form textarea {
+  height: 35px;
+  width: 300px;
+}
 
-}
-.add-dish-form button {
-  margin-top: 10px;
-}
-.add-dish-form button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
+.edit-dish-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-.add-dish-form button:hover {
-  background-color: #45a049;
-}
-
-.back-arrow {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  font-size: 40px;
-  cursor: pointer;
-  color: white;
+.edit-dish-form button:hover {
+  background-color: #0056b3;
 }
 
 .back-arrow {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  font-size: 40px;
   cursor: pointer;
-  color: white;
+  font-size: 1.5em;
+  margin-right: 10px;
+  margin-left: -550px;
 }
 </style>

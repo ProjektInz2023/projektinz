@@ -3,16 +3,18 @@
     <div class="dishes">
       <BackPanel>
         <div>
-          <section class="main-courses-section">
+          <section class="users-section">
             <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
             <h1 class="section-title">Dania główne</h1>
-            <div style="color: white;">
-              <ul class="dish-list">
+
+            <div class="user-list-container">
+              <ul class="user-list">
                 <li v-for="mainCourse in mainCourses" :key="mainCourse.id">
-                  <div class="course-container">
-                    <div class="main-course-box">
-                      <span class="main-course-name">{{ mainCourse.name }}</span>
+                  <div class="user-container">
+                    <div class="user-box">
+                      <div class="user-name">{{ mainCourse.name }}</div>
                     </div>
+
                     <div class="action-icons">
                       <div class="fas fa-edit edit-icon" style="cursor: pointer;" @click="editDish(mainCourse.mainCourseId)"></div>
                       <div class="fas fa-trash delete-icon" style="cursor: pointer;" @click="deleteDish(mainCourse.mainCourseId)"></div>
@@ -21,7 +23,8 @@
                 </li>
               </ul>
             </div>
-            <button @click="addDish">Dodaj danie</button>
+
+            <button class="add-dish-button" @click="addDish">Dodaj danie</button>
           </section>
         </div>
       </BackPanel>
@@ -77,7 +80,8 @@ export default defineComponent({
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Tak, usuń',
-        cancelButtonText: 'Anuluj'
+        cancelButtonText: 'Anuluj',
+        confirmButtonColor: '#d9534f'
       })
       return result.isConfirmed
     },
@@ -114,93 +118,126 @@ export default defineComponent({
 })
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 
-.course-container {
+.user-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
-.main-courses-section {
-  background-color: grey;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-  width: 360px;
+.user-box {
 }
 
-p, .main-course-name {
-  color: white !important;
-  margin: 0 !important;
-  padding: 5px !important;
-}
-
-ul {
-  list-style-type: none;
-}
-
-.main-course-box {
-  border: 1px solid white;
-  margin-bottom: 8px;
-  padding: 5px;
-  box-sizing: border-box;
-  margin-right: 10px;
-}
-
-button {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.main-courses-section {
-  margin-bottom: 30px;
-}
-
-.back-arrow {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  font-size: 40px;
-  cursor: pointer;
-  color: white;
-}
-
-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-.delete-icon {
-  margin-left: 10px;
-}
-
-.dish-list {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.section-title {
-  font-size: 30px;
-  margin-bottom: 10px;
-  color: #333
-}
-
-.action-icons {
-  margin-right: 8px;
+.user-name {
+  font-size: 1.2em;
   margin-bottom: 5px;
 }
 
+.action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.manager-account-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.users-section {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.back-arrow {
+  cursor: pointer;
+  font-size: 1.5em;
+  margin-right: 10px;
+  margin-left: -550px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.user-list-container {
+  height: 400px;
+  width: 600px;
+  overflow-y: scroll;
+  margin-top: 10px;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.user-box {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 70px;
+}
+
+.user-name {
+  font-size: 1.2em;
+}
+
+.action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.add-dish-button {
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+}
+
+.add-dish-button:hover {
+  background-color: #0056b3;
+}
 </style>

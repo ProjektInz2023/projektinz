@@ -1,18 +1,21 @@
 <template>
   <div class="manager-account-view">
     <div class="dishes">
-      <Back>
-        <a @click="directToMainDishes" class="link-container">
-          <legend class="clickable-button">
-            <h1 class="hero-text smaller">Dania główne</h1>
-          </legend>
-        </a>
-        <a @click="directToUsers" class="link-container">
-          <legend class="clickable-button">
-            <h1 class="hero-text smaller">Użytkownicy</h1>
-          </legend>
-        </a>
-      </Back>
+      <BackPanel>
+        <div class="choose-view">
+          <h2 class="welcome-text">Witaj!</h2>
+          <a @click="directToMainDishes" class="link-container">
+            <legend class="clickable-button">
+              <h1 class="section-title smaller">Dania główne</h1>
+            </legend>
+          </a>
+          <a @click="directToUsers" class="link-container">
+            <legend class="clickable-button">
+              <h1 class="section-title smaller">Użytkownicy</h1>
+            </legend>
+          </a>
+        </div>
+      </BackPanel>
     </div>
   </div>
 </template>
@@ -20,7 +23,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
-import Back from '@/components/BackPanel.vue'
+import BackPanel from '@/components/BackPanel.vue'
 import router from '@/router'
 import store from '@/store'
 
@@ -52,7 +55,7 @@ export default defineComponent({
     }
   },
   components: {
-    Back
+    BackPanel
   },
   beforeMount () {
     if ($cookie.get('managerToken')) {
@@ -67,17 +70,30 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-h1 {
-  color: whitesmoke;
-  margin-bottom: 70px;
-  margin-top: 70px;
-}
-
-.admin-account-view {
+.manager-account-view {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+.choose-view {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: normal;
 }
 
 .dishes {
@@ -89,14 +105,23 @@ h1 {
 }
 
 .clickable-button {
-  border: 2px solid white;
+  background-color: #fff;
+  padding: 20px;
+  border: 2px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
   margin: 20px;
-  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
 
 .clickable-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #e0e0e0;
+}
+
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
 }
 </style>
