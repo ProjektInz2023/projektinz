@@ -18,8 +18,8 @@
             <label>Alergeny:</label>
             <input v-model="newDish.alergens[0].name" />
 
-            <label>Obrazek (URL):</label>
-            <input v-model="newDish.image" />
+            <label>Obrazek:</label>
+            <input type="file" @change="handleFileChange" />
           </form>
 
           <button type="submit" @click="submitDishForm">Dodaj</button>
@@ -36,6 +36,8 @@ import BackPanel from '@/components/BackPanel.vue'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import router from '@/router'
+import { ref, uploadBytes } from 'firebase/storage'
+import { storage } from '../firebase'
 
 const $cookie = require('vue-cookies')
 
@@ -44,6 +46,7 @@ export default defineComponent({
   data () {
     return {
       mainCourses: [],
+      dishPhoto: null,
       newDish: {
         name: '',
         description: '',
@@ -60,20 +63,36 @@ export default defineComponent({
     goBack () {
       this.$router.go(-1)
     },
+    handleFileChange (event: { target: { files: any[] } }) {
+      const file = event.target.files[0]
+      this.dishPhoto = file
+    },
     async submitDishForm () {
       if ($cookie.get('managerToken')) {
         if (await this.confirmAddition()) {
-          axios
-            .post('http://127.0.0.1:8000/api/addmaincourse/', this.newDish)
-            .then((response) => {
-              console.log('Danie dodane:', response.data)
-              this.showSuccessNotification()
-            })
-            .catch((error) => {
-              console.error('Błąd dodawania dania:', error)
-            })
-        } else {
-          this.$router.push({ name: 'Add-Dish' })
+          try {
+            if (this.dishPhoto) {
+              const file = this.dishPhoto as File
+
+              const storageRef = ref(storage, 'folder/' + file.name)
+              const snapshot = await uploadBytes(storageRef, file)
+              this.newDish.image = file.name
+              console.log('Image uploaded:', snapshot)
+
+              axios.post('http://127.0.0.1:8000/api/addmaincourse/', this.newDish)
+                .then((response) => {
+                  console.log('Danie dodane:', response.data)
+                  this.showSuccessNotification()
+                })
+                .catch((error) => {
+                  console.error('Błąd dodawania dania:', error)
+                })
+            } else {
+              console.error('Image is null.')
+            }
+          } catch (error) {
+            console.error('Error uploading image:', error)
+          }
         }
       }
     },
