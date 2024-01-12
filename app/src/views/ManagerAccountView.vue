@@ -87,6 +87,7 @@ export default defineComponent({
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
   text-align: center;
+  margin: 0 auto;
 }
 
 .welcome-text {
@@ -123,5 +124,7 @@ export default defineComponent({
   font-size: 1.5em;
   margin-bottom: 10px;
   color: #333;
+  font-weight: 500;
 }
+
 </style>

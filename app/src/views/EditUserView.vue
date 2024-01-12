@@ -5,7 +5,7 @@
         <div class="edit-user-form">
           <i class="fas fa-arrow-left back-arrow" @click="goBack"></i>
           <h1 class="section-title">Edytuj osobę</h1>
-          <form @submit.prevent="submitUserForm">
+          <form @submit.prevent="submitUserForm" class="edit-form">
             <label>Imię:</label>
             <input v-model="newPerson.name" required />
 
@@ -116,11 +116,15 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
+.edit-form{
+  width: 100%;
+  padding-bottom: 15px;
+}
 .edit-user-form {
   background-color: #f2f2f2;
   padding: 20px;
   border-radius: 10px;
-  width: 600px;
+  width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
 }
@@ -136,14 +140,24 @@ export default defineComponent({
 }
 
 .edit-user-form input {
-  height: 35px;
-  width: 300px;
-  margin-bottom: 10px;
+  font-size: 110%;
+  outline: none;
+  text-indent: 15px;
+  width: 400px;
+  height: 40px;
+  border: none;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  box-shadow: 0px 25px 20px -20px rgba(0,0,0,1);
+  margin: 10px;
+  border-bottom: 1px transparent solid;
+  transition: all 1s;
 }
 
 .edit-user-form button {
   padding: 10px;
-  background-color: #007bff;
+  width: 30%;
+  background-color: #EF6C00;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -154,13 +168,15 @@ export default defineComponent({
 }
 
 .edit-user-form button:hover {
-  background-color: #0056b3;
+  background-color: #E65100;
 }
 
 .back-arrow {
   cursor: pointer;
   font-size: 1.5em;
-  margin-right: 10px;
-  margin-left: -550px;
+  float: left;
+  margin-left: 15px;
+  margin-right: -25px;
 }
+
 </style>

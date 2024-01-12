@@ -141,7 +141,8 @@ export default defineComponent({
 
 .add-dish-form button {
   padding: 10px;
-  background-color: #007bff;
+  width: 30%;
+  background-color: #EF6C00;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -152,13 +153,15 @@ export default defineComponent({
 }
 
 .add-dish-form button:hover {
-  background-color: #0056b3;
+  background-color: #E65100;
 }
 
 .back-arrow {
   cursor: pointer;
   font-size: 1.5em;
-  margin-right: 10px;
-  margin-left: -550px;
+  float: left;
+  margin-left: 15px;
+  margin-right: -25px;
 }
+
 </style>

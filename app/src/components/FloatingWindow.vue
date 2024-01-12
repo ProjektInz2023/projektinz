@@ -33,7 +33,7 @@ export default defineComponent({
     left: 50%;
     transform: translate(-50%, -50%);
     z-index:10;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 .really-big{
   position: absolute;

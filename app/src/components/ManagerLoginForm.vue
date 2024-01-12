@@ -25,7 +25,7 @@
             id="password"
             type="password"
             autocomplete="off"
-            placeholder="managerpassword"
+            placeholder="password"
             name="pass"
             v-model="password"
             maxlength="20"
@@ -35,9 +35,9 @@
       </div>
       <button type="submit" class="btn">{{ send }}</button>
     </form>
-    <a @click="redirectToCookLogin">
+    <a @click="redirectToCookLogin"  class="redirect-link">
       <legend>
-        <h2 class="hero-text smaller">Cook Login</h2>
+        <h2 class="hero-text smaller"> Kucharz</h2>
       </legend>
     </a>
   </div>
@@ -145,18 +145,21 @@ a:active{
 input:focus{
   outline-width:0;
 }
+input::placeholder{
+  font-size: smaller;
+}
 input{
   border:0px;
-  border-radius:0px;
+  border-radius:5px;
   text-indent:20px;
   width:100%;
-  height:70px;
-  font-size: 150%;
+  height:50px;
+  font-size: 120%;
   background-color: rgba(244,244,244,1);
   z-index: 1;
   transition: all 0.3s ease-in;
   margin:0 auto;
-  padding:0px;
+  padding:5px;
   padding-left: 2%;
   padding-right: 2%;
   color:rgba(0,0,0,0.4);
@@ -218,11 +221,11 @@ button
 */
 .btn{
   margin-top:25px;
-  border-radius:0px;
+  border-radius:45px;
   font-size:110%;
   color:rgba(255,255,255,1);
-  width:240px;
-  height:65px;
+  width:180px;
+  height:45px;
   background:rgba(255,103,31,1);
   border: 0px;
 }
@@ -272,4 +275,5 @@ a{
 ul{
   padding: 0;
 }
+
 </style>

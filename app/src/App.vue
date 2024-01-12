@@ -12,12 +12,14 @@
     </div>
   </header>
   <div class="bg-image"></div>
+  <page-loader></page-loader>
   <router-view @UserActionLogin='LogIn' />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 import router from '@/router'
 import LoginForm from './components/LoginForm.vue'
+import PageLoader from './components/PageLoader.vue'
 import store from '@/store'
 const $cookie = require('vue-cookies')
 export default defineComponent({
@@ -27,6 +29,9 @@ export default defineComponent({
       logged: false as boolean,
       user: {}
     }
+  },
+  components: {
+    PageLoader
   },
   methods: {
     LogOut () {
@@ -70,8 +75,14 @@ header{
   position: absolute;
   color: white;
 }
+button {
+  font-family: inherit
+}
+input{
+  font-family:Montserrat ,Arial, sans-serif ;
+}
 #app {
-  font-family:Montserrat ,Arial, sans-serif;
+  font-family:Montserrat ,Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -148,5 +159,12 @@ transform: translate(50%, 50%);
   height:2px;
   background-color: rgba(255,103,31,1);
   box-shadow: 0px 0px 70px 2px rgba(255,103,31,1);
+}
+.content>.really-big{
+  display: none !important;
+}
+.content{
+  width: 1000px;
+  transition: 0.5s ease all;
 }
 </style>

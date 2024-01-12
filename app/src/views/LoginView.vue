@@ -39,4 +39,8 @@ export default defineComponent({
   height: 100vh;
   display:block;
 }
+.redirect-link:hover>legend>h2{
+text-decoration: underline;
+}
+
 </style>

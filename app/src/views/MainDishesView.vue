@@ -162,17 +162,10 @@ export default defineComponent({
   background-color: #f2f2f2;
   padding: 20px;
   border-radius: 10px;
+  width:100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   align-items: center;
 }
-
-.back-arrow {
-  cursor: pointer;
-  font-size: 1.5em;
-  margin-right: 10px;
-  margin-left: -550px;
-}
-
 .section-title {
   margin: 0;
   font-size: 1.5em;
@@ -180,7 +173,7 @@ export default defineComponent({
 
 .user-list-container {
   height: 400px;
-  width: 600px;
+  width: 100%;
   overflow-y: scroll;
   margin-top: 10px;
 }
@@ -228,7 +221,8 @@ export default defineComponent({
 .add-dish-button {
   padding: 10px;
   margin-top: 20px;
-  background-color: #007bff;
+  width: 30%;
+  background-color: #EF6C00;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -238,6 +232,13 @@ export default defineComponent({
 }
 
 .add-dish-button:hover {
-  background-color: #0056b3;
+  background-color: #E65100;
+}
+.back-arrow {
+  cursor: pointer;
+  font-size: 1.5em;
+  float: left;
+  margin-left: 15px;
+  margin-right: -25px;
 }
 </style>
