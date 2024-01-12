@@ -4,7 +4,7 @@
       <div class="form-group">
         <fieldset>
           <legend>
-            <h2 class="hero-text">Manager Login</h2>
+            <h2 class="hero-text">Manager</h2>
           </legend>
           <div class="line"></div>
           <input
@@ -40,6 +40,7 @@
         <h2 class="hero-text smaller"> Kucharz</h2>
       </legend>
     </a>
+    <p v-if="loginError" class="error-message">Błędne dane logowania. Spróbuj ponownie.</p>
   </div>
 </template>
 
@@ -58,7 +59,8 @@ export default defineComponent({
       email: '',
       password: '',
       errors: [] as string[],
-      error_highlight: false
+      error_highlight: false,
+      loginError: false
     }
   },
   methods: {
@@ -98,14 +100,25 @@ export default defineComponent({
         },
         password: this.password as string,
         email: this.email as string
-      }).then(function (response) {
+      }).then((response) => {
         if (response.status === 200 && response.data.access) {
           console.log(response)
+          this.loginError = false
           $cookie.set('managerToken', response.data.access, 60 * 60 * 24)
           router.push('/manager-account')
+        } else {
+          this.loginError = true
+
+          setTimeout(() => {
+            this.loginError = false
+          }, 5000)
         }
-      }, function (err) {
+      }, (err) => {
         console.log('err', err)
+        this.loginError = true
+        setTimeout(() => {
+          this.loginError = false
+        }, 5000)
       })
     },
     redirectToCookLogin () {
@@ -276,4 +289,12 @@ ul{
   padding: 0;
 }
 
+.error-message {
+  color: white;
+  font-size: 14px;
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #ff0707;
+}
 </style>

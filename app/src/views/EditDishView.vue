@@ -49,7 +49,7 @@ export default defineComponent({
         description: '',
         price: 0,
         alergens: [{ name: '' }],
-        image: ''
+        image: '' // TODO: Change depends on firebase
       }
     }
   },
@@ -66,11 +66,12 @@ export default defineComponent({
           axios
             .put(`http://127.0.0.1:8000/api/maincourses/${this.dishId}/`, this.newDish)
             .then((response) => {
-              console.log('Danie dodane:', response.data)
+              console.log('Danie zmienione:', response.data)
               this.showSuccessNotification()
             })
             .catch((error) => {
-              console.error('Błąd dodawania dania:', error)
+              console.error('Błąd aktualizacji dania:', error)
+              this.showErrorNotification()
             })
         }
       } else {
@@ -96,6 +97,15 @@ export default defineComponent({
         timer: 1500
       }).then(() => {
         router.push('/main-dishes')
+      })
+    },
+    showErrorNotification () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Błąd podczas edycji dania',
+        text: 'Sprawdź wszystkie pola i spróbuj ponownie',
+        showConfirmButton: false,
+        timer: 3000
       })
     },
     async fetchDishData () {
@@ -127,7 +137,6 @@ export default defineComponent({
 <style lang="css" scoped>
 .edit-form{
   width: 100%;
-  padding-bottom: 15px;
 }
 .edit-dish-form {
   background-color: #f2f2f2;
@@ -136,11 +145,11 @@ export default defineComponent({
   width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
+  margin-top: 80px;
 }
 
 .edit-dish-form h1 {
   font-size: 1.5em;
-  margin-bottom: 20px;
 }
 
 .edit-dish-form label {

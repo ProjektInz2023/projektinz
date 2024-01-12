@@ -36,6 +36,7 @@
                            <v-col sm="4"></v-col>
                           </v-row>
                       </form>
+                       <p v-if="loginError" class="error-message">Błędne dane logowania. Spróbuj ponownie.</p>
                      </v-card-text>
                   </v-card>
                </v-col>
@@ -72,7 +73,8 @@ export default defineComponent({
           name: 'Login',
           message: 'Register'
         }
-      }
+      },
+      loginError: false
     }
   },
   mounted () {
@@ -89,17 +91,27 @@ export default defineComponent({
         },
         password: this.password as string,
         email: this.username as string
-      }).then(function (response) {
+      }).then((response) => {
         console.log(response)
         if (response.status === 200 && response.data.access) {
           console.log(response)
+          this.loginError = false
           store.dispatch('insertUser', { name: response.data.name, surname: response.data.surname })
           $cookie.set('userdata', response.data.name, 60 * 60 * 24)
           $cookie.set('token', response.data.access, 60 * 60 * 24)
           router.push('/order')
+        } else {
+          this.loginError = true
+          setTimeout(() => {
+            this.loginError = false
+          }, 5000)
         }
-      }, function (err) {
+      }, (err) => {
         console.log('err', err)
+        this.loginError = true
+        setTimeout(() => {
+          this.loginError = false
+        }, 5000)
       })
     }
   }
@@ -122,5 +134,14 @@ export default defineComponent({
 }
 .text-center{
   margin-inline-start:0px !important;
+}
+.error-message {
+  color: white;
+  font-size: 14px;
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #ff0707;
+  text-align: center;
 }
 </style>

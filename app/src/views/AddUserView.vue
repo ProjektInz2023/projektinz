@@ -75,6 +75,7 @@ export default defineComponent({
             })
             .catch((error) => {
               console.error('Błąd dodawania osoby:', error)
+              this.showErrorNotification()
             })
         } else {
           this.$router.push({ name: 'Add-User' })
@@ -101,6 +102,15 @@ export default defineComponent({
       }).then(() => {
         router.push('/users')
       })
+    },
+    showErrorNotification () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Błąd podczas dodawania osoby',
+        text: 'Sprawdź wszystkie pola i spróbuj ponownie',
+        showConfirmButton: false,
+        timer: 3000
+      })
     }
   },
   beforeMount () {
@@ -118,14 +128,14 @@ export default defineComponent({
   background-color: #f2f2f2;
   padding: 20px;
   border-radius: 10px;
-  width: 600px;
+  width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
+  margin-top: 80px;
 }
 
 .add-dish-form h1 {
   font-size: 1.5em;
-  margin-bottom: 20px;
 }
 
 .add-dish-form label {
@@ -134,11 +144,25 @@ export default defineComponent({
 }
 
 .add-dish-form input,
-.add-dish-form select {
-  height: 35px;
-  width: 300px;
+.add-dish-form textarea {
+  font-size: 110%;
+  outline: none;
+  text-indent: 15px;
+  width: 500px;
+  height: 40px;
+  border: none;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  box-shadow: 0px 25px 20px -20px rgba(0,0,0,1);
+  margin: 10px;
+  border-bottom: 1px transparent solid;
+  transition: all 1s;
 }
-
+.add-dish-form textarea:focus,.add-dish-form input:focus, .add-dish-form select:focus{
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 25px 20px -20px rgb(245, 131, 1);
+  border-bottom: rgb(245, 131, 1) 1px solid;
+}
 .add-dish-form button {
   padding: 10px;
   width: 30%;
@@ -150,6 +174,21 @@ export default defineComponent({
   font-size: 1.2em;
   transition: background-color 0.3s ease;
   margin-top: 20px;
+}
+
+.add-dish-form select {
+  font-size: 110%;
+  outline: none;
+  text-indent: 15px;
+  width: 500px;
+  height: 40px;
+  border: none;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.4);
+  margin: 10px;
+  border-bottom: 1px transparent solid;
+  transition: all 1s;
 }
 
 .add-dish-form button:hover {
