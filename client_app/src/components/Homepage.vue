@@ -271,5 +271,9 @@ export default defineComponent({
     width: 300%;
     height: 300%;
   }
+  .confirmation-text{
+    font-size: 150%;
+    width: 100%;
+  }
 }
 </style>
