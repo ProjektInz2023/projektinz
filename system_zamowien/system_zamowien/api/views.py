@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -37,9 +37,10 @@ class CreateCheckoutSessionView(View):
             success_url=YOUR_DOMAIN + '?success=true',
             cancel_url=YOUR_DOMAIN + '?canceled=true',
         )
-        return JsonResponse({
-            'id': checkout_session.id
-        })
+        return redirect(checkout_session.url, code=303)
+        #return JsonResponse({
+        #    'id': checkout_session.id
+        #})
 
 
 
