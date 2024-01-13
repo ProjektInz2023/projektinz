@@ -8,6 +8,7 @@ from .serializers import CreateUserSerializer, MainCourseSerializer, Order2Seria
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
@@ -19,6 +20,7 @@ from django.http import JsonResponse
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class CreateCheckoutSessionView(View):
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         
         YOUR_DOMAIN = "http://127.0.0.1:8000"

@@ -37,6 +37,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "https://192.168.0.69:8080",
+    "https://192.168.0.69:8081",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -44,6 +45,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://192.168.0.69:8080",
+    "https://192.168.0.69:8081",
 ]
 
 INSTALLED_APPS = [
