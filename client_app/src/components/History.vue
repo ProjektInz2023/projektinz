@@ -37,7 +37,9 @@ export default defineComponent({
   data () {
     return {
       ordersData: [],
-      dataMail: ''
+      dataMail: '',
+      prevRoute: null,
+      userid: Number
     }
   },
   beforeMount () {
@@ -57,23 +59,28 @@ export default defineComponent({
     }
   },
   mounted () {
-    axios.get(`http://127.0.0.1:8000/api/orders/${this.dataMail}/`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'login'
-      }
-    }).then((response) => {
-      if (response.status === 200) {
-        console.log(response)
-        this.ordersData = response.data
-      } else {
-        console.log('aaaaa')
-      }
-    }, function (err) {
-      console.log('err', err)
+    this.delay(1000).then(() => {
+      axios.get(`http://127.0.0.1:8000/api/orders/${this.dataMail}/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'login'
+        }
+      }).then((response) => {
+        if (response.status === 200) {
+          console.log(response)
+          this.ordersData = response.data
+        } else {
+          console.log('aaaaa')
+        }
+      }, function (err) {
+        console.log('err', err)
+      })
     })
   },
   methods: {
+    delay (time : number) {
+      return new Promise(resolve => setTimeout(resolve, time))
+    },
     formatDate (date: string | number | Date) {
       const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }
       return new Date(date).toLocaleDateString('pl-PL', options)
@@ -89,6 +96,7 @@ export default defineComponent({
       return JSON.parse(jsonPayload)
     }
   }
+
 })
 </script>
 <style scoped>

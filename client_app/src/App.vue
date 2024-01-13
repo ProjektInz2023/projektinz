@@ -4,9 +4,11 @@
       <v-layout class="rounded rounded-md">
         <v-app-bar title="">
 <v-img
+class="home-btn"
+@click="home()"
 max-height="125"
 max-width="255"
-  src=".\assets\logo.png"
+src=".\assets\logo.png"
 ></v-img></v-app-bar>
         <v-navigation-drawer
         v-if="login">
@@ -55,6 +57,9 @@ export default defineComponent({
     PageLoader
   },
   methods: {
+    home () {
+      router.push('/')
+    },
     LogOut () {
       if ($cookie.get('token')) {
         $cookie.remove('token')
@@ -63,12 +68,23 @@ export default defineComponent({
         }
         // eslint-disable-next-line
         // @ts-ignore
-        router.push({ name: 'LandingPage' })
+        router.push('/')
+        this.login = false
       }
     },
     LogIn () {
       console.log('in')
       this.user = $cookie.get('userdata')
+    }
+  },
+  mounted () {
+    if ($cookie.get('userdata')) {
+      this.user = $cookie.get('userdata')
+    } else {
+      this.login = false
+    }
+    if (router.options.history.state.current === '/' || router.options.history.state.current === '') {
+      this.login = false
     }
   }
 })
@@ -116,4 +132,7 @@ transform: translate(50%, 50%);
 }
 html, body {margin: 0; height: 100%; overflow: hidden;
   font-family: "Roboto", sans-serif }
+.home-btn:hover{
+cursor: pointer;
+}
 </style>

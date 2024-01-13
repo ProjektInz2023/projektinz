@@ -8,10 +8,12 @@
             {{ course }}
         </p>
         <div class="line down"></div>
-        <span>Zamawiający:</span>
+        <p class="hero-text">Zamawiający:</p>
         <p class="hero-text">{{ name }}</p>
+        <div class="flex-container">
         <button class="btn" v-if="mode === 'Wydaj'" @click="action('return')" style="margin-left: 0;">Cofnij Status</button>
-        <button class="btn" @click="action()">{{mode}}</button>
+        <button :class="mode === 'Gotowe' ? 'btn-solo': 'btn'" @click="action()">{{mode}}</button>
+      </div>
     </div>
   </template>
 <script lang="ts">
@@ -149,7 +151,20 @@ position: relative;
     overflow: hidden;
     position: relative;
     box-shadow: 0px 0px 5px 1px rgba(255,255,255,0.2);
-    margin-left: 25px;
+}
+.btn-solo{
+  margin: 0 auto;
+    margin-top:20%;
+    border-radius:0px;
+    font-size:110%;
+    color:rgba(255,255,255,1);
+    width:200px;
+    height:55px;
+    background:rgba(255,103,31,1);
+    border: 0px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0px 0px 5px 1px rgba(255,255,255,0.2);
 }
 .btn::before {
     content: '';
@@ -198,5 +213,11 @@ position: relative;
 .btn-exit:hover{
   cursor: pointer;
   color:rgba(255, 0, 0, 1);
+}
+.flex-container{
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+  justify-content: space-between;
 }
 </style>

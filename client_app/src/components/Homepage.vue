@@ -60,6 +60,11 @@
           text="Zamknij"
           @click="isActive.value = false"
         ></v-btn>
+        <form @submit="newOrder(item.mainCourseId)" action="http://127.0.0.1:8000/api/create-checkout-session/" method="POST">
+      <v-btn type="submit">
+        Checkout
+      </v-btn>
+    </form>
         <v-btn
           text="Zamów"
           @click="isActive.value = false; newOrder(item.mainCourseId)"
@@ -117,28 +122,9 @@ export default defineComponent({
 
       return JSON.parse(jsonPayload)
     },
-    async newOrder (id: number) {
-      this.orderplaced = true
-      this.delay(3000).then(() => {
-        this.orderplaced = false
-      })
-      axios.post('http://127.0.0.1:8000/api/addorder/', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: $cookie.get('token')
-        },
-        mainCourse: id,
-        user: this.userid
-      }).then(function (response) {
-        console.log(response)
-        if (response.status === 200 && response.data.access) {
-          console.log(response)
-          $cookie.set('token', response.data.access, 60 * 60 * 24)
-          router.push('/order')
-        }
-      }, function (err) {
-        console.log('err', err)
-      })
+    newOrder (id: number) {
+      $cookie.set('cartitem', id, 60 * 60 * 24)
+      $cookie.set('cartuser', this.userid, 60 * 60 * 24)
     }
   },
   beforeMount () {
