@@ -29,7 +29,7 @@ class CreateCheckoutSessionView(View):
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': 'price_1OVz6kA8AWLRKBxKnJhc2r5f',
+                    'price': 'price_1OYBN9A8AWLRKBxKIDs4OLZs',
                     'quantity': 1,
                 },
             ],
