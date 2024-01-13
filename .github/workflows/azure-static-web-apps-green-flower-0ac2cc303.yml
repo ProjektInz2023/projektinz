@@ -44,3 +44,6 @@ jobs:
           app_location: "/client_app"
           api_location: "api"
           output_location: "dist"
+          app_build_command: 'npm install --force'
+          api_build_command: 'npm install --force'
+          
