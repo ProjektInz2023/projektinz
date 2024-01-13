@@ -161,7 +161,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR + "/media"
 
 STRIPE_PUBLIC_KEY = "pk_test_51OVeTkA8AWLRKBxKwmMaoJSa6mIZoALPETb8RmcsbLJpB1PPefhIX9xqHiMiIX6MuxQunfKLerzcwWtVsRLwSMVz000aZTLhJE"
 STRIPE_SECRET_KEY = "sk_test_51OVeTkA8AWLRKBxKPIBbrNgXbgSWZ4pcs3shNxtaB6c7pgYsKfc5g9FUcZvRqGpPybtRRDiJCmxqkYJq61NgYb1700bn8y3Pel"
