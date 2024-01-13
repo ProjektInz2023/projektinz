@@ -44,12 +44,6 @@ jobs:
           app_location: "/client_app"
           api_location: "api"
           output_location: "dist"
-      - task: AzureStaticWebApp@0
-        inputs:
-          app_location: '/'
-          api_location: 'api'
           app_build_command: 'npm install --force'
-          output_location: ''
           api_build_command: 'npm install --force'
-          azure_static_web_apps_api_token: $(deployment_token)
           
