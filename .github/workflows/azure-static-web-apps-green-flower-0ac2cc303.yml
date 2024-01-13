@@ -20,7 +20,9 @@ jobs:
           submodules: true
           lfs: false
       - name: Install dependencies
-        run: npm install --force
+        run: |
+          cd client_app/  # Set the correct path to your app
+          npm install --force
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
