@@ -186,7 +186,7 @@ class MainCourseRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView)
 class UserOrders(APIView):
     def get(self, request, email, *args, **kwargs):
         orders = Order.objects.filter(user__email=email)
-        serializer = OrderSerializer(orders, many=True)
+        serializer = Order2Serializer(orders, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 @api_view(['POST'])
