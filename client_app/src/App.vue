@@ -21,7 +21,7 @@ max-width="255"
           </v-list>
           <template v-slot:append>
           <div class="pa-4 ">
-            <v-btn block class="bg-orange-darken-3" @click="LogOut()" style="margin-bottom:25px">
+            <v-btn block class="bg-orange-darken-3" @click="LogOut()" style="margin-bottom:50px">
               Logout
             </v-btn>
           </div>

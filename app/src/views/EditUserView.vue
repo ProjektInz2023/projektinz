@@ -63,6 +63,7 @@ export default defineComponent({
             })
             .catch((error) => {
               console.error('Błąd edytowania osoby:', error)
+              this.showErrorNotification()
             })
         }
       } else {
@@ -88,6 +89,15 @@ export default defineComponent({
         timer: 1500
       }).then(() => {
         router.push('/users')
+      })
+    },
+    showErrorNotification () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Błąd podczas edytowania osoby',
+        text: 'Sprawdź wszystkie pola i spróbuj ponownie',
+        showConfirmButton: false,
+        timer: 3000
       })
     },
     async fetchDishData () {

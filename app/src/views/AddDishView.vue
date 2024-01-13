@@ -86,12 +86,15 @@ export default defineComponent({
                 })
                 .catch((error) => {
                   console.error('Błąd dodawania dania:', error)
+                  this.showErrorNotification()
                 })
             } else {
               console.error('Image is null.')
+              this.showErrorNotification()
             }
           } catch (error) {
             console.error('Error uploading image:', error)
+            this.showErrorNotification() // TODO: Check how it works with working firebase
           }
         }
       }
@@ -116,6 +119,15 @@ export default defineComponent({
       }).then(() => {
         router.push('/main-dishes')
       })
+    },
+    showErrorNotification () {
+      Swal.fire({
+        icon: 'error',
+        title: 'Błąd podczas dodawania dania',
+        text: 'Sprawdź wszystkie pola i spróbuj ponownie',
+        showConfirmButton: false,
+        timer: 3000
+      })
     }
   },
   beforeMount () {
@@ -137,11 +149,11 @@ export default defineComponent({
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
+  margin-top: 80px;
 }
 
 .add-dish-form h1 {
   font-size: 1.5em;
-  margin-bottom: 20px;
 }
 
 .add-dish-form label {

@@ -5,20 +5,20 @@
     <span class="hero-text">Aktywne</span>
     <div v-for="item in ordersActive" class="small-tile" :key="item">
       <FloatingWindow :ref="item.mainCourse" :class="{'visible': big === item.mainCourse,'invisible': big !== item.mainCourse }">
-        <OrderSpecifications :id="item.orderId" :name="item.user" :course="item.mainCourse" :mode="'Gotowe'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
+        <OrderSpecifications :id="item.orderId" :name="item.user.email" :course="item.mainCourse.name" :mode="'Gotowe'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
       </FloatingWindow>
       <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">Zamowienie nr {{ item.orderId }}</p>
-      <span>{{ item.mainCourse }}</span></div>
+      <span>{{ item.mainCourse.name }}</span></div>
     </div>
   </section>
   <section class="finalized">
     <span class="hero-text">Gotowe</span>
     <div v-for="item in ordersReady" class="small-tile" :key="item" >
       <FloatingWindow :ref="item.mainCourse" :class="{'visible': big === item.mainCourse,'invisible': big !== item.mainCourse }">
-        <OrderSpecifications :id="item.orderId" :name="item.user" :course="item.mainCourse" :mode="'Wydaj'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
+        <OrderSpecifications :id="item.orderId" :name="item.user.email" :course="item.mainCourse.name" :mode="'Wydaj'" @closed="bigWindow(item.mainCourse)"></OrderSpecifications>
       </FloatingWindow>
       <div class="fill-tile" @click="bigWindow(item.mainCourse)"><p v-if="item.user" class="spaced">Zamowienie nr {{ item.orderId }}</p>
-      <span>{{ item.mainCourse }}</span></div>
+      <span>{{ item.mainCourse.name }}</span></div>
     </div>
   </section>
 </div>

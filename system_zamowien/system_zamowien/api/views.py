@@ -4,13 +4,41 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import MainCourse, Order, Staff
 from rest_framework import status
-from .serializers import CreateUserSerializer, MainCourseSerializer, OrderSerializer, UserSerializer
+from .serializers import CreateUserSerializer, MainCourseSerializer, Order2Serializer, OrderSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
+from django.views import View
+import stripe
+from django.conf import settings
+from django.http import JsonResponse
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class CreateCheckoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        
+        YOUR_DOMAIN = "http://127.0.0.1:8000"
+
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': '{{PRICE_ID}}',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=YOUR_DOMAIN + '?success=true',
+            cancel_url=YOUR_DOMAIN + '?canceled=true',
+        )
+        return JsonResponse({
+            'id': checkout_session.id
+        })
+
 
 
 #class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -87,7 +115,7 @@ def all_orders(request):
  
     # if there is something in items else raise error
     if orders:
-        serializer = OrderSerializer(orders, many=True)
+        serializer = Order2Serializer(orders, many=True)
         return Response(serializer.data)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)

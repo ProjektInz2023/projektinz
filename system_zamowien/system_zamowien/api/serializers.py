@@ -58,6 +58,36 @@ class OrderSerializer(serializers.ModelSerializer):
    #class Meta:
     #    model = Order
     #    fields = '__all__'
+        
+
+class MainCourse2Serializer(serializers.ModelSerializer):
+    #alergens = AlergenSerializer(many=True)
+
+    class Meta:
+        model = MainCourse
+        fields = ('name', )
+
+class User2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        #fields = ('id', 'email', 'name', 'surname', 'role')
+        fields = ('email', )
+
+class Order2Serializer(serializers.ModelSerializer):
+    #user = serializers.PrimaryKeyRelatedField(queryset=Staff.objects.all())
+    #class Meta:
+     #   model = Order
+      #  fields = '__all__' 
+    user = User2Serializer()
+    mainCourse = MainCourse2Serializer()
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+class User2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = ('id', 'email', 'name', 'surname', 'role')
 
 
 
