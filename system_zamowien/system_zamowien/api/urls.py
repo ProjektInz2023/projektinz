@@ -1,7 +1,7 @@
 from . import views
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from api.views import AdminLoginView, CookLoginView, MainCourseList, MainCourseListCreateView, MainCourseRetrieveUpdateDestroyView, MainCourseRetrieveUpdateView, MyTokenObtainPairView, UserOrders, add_order, create_user, get_all_users, get_user_by_email, update_or_delete_user
+from api.views import AdminLoginView, CookLoginView, CreateCheckoutSessionView, MainCourseList, MainCourseListCreateView, MainCourseRetrieveUpdateDestroyView, MainCourseRetrieveUpdateView, MyTokenObtainPairView, UserOrders, add_order, create_user, get_all_users, get_user_by_email, update_or_delete_user
 
 
 
@@ -28,4 +28,6 @@ urlpatterns = [
     path('addmaincourse/', MainCourseListCreateView.as_view(), name='main_course-list-create'),
     path('maincourses/<int:pk>/', MainCourseRetrieveUpdateView.as_view(), name='main_course-retrieve-update'),
     path('deletemaincourse/<int:pk>/', MainCourseRetrieveUpdateDestroyView.as_view(), name='main_course-retrieve-update'),
+
+    path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
 ]
