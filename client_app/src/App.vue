@@ -1,36 +1,40 @@
 <template>
-  <v-app class="text-primary ">
+  <v-app class="text-primary">
     <page-loader></page-loader>
-      <v-layout class="rounded rounded-md">
-        <v-app-bar title="">
-<v-img
-class="home-btn"
-@click="home()"
-max-height="125"
-max-width="255"
-src=".\assets\logo.png"
-></v-img></v-app-bar>
-        <v-navigation-drawer
-        v-if="login">
-        <v-list-item  class="text-center" style="margin-top: 5px;" >Witaj <span style="text-transform: capitalize;">{{user}} </span></v-list-item>
+    <v-layout class="rounded rounded-md">
+      <v-app-bar title="">
+        <v-img
+          class="home-btn"
+          @click="home()"
+          max-height="125"
+          max-width="255"
+          src=".\assets\logo.png"
+        ></v-img>
+      </v-app-bar>
+      <v-navigation-drawer mobile-break-point=750
+                           v-if="login"
+      >
+        <v-list-item class="text-center" style="margin-top: 5px;">
+          Witaj <span style="text-transform: capitalize;">{{user}} </span>
+        </v-list-item>
         <v-divider></v-divider>
-          <v-list>
-              <v-list-item style="min-height: 35px;" v-for="item in items" :key="item.title" :to="item.route" >
-                <font-awesome-icon :icon="item.icon" class="special-icon"/>
-                <div class="vertical-line"></div>
-                <v-list-item  style="display:inline-block;padding-top: 10px;">{{ item.title }}</v-list-item>
-              </v-list-item>
-          </v-list>
-          <template v-slot:append>
-          <div class="pa-4 ">
+        <v-list class="custom-list">
+          <v-list-item style="min-height: 35px;" v-for="item in items" :key="item.title" :to="item.route">
+            <font-awesome-icon :icon="item.icon" class="special-icon"/>
+            <div class="vertical-line"></div>
+            <v-list-item style="display:inline-block;padding-top: 10px;">{{ item.title }}</v-list-item>
+          </v-list-item>
+        </v-list>
+        <template v-slot:append>
+          <div class="pa-4">
             <v-btn block class="bg-orange-darken-3" @click="LogOut()" style="margin-bottom:50px">
               Logout
             </v-btn>
           </div>
         </template>
-    </v-navigation-drawer>
-    <router-view @loginPage="login = false" @otherPage="login = true" @UserActionLogin="LogIn()"/>
-  </v-layout>
+      </v-navigation-drawer>
+      <router-view @loginPage="login = false" @otherPage="login = true" @UserActionLogin="LogIn()"/>
+    </v-layout>
   </v-app>
 </template>
 
@@ -135,4 +139,33 @@ html, body {margin: 0; height: 100%; overflow: hidden;
 .home-btn:hover{
 cursor: pointer;
 }
+
+ @media (max-width: 768px) {
+   /* Apply custom styles for the navigation bar in mobile view */
+   .custom-list {
+     width: 100%; /* Collapse the navigation bar to full width */
+     height: auto; /* Remove fixed height to adjust to screen size */
+     padding: 20px 10px; /* Add padding to enhance readability */
+   }
+
+   /* Hide the divider line on mobile */
+   .vertical-line {
+     display: none;
+   }
+
+   /* Increase username font size for better visibility */
+   #Username {
+     font-size: 18px;
+   }
+
+   /* Remove fixed height for login page and vertical line on mobile */
+   .v-navigation-drawer {
+     height: auto;
+   }
+
+   .vertical-line {
+     display: none;
+   }
+ }
+
 </style>

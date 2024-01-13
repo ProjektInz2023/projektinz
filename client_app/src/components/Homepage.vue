@@ -5,7 +5,7 @@
       <div class="text-h5 text-center category-text">Dania Obiadowe</div>
       <v-dialog width="25%" v-for="item in menu" :key="item.name" display="inline-block" persistent  class="align-self-md-center"  >
   <template v-slot:activator="{ props }">
-    <v-card v-bind="props" height="200" :elevation="8"  class="ma-3 pa-3 d-flex">
+    <v-card v-bind="props" height="200" :elevation="8"  class="ma-3 pa-3 d-flex food-blocks">
       <v-row cols="12">
         <v-col cols="2">
       <v-img
@@ -29,7 +29,7 @@
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8" style="width: 120%;">
+    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
@@ -236,9 +236,30 @@ export default defineComponent({
 }
 .popupcard{
   overflow-y: scroll !important;
+  width: 150%;
 }
 #orderContainer{
   margin-top:15px;
   height: 95vh;
+}
+.food-blocks {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .popupcard{
+    overflow-y: scroll !important;
+    width: 350%;
+    margin-left: -150px;
+    margin-right: auto;
+  }
+  .food-blocks {
+    width: 300%;
+    height: 300%;
+  }
+  .confirmation-text{
+    font-size: 150%;
+    width: 100%;
+  }
 }
 </style>

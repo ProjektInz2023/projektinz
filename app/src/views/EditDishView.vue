@@ -18,8 +18,8 @@
             <label>Alergeny:</label>
             <input v-model="newDish.alergens[0].name" />
 
-            <label>Obrazek (URL):</label>
-            <input v-model="newDish.image" />
+            <label>Obrazek:</label>
+            <input type="file" @change="handleFileChange" />
           </form>
 
           <button type="submit" @click="submitDishForm">Zapisz zmiany</button>
@@ -44,6 +44,7 @@ export default defineComponent({
   data () {
     return {
       dishId: null as string | null,
+      dishPhoto: null,
       newDish: {
         name: '',
         description: '',
@@ -59,6 +60,10 @@ export default defineComponent({
   methods: {
     goBack () {
       this.$router.go(-1)
+    },
+    handleFileChange (event: { target: { files: any[] } }) {
+      const file = event.target.files[0]
+      this.dishPhoto = file
     },
     async submitDishForm () {
       if ($cookie.get('managerToken')) {
@@ -135,13 +140,6 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-.edit-form{
-  width: 80%;
-  margin: 0 auto;
-  padding-bottom: 15px;
-  padding: 45px;
-  padding-top: 10px;
-}
 .edit-dish-form {
   background-color: #f2f2f2;
   padding: 20px;

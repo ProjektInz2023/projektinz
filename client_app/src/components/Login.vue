@@ -1,50 +1,50 @@
 <template>
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-        <v-container class="fluid fill-height">
-            <v-layout class="justify-center align-center" >
-              <v-row cols="12" >
-                <v-col sm="4"></v-col>
-                  <v-col class="justify-center"  sm="4">
-                   <v-card class="elevation-12" style="min-height: 400px;">
-                     <v-toolbar dark color="orange-darken-3" style="margin-bottom: 5%;" >
-                        <v-toolbar-title class="text-center text-h5">Zaloguj się</v-toolbar-title>
-                     </v-toolbar>
-                     <v-card-text class="justify-center ">
-                     <form ref="form" @submit.prevent="login()">
-                            <v-text-field
-                              v-model="username"
-                              name="username"
-                              label="Username"
-                              type="text"
-                              placeholder="username"
-                              required
-                           ></v-text-field>
-                            <v-text-field
-                              v-model="password"
-                              name="password"
-                              label="Password"
-                              type="password"
-                              placeholder="password"
-                              required
-                           ></v-text-field>
-                           <div class="red--text justify-center" style="margin-bottom: 5%;"> {{errorMessage}}</div>
-                           <v-row cols="12" >
-                            <v-col sm="4"></v-col>
-                            <v-col sm="4">
-                           <v-btn type="submit" class=".mt-auto" color="orange-darken-3" width="100%" min-height="45" value="log in">{{isRegister ? stateObj.register.name : stateObj.login.name}}</v-btn>
-                          </v-col>
-                           <v-col sm="4"></v-col>
-                          </v-row>
-                      </form>
-                       <p v-if="loginError" class="error-message">Błędne dane logowania. Spróbuj ponownie.</p>
-                     </v-card-text>
-                  </v-card>
-               </v-col>
-               <v-col sm="4"></v-col>
-              </v-row>
-            </v-layout>
-         </v-container>
-    </v-main>
+  <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+    <v-container class="fluid fill-height">
+      <v-layout class="justify-center align-center" >
+        <v-row cols="12" >
+          <v-col sm="4"></v-col>
+          <v-col class="justify-center"  sm="4">
+            <v-card class="elevation-12" style="min-height: 400px;">
+              <v-toolbar dark color="orange-darken-3" style="margin-bottom: 5%;" >
+                <v-toolbar-title class="text-center text-h5">Zaloguj się</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text class="justify-center ">
+                <form ref="form" @submit.prevent="login()">
+                  <v-text-field
+                    v-model="username"
+                    name="username"
+                    label="Username"
+                    type="text"
+                    placeholder="username"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    placeholder="password"
+                    required
+                  ></v-text-field>
+                  <div class="red--text justify-center" style="margin-bottom: 5%;"> {{errorMessage}}</div>
+                  <v-row cols="12" >
+                    <v-col sm="4"></v-col>
+                    <v-col sm="4" class="login-form">
+                      <v-btn type="submit" class=".mt-auto" color="orange-darken-3" width="100%" min-height="45" value="log in">{{isRegister ? stateObj.register.name : stateObj.login.name}}</v-btn>
+                    </v-col>
+                    <v-col sm="4"></v-col>
+                  </v-row>
+                </form>
+                <p v-if="loginError" class="error-message">Błędne dane logowania. Spróbuj ponownie.</p>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col sm="4"></v-col>
+        </v-row>
+      </v-layout>
+    </v-container>
+  </v-main>
 </template>
 
 <script lang='ts'>
@@ -143,5 +143,20 @@ export default defineComponent({
   border-radius: 5px;
   background-color: #ff0707;
   text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .login-form {
+    width: 280px;
+  }
+
+  .text-center {
+    margin-inline-start: 0px !important;
+  }
+
+  .error-message {
+    font-size: 12px;
+    margin-top: 10px;
+  }
 }
 </style>
