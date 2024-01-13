@@ -34,8 +34,8 @@ class CreateCheckoutSessionView(View):
                 },
             ],
             mode='payment',
-            success_url=YOUR_DOMAIN + '?success=true',
-            cancel_url=YOUR_DOMAIN + '?canceled=true',
+            success_url=YOUR_DOMAIN + '/order',
+            cancel_url=YOUR_DOMAIN + '/order',
         )
         return redirect(checkout_session.url, code=303)
         #return JsonResponse({
