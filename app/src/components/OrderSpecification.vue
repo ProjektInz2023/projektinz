@@ -5,7 +5,7 @@
         <p class="hero-desc">Opis</p>
         <div class="line"></div>
         <p>
-            {{ course }} wraz sosem i frytkami
+            {{ course }}
         </p>
         <div class="line down"></div>
         <span>Zamawiający:</span>

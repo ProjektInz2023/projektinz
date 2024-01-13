@@ -4,7 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import MainCourse, Order, Staff
 from rest_framework import status
-from .serializers import CreateUserSerializer, MainCourseSerializer, OrderSerializer, UserSerializer
+from .serializers import CreateUserSerializer, MainCourseSerializer, Order2Serializer, OrderSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -87,7 +87,7 @@ def all_orders(request):
  
     # if there is something in items else raise error
     if orders:
-        serializer = OrderSerializer(orders, many=True)
+        serializer = Order2Serializer(orders, many=True)
         return Response(serializer.data)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
