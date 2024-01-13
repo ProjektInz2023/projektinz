@@ -21,10 +21,13 @@ jobs:
           submodules: true
           lfs: false
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
         run: |
           cd client_app/  # Set the correct path to your app
-          npm install --force
+          npm install
 
       - name: Build
         run: |
