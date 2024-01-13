@@ -33,6 +33,7 @@ export default defineComponent({
   },
   methods: {
     action (special = '') {
+      console.log(this.mode)
       if (this.mode === 'Gotowe') {
         let url = 'http://127.0.0.1:8000/api/orders/'
         console.log(this.id)

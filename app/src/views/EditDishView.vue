@@ -136,7 +136,11 @@ export default defineComponent({
 
 <style lang="css" scoped>
 .edit-form{
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 15px;
+  padding: 45px;
+  padding-top: 10px;
 }
 .edit-dish-form {
   background-color: #f2f2f2;

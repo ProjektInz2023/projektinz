@@ -145,7 +145,8 @@ export default defineComponent({
   background-color: #f2f2f2;
   padding: 20px;
   border-radius: 10px;
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #333;
   margin-top: 80px;

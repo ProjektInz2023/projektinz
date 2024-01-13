@@ -3,7 +3,7 @@
     <div class="bg-background"  id="orderContainer">
       <div class="custom-background"></div>
           <div class="text-h5 text-center category-text">Historia Zamówień</div>
-              <v-card v-for="(order, index) in ordersData.slice().reverse()" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card">
+              <v-card v-for="(order, index) in ordersData.slice().reverse()" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card" :ref="order.orderId" :class="order.status === 'Aktywne' ? 'active-order': 'not-active'">
       <v-row cols="12">
         <v-col cols="3">
     </v-col>
@@ -118,5 +118,8 @@ export default defineComponent({
 #orderContainer{
   padding-top:15px;
   height: 95vh;
+}
+.active-order{
+  height: 300px !important;
 }
 </style>
