@@ -66,3 +66,4 @@ jobs:
           app-name: 'canteen123'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FC3B5AE45D5E4D5B84A541A13B237700 }}
+          
