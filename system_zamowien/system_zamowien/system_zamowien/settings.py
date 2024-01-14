@@ -111,7 +111,7 @@ DATABASES = {
         'HOST': DB_URL,
         'PORT': DB_PORT,
         'OPTIONS': {
-                'driver': 'ODBC Driver 18 for SQL Server',
+                #'driver': 'ODBC Driver 18 for SQL Server',
             },
     }
 }
