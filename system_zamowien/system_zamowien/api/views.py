@@ -34,8 +34,8 @@ class CreateCheckoutSessionView(View):
                 },
             ],
             mode='payment',
-            success_url='http://localhost:8080/success',
-            cancel_url='http://localhost:8080/order',
+            success_url='https://kind-forest-09e09e903.4.azurestaticapps.net/success',
+            cancel_url='https://kind-forest-09e09e903.4.azurestaticapps.net/order',
         )
         return redirect(checkout_session.url, code=303)
         #return JsonResponse({
