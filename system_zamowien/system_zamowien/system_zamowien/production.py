@@ -1,7 +1,7 @@
 import os
-from .settings import *
 from .settings import BASE_DIR
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SECRET_KEY = os.environ['SECRET']
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else ['kantyna-backend.azurewebsites.net']
 CSRF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
@@ -9,7 +9,6 @@ DEBUG = False
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 MIDDLEWARE = [
