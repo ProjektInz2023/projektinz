@@ -29,6 +29,11 @@ jobs:
           cd system_zamowien/system_zamowien
           pip install -r requirements.txt
 
+      - name: Run collectstatic
+        run: |
+          cd system_zamowien/system_zamowien
+          python manage.py collectstatic
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       - name: Zip artifact for deployment
         run: zip -r release.zip .
