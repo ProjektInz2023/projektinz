@@ -5,7 +5,7 @@
         <v-row cols="12" >
           <v-col sm="4"></v-col>
           <v-col class="justify-center"  sm="4">
-            <v-card class="elevation-12" style="min-height: 400px;">
+            <v-card class="elevation-12 login-blurb" style="min-height: 400px;">
               <v-toolbar dark color="orange-darken-3" style="margin-bottom: 5%;" >
                 <v-toolbar-title class="text-center text-h5">Zaloguj się</v-toolbar-title>
               </v-toolbar>
@@ -30,8 +30,8 @@
                   <div class="red--text justify-center" style="margin-bottom: 5%;"> {{errorMessage}}</div>
                   <v-row cols="12" >
                     <v-col sm="4"></v-col>
-                    <v-col sm="4" class="login-form">
-                      <v-btn type="submit" class=".mt-auto" color="orange-darken-3" width="100%" min-height="45" value="log in">{{isRegister ? stateObj.register.name : stateObj.login.name}}</v-btn>
+                    <v-col sm="6" class="login-form">
+                      <v-btn id="submit-btn" type="submit" class=".mt-auto" color="orange-darken-3" width="100%" min-height="45" value="log in">{{isRegister ? stateObj.register.name : stateObj.login.name}}</v-btn>
                     </v-col>
                     <v-col sm="4"></v-col>
                   </v-row>
@@ -147,7 +147,7 @@ export default defineComponent({
 
 @media only screen and (max-width: 768px) {
   .login-form {
-    width: 280px;
+    width: 300px;
   }
 
   .text-center {
@@ -157,6 +157,16 @@ export default defineComponent({
   .error-message {
     font-size: 12px;
     margin-top: 10px;
+  }
+  .login-blurb{
+    min-height: 300px !important;
+    width: 350px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .mobile{
+    display: none !important;
   }
 }
 </style>

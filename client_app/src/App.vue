@@ -33,7 +33,7 @@
       </v-navigation-drawer>
       <router-view @loginPage="login = false" @otherPage="login = true" @UserActionLogin="LogIn()"/>
     </v-layout>
-    <v-bottom-navigation class="mobile-view">
+    <v-bottom-navigation class="mobile-view" v-if="login">
 
   <v-btn  v-for="item in items" :key="item.title" :to="item.route">
     <span>{{ item.title }}</span>

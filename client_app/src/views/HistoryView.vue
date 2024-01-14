@@ -96,4 +96,22 @@ export default defineComponent({
   font-family: "Roboto", sans-serif !important;
   z-index: 999;
 }
+@media only screen and (max-width: 768px) {
+  .bottom-baner{
+  position: fixed;
+  height: 110px;
+  width: 100%;
+  margin: 0 auto !important;
+  background-color: rgba(239, 108, 0,0.9);
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);
+  bottom: -10px;
+  left: 0;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-radius: 15px;
+  line-height: 1.75rem;
+  font-family: "Roboto", sans-serif !important;
+  z-index: 999;
+}
+}
 </style>
