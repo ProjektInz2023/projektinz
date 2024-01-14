@@ -246,6 +246,20 @@ export default defineComponent({
 .food-blocks {
   width: 100%;
 }
+@media (min-width: 2882px) {
+  .image-holder-sm{
+    height: 200px !important;
+    width: 400px !important;
+  }
+  .image-holder{
+    height: 700px !important;
+    width: 800px !important;
+  }
+  .popupcard{
+    overflow-y: scroll !important;
+    width: 800px;
+  }
+}
 @media (max-width: 1280px) {
   .bg-background{
   background: rgba(255,255,255,0.8) !important;
