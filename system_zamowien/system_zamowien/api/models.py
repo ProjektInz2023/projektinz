@@ -3,11 +3,19 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Group
 from django.utils import timezone
 
 
+class Alergen(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
 class MainCourse(models.Model):
     mainCourseId = models.AutoField(primary_key=True, db_column='mainCourseId')
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
+    alergens = models.ManyToManyField(Alergen, blank=True)
     price = models.FloatField()
+    image = models.CharField(max_length=255, default=None)
 
     def __str__(self):
         return self.name
@@ -34,23 +42,6 @@ class MainCourse(models.Model):
 
     def delete_main_course(self):
         self.delete()
-
-class Order(models.Model):
-    STATUS_CHOICES = (
-        ('Aktywne', 'Aktywne'),
-        ('Gotowe', 'Gotowe'),
-        ('Zakonczone', 'Zakonczone'),
-    )
-
-    orderId = models.AutoField(primary_key=True, unique=True)
-    user = models.CharField(max_length=100)
-    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET("Danie usuniete"))
-    date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=32, choices=STATUS_CHOICES)
-
-    def __str__(self):
-        return self.user
-
 
 class MyUserManager(BaseUserManager):
     
@@ -114,3 +105,19 @@ class Staff(AbstractBaseUser):
     def is_staff(self):
 
         return self.is_admin
+    
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('Aktywne', 'Aktywne'),
+        ('Gotowe', 'Gotowe'),
+        ('Zakonczone', 'Zakonczone'),
+    )
+
+    orderId = models.AutoField(primary_key=True, unique=True)
+    user = models.ForeignKey(Staff, on_delete=models.CASCADE) 
+    mainCourse = models.ForeignKey(MainCourse, on_delete=models.SET_NULL, null=True)
+    date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default="Aktywne")
+    
+    def __str__(self):
+        return f"Order #{self.pk} - {self.user.email}"

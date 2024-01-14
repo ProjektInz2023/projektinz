@@ -1,6 +1,6 @@
 from datetime import timedelta
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,9 +15,9 @@ SECRET_KEY = 'django-insecure-ognuj2_(paaj+d!(+q7qxwsjkon=ang^&abp!@m9ly(%qva(!f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
-AUTH_USER_MODEL = "api.Staff"
+AUTH_USER_MODEL = 'api.Staff'
 
 
 # Application definition
@@ -37,6 +37,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "https://192.168.0.69:8080",
+    "https://192.168.0.69:8081",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -44,6 +45,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://192.168.0.69:8080",
+    "https://192.168.0.69:8081",
 ]
 
 INSTALLED_APPS = [
@@ -64,7 +66,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -92,7 +94,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
 ]
 
-
 WSGI_APPLICATION = 'system_zamowien.wsgi.application'
 
 
@@ -103,12 +104,15 @@ from system_zamowien.config import DB_NAME, DB_PASSWORD, DB_URL, DB_USER, DB_POR
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mssql',
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_URL,
         'PORT': DB_PORT,
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     }
 }
 
@@ -153,3 +157,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
+STRIPE_PUBLIC_KEY = "pk_test_51OVeTkA8AWLRKBxKwmMaoJSa6mIZoALPETb8RmcsbLJpB1PPefhIX9xqHiMiIX6MuxQunfKLerzcwWtVsRLwSMVz000aZTLhJE"
+STRIPE_SECRET_KEY = "sk_test_51OVeTkA8AWLRKBxKPIBbrNgXbgSWZ4pcs3shNxtaB6c7pgYsKfc5g9FUcZvRqGpPybtRRDiJCmxqkYJq61NgYb1700bn8y3Pel"
+STRIPE_WEBHOOK_SECRET = ""
