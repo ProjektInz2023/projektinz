@@ -104,15 +104,12 @@ from system_zamowien.config import DB_NAME, DB_PASSWORD, DB_URL, DB_USER, DB_POR
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_URL,
         'PORT': DB_PORT,
-        'OPTIONS': {
-                #'driver': 'ODBC Driver 18 for SQL Server',
-            },
     }
 }
 
