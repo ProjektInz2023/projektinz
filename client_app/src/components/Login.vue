@@ -84,7 +84,7 @@ export default defineComponent({
     async login () {
       console.log(this.username, this.password)
       $cookie.set('data', this.username, 60 * 60 * 24)
-      axios.post('https://34.118.43.161:8081/api/login/', {
+      axios.post('https://34.118.43.161:8080/api/login/', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'login'
