@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-ognuj2_(paaj+d!(+q7qxwsjkon=ang^&abp!@m9ly(%qva(!f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['kantyna-backend.azurewebsites.net', '127.0.0.1']
 
 AUTH_USER_MODEL = 'api.Staff'
 
@@ -154,6 +154,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CRSF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else ['kantyna-backend.azurewebsites.net']
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
