@@ -56,7 +56,7 @@ export default defineComponent({
       if ($cookie.get('managerToken')) {
         if (await this.confirmEdition()) {
           axios
-            .put(`http://127.0.0.1:8000/api/edit_staff/${this.newPerson.email}/`, this.newPerson)
+            .put(`http://34.118.43.161:8080/api/edit_staff/${this.newPerson.email}/`, this.newPerson)
             .then((response) => {
               console.log('Osoba zmieniona:', response.data)
               this.showSuccessNotification()
@@ -102,7 +102,7 @@ export default defineComponent({
     },
     async fetchDishData () {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/staff/${this.userEmail}/`)
+        const response = await axios.get(`http://34.118.43.161:8080/api/staff/${this.userEmail}/`)
         const personData = response.data
         console.log(personData)
 

@@ -65,7 +65,7 @@ export default defineComponent({
     async deleteDish (dishid: never) {
       if (await this.confirmDelete()) {
         try {
-          const response = await axios.delete(`http://127.0.0.1:8000/api/deletemaincourse/${dishid}`)
+          const response = await axios.delete(`http://34.118.43.161:8080/api/deletemaincourse/${dishid}`)
           console.log(response.data)
           this.showSuccessNotification()
           this.delayedReload(1500)
@@ -103,7 +103,7 @@ export default defineComponent({
     if ($cookie.get('managerToken')) {
       $cookie.get('managerToken')
       axios
-        .get('http://127.0.0.1:8000/api/maincourses/', {})
+        .get('http://34.118.43.161:8080/api/maincourses/', {})
         .then((response) => {
           console.log(response)
           this.mainCourses = response.data

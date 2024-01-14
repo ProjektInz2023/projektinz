@@ -67,7 +67,7 @@ export default defineComponent({
     async deleteUser (userEmail: never) {
       if (await this.confirmDelete()) {
         try {
-          const response = await axios.delete(`http://127.0.0.1:8000/api/delete_staff/${userEmail}`)
+          const response = await axios.delete(`http://34.118.43.161:8080/api/delete_staff/${userEmail}`)
           console.log(response.data)
           this.showSuccessNotification()
           this.delayedReload(1500)
@@ -105,7 +105,7 @@ export default defineComponent({
     if ($cookie.get('managerToken')) {
       $cookie.get('managerToken')
       axios
-        .get('http://127.0.0.1:8000/api/staff/', {})
+        .get('http://34.118.43.161:8080/api/staff/', {})
         .then((response) => {
           console.log(response)
           this.users = response.data

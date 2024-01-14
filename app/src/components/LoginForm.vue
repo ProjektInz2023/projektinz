@@ -78,7 +78,7 @@ export default defineComponent({
       }
     },
     async login () {
-      axios.post('http://127.0.0.1:8000/api/logincook/', {
+      axios.post('http://34.118.43.161:8080/api/logincook/', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'login'

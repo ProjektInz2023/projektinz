@@ -68,7 +68,7 @@ export default defineComponent({
       if ($cookie.get('managerToken')) {
         if (await this.confirmAddition()) {
           axios
-            .post('http://127.0.0.1:8000/api/addstaff/', this.newPerson)
+            .post('http://34.118.43.161:8080/api/addstaff/', this.newPerson)
             .then((response) => {
               console.log('Osoba dodana:', response.data)
               this.showSuccessNotification()

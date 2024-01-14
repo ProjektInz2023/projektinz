@@ -37,7 +37,7 @@ export default defineComponent({
     action (special = '') {
       console.log(this.mode)
       if (this.mode === 'Gotowe') {
-        let url = 'http://127.0.0.1:8000/api/orders/'
+        let url = 'http://34.118.43.161:8080/api/orders/'
         console.log(this.id)
         if (this.id) {
           console.log(this.id)
@@ -53,7 +53,7 @@ export default defineComponent({
         }
       } else {
         if (this.mode === 'Wydaj') {
-          let url = 'http://127.0.0.1:8000/api/orders/'
+          let url = 'http://34.118.43.161:8080/api/orders/'
           console.log(this.id)
           if (this.id) {
             console.log(this.id)
@@ -69,7 +69,7 @@ export default defineComponent({
           }
         }
       } if (special === 'return') {
-        let url = 'http://127.0.0.1:8000/api/orders/'
+        let url = 'http://34.118.43.161:8080/api/orders/'
         console.log(this.id)
         if (this.id) {
           console.log(this.id)

@@ -59,7 +59,7 @@ export default defineComponent({
   },
   mounted () {
     function update () {
-      axios.get('http://127.0.0.1:8000/api/orders/', {
+      axios.get('http://34.118.43.161:8080/api/orders/', {
         headers: {
           'Content-Type': 'application/json'
         }

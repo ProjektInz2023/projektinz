@@ -79,7 +79,7 @@ export default defineComponent({
               this.newDish.image = file.name
               console.log('Image uploaded:', snapshot)
 
-              axios.post('http://127.0.0.1:8000/api/addmaincourse/', this.newDish)
+              axios.post('http://34.118.43.161:8080/api/addmaincourse/', this.newDish)
                 .then((response) => {
                   console.log('Danie dodane:', response.data)
                   this.showSuccessNotification()
