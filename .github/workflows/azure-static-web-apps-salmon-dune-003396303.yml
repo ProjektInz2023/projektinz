@@ -18,6 +18,9 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Install Dependencies
+        run: npm install --force
+        working-directory: /client_app
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -27,6 +30,4 @@ jobs:
           action: "upload"
           app_location: '/client_app'
           api_location: 'api'
-          app_build_command: 'npm install --force'
           output_location: ''
-          api_build_command: 'npm install --force'
