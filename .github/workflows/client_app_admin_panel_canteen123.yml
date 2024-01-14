@@ -22,6 +22,11 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: cd
+        run: |
+          cd system_zamowien/
+          cd system_zamowien/
+
       - name: Create and start virtual environment
         run: |
           python -m venv venv
