@@ -1,17 +1,18 @@
 <template>
     <v-main class="d-flex  flex-column " style="min-height: 300px;">
       <div class="bg-background" id="orderContainer" >
-        <div class="custom-background"></div>
-      <div class="text-h5 text-center category-text">Dania Obiadowe</div>
+      <v-card class=" text-center history-card ma-3 pa-3 d-flex divider-sm"><v-card-text class="divider-sm-text">Dania Obiadowe </v-card-text></v-card>
       <v-dialog width="25%" v-for="item in menu" :key="item.name" display="inline-block" persistent  class="align-self-md-center"  >
   <template v-slot:activator="{ props }">
     <v-card v-bind="props" height="200" :elevation="8"  class="ma-3 pa-3 d-flex food-blocks">
       <v-row cols="12">
         <v-col cols="2">
       <v-img
+      class="image-holder-sm"
       height="176"
       cover
-      :src="require('@/assets/' + item.image +'.jpg')"></v-img>
+      :src="require('@/assets/' + item.image +'.jpg')"
+      :error="require('@/assets/' + 'kurczak' +'.jpg')"></v-img>
     </v-col>
     <v-col>
       <span class="item-name">
@@ -29,28 +30,29 @@
   </template>
 
   <template v-slot:default="{ isActive }" >
-    <v-card class="justify-center mt-auto popupcard"  :title="item.name"  :elevation="8">
+    <v-card class="justify-center mt-auto popupcard text-mobile"  :title="item.name"  :elevation="8">
       <v-card-text class="text-black">
         {{item.description}}
       </v-card-text>
       <v-img
+      class="image-holder"
         height="500"
         width="576"
         cover
         :src="require('@/assets/' + item.image +'.jpg')"
         ></v-img>
         <v-divider style="margin-top: 15px;"></v-divider>
-      <v-card-text class="text-black text-overline-special">
+      <v-card-text class="text-black text-overline-special text-mobile">
         zawiera cechy:
       </v-card-text>
       <v-row>
-      <div class="indented text-overline" v-for="alergen in item.alergens" :key="alergen" style="display: inline-block;">
+      <div class="indented text-overline text-mobile-allergen" v-for="alergen in item.alergens" :key="alergen" style="display: inline-block;">
         {{ alergen.name }}
       </div>
     </v-row>
     <v-divider style="margin-top: 15px;"></v-divider>
     <v-divider style="margin-top: 25px;" ></v-divider>
-      <v-card-text class="text-h5 text-overline-special-2">
+      <v-card-text class="text-h5 text-overline-special-2 text-mobile">
         Cena {{item.price}}.00zł
       </v-card-text>
       <v-divider style="margin: 5px;" ></v-divider>
@@ -62,13 +64,9 @@
         ></v-btn>
         <form @submit="newOrder(item.mainCourseId)" action="http://127.0.0.1:8000/api/create-checkout-session/" method="POST">
       <v-btn type="submit">
-        Checkout
+        Zamów
       </v-btn>
     </form>
-        <v-btn
-          text="Zamów"
-          @click="isActive.value = false; newOrder(item.mainCourseId)"
-        ></v-btn>
       </v-card-actions>
     </v-card>
   </template>
@@ -198,8 +196,11 @@ export default defineComponent({
   font-family: "Roboto", sans-serif !important;
 }
 .bg-background{
-  background: rgba(255,255,255,0) !important;
+  background: rgba(255,255,255,0.8) !important;
+  margin: 15px;
+  padding-right: 25px;
   width:70% !important;
+  border-radius: 15px;
 }
 .list-image{
   height: 100%;
@@ -245,12 +246,31 @@ export default defineComponent({
 .food-blocks {
   width: 100%;
 }
-
+@media (max-width: 1280px) {
+  .bg-background{
+  background: rgba(255,255,255,0.8) !important;
+  margin: 0px;
+  padding-right: 15px;
+  width:100% !important;
+  border-radius: 0px;
+}
+.image-holder-sm{
+    height: 200px !important;
+    width: 400px !important;
+  }
+  .popupcard{
+    overflow-y: scroll !important;
+    width: 500px;
+    margin-left: -100px;
+    margin-right: auto;
+  }
+}
 @media (max-width: 768px) {
   .popupcard{
     overflow-y: scroll !important;
-    width: 350%;
-    margin-left: -150px;
+    width: 300px;
+    height: 550px;
+    margin-left: -100px;
     margin-right: auto;
   }
   .food-blocks {
@@ -261,5 +281,29 @@ export default defineComponent({
     font-size: 150%;
     width: 100%;
   }
+  .image-holder{
+    height: 200px !important;
+    width: 300px !important;
+  }
+  .image-holder-sm{
+    height: 200px !important;
+    width: 200px !important;
+  }
+  .text-mobile{
+    font-size: 15px !important;
+  }
+  .text-mobile-allergen{
+    font-size: 10px !important;
+  }
+}
+.divider-sm-text{
+  font-size: 130%;
+}
+.divider-sm{
+  background: rgba(255,255,255,0);
+  box-shadow: 0px 25px 20px -20px rgba(0, 0, 0,0);
+  width: 50%;
+  margin: 0 auto !important;
+  margin-top: 25px  !important;
 }
 </style>

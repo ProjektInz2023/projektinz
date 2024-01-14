@@ -11,9 +11,7 @@
           src=".\assets\logo.png"
         ></v-img>
       </v-app-bar>
-      <v-navigation-drawer mobile-break-point=750
-                           v-if="login"
-      >
+      <v-navigation-drawer mobile-break-point=750 v-if="login">
         <v-list-item class="text-center" style="margin-top: 5px;">
           Witaj <span style="text-transform: capitalize;">{{user}} </span>
         </v-list-item>
@@ -28,13 +26,23 @@
         <template v-slot:append>
           <div class="pa-4">
             <v-btn block class="bg-orange-darken-3" @click="LogOut()" style="margin-bottom:50px">
-              Logout
+              Wyloguj się
             </v-btn>
           </div>
         </template>
       </v-navigation-drawer>
       <router-view @loginPage="login = false" @otherPage="login = true" @UserActionLogin="LogIn()"/>
     </v-layout>
+    <v-bottom-navigation class="mobile-view">
+
+  <v-btn  v-for="item in items" :key="item.title" :to="item.route">
+    <span>{{ item.title }}</span>
+  </v-btn>
+
+  <v-btn block class="bg-orange-darken-3 nav-logout" @click="LogOut()" >
+              Wyloguj się
+            </v-btn>
+</v-bottom-navigation>
   </v-app>
 </template>
 
@@ -50,7 +58,7 @@ export default defineComponent({
   data () {
     return {
       items: [
-        { icon: 'fa-regular fa-star', title: 'Zamów', route: '/order' },
+        { icon: 'fa-regular fa-star', title: 'Zamów Posiłek', route: '/order' },
         { icon: 'fa-regular fa-bookmark', title: 'Historia Zamówień', route: '/history' }
       ],
       user: {},
@@ -139,7 +147,14 @@ html, body {margin: 0; height: 100%; overflow: hidden;
 .home-btn:hover{
 cursor: pointer;
 }
-
+.mobile-view{
+  display: none;
+}
+@media (max-width: 1280px) {
+  .mobile-view{
+  display: flex;
+}
+}
  @media (max-width: 768px) {
    /* Apply custom styles for the navigation bar in mobile view */
    .custom-list {
@@ -166,6 +181,12 @@ cursor: pointer;
    .vertical-line {
      display: none;
    }
+   .nav-logout{
+    min-width: 50px !important;
+   }
+   .mobile-view{
+  display: flex;
+}
  }
 
 </style>

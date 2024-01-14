@@ -1,20 +1,73 @@
 <template>
   <v-main class="d-flex flex-column" style="min-height: 300px;">
     <div class="bg-background"  id="orderContainer">
-      <div class="custom-background"></div>
-          <div class="text-h5 text-center category-text">Historia Zamówień</div>
-              <v-card v-for="(order, index) in ordersData.slice().reverse()" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card" :ref="order.orderId" :class="order.status === 'Aktywne' ? 'active-order': 'not-active'">
+          <v-card class=" text-center history-card ma-3 pa-3 d-flex divider-sm"><v-card-text class="divider-sm-text" style="color:#fc8241;">Gotowe zamówienia: </v-card-text></v-card>
+          <v-card class=" ma-3 pa-3 d-flex text-center history-card" v-if="!ordersData.filter(x => x.status === 'Gotowe').length"><v-card-text class="divider-sm-text">Brak Gotowych zamówień </v-card-text></v-card>
+          <v-card v-for="(order, index) in ordersData.filter(x => x.status === 'Gotowe')" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card" :ref="order.orderId" :class="order.status === 'Gotowe' ? 'active-order': 'not-active'">
+            <v-card class=" text-center history-card ma-3 pa-3 d-flex divider-sm" v-if="!ordersData.filter(x => x.status === 'Gotowe').length"><v-card-text class="divider-sm-text">Brak </v-card-text></v-card>
+            <v-row cols="12">
+        <v-col cols="3">
+    </v-col>
+    <v-col>
+      <span :class="order.status === 'Gotowe' ? 'item-name': 'item-name-sm'">
+        Numer zamówienia {{ order.orderId }}
+      </span>
+      <div class="ver-line"></div>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2-top': 'text-overline-special-2-not-top'">
+       Zamówiono: {{ order.mainCourse.name }}
+      </v-card-text>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2': 'text-overline-special-2-not'">
+        Status zamówienia: {{ order.status }}
+      </v-card-text>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2': 'text-overline-special-2-not'">
+        Data: {{ formatDate(order.date) }}
+      </v-card-text>
+    </v-col>
+    <v-col cols="3"></v-col>
+    </v-row>
+    </v-card>
+    <v-card class=" text-center history-card ma-3 pa-3 d-flex divider-sm"><v-card-text class="divider-sm-text"> Oczekujące zamówienia: </v-card-text></v-card>
+    <v-card class=" ma-3 pa-3 d-flex text-center history-card" v-if="!ordersData.filter(z => z.status === 'Aktywne').length"><v-card-text class="divider-sm-text">Brak aktywnych zamówień </v-card-text></v-card>
+    <v-card v-for="(order, index) in ordersData.filter(z => z.status === 'Aktywne')" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center " :ref="order.orderId" :class="order.status === 'Gotowe' ? 'active-order': 'not-active'">
       <v-row cols="12">
         <v-col cols="3">
     </v-col>
     <v-col>
-      <span class="item-name">
+      <span :class="order.status === 'Gotowe' ? 'item-name': 'item-name-sm'">
         Numer zamówienia {{ order.orderId }}
       </span>
-      <v-card-text class="text-overline-special-2">
+      <div class="ver-line"></div>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2-top': 'text-overline-special-2-not-top'">
+       Zamówiono: {{ order.mainCourse.name }}
+      </v-card-text>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2': 'text-overline-special-2-not'">
         Status zamówienia: {{ order.status }}
       </v-card-text>
-      <v-card-text class="text-overline-special-2">
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2': 'text-overline-special-2-not'">
+        Data: {{ formatDate(order.date) }}
+      </v-card-text>
+    </v-col>
+    <v-col cols="3"></v-col>
+    </v-row>
+    </v-card>
+    <v-card class=" text-center history-card ma-3 pa-3 d-flex divider-sm"><v-card-text class="divider-sm-text"> Historia: </v-card-text></v-card>
+    <v-card class=" ma-3 pa-3 d-flex text-center history-card" v-if="!ordersData.filter(y => y.status === 'Zakonczone').length"><v-card-text class="divider-sm-text">Brak Gotowych zamówień </v-card-text></v-card>
+    <v-card v-for="(order, index) in ordersData.filter(y => y.status === 'Zakonczone')" :key="index" height="100" :elevation="8"  class="ma-3 pa-3 d-flex text-center history-card" :ref="order.orderId" :class="order.status === 'Gotowe' ? 'active-order': 'not-active'">
+      <v-row cols="12">
+        <v-col cols="3">
+    </v-col>
+    <v-col>
+      <span :class="order.status === 'Gotowe' ? 'item-name': 'item-name-sm'">
+        Numer zamówienia {{ order.orderId }}
+      </span>
+      <div class="ver-line"></div>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2-top': 'text-overline-special-2-not-top'">
+       Zamówiono: {{ order.mainCourse.name }}
+      </v-card-text>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2': 'text-overline-special-2-not'">
+        Status zamówienia: {{ order.status }}
+      </v-card-text>
+      <v-card-text :class="order.status === 'Gotowe' ? 'text-overline-special-2': 'text-overline-special-2-not'">
         Data: {{ formatDate(order.date) }}
       </v-card-text>
     </v-col>
@@ -39,7 +92,8 @@ export default defineComponent({
       ordersData: [],
       dataMail: '',
       prevRoute: null,
-      userid: Number
+      userid: Number,
+      loading: false
     }
   },
   beforeMount () {
@@ -60,6 +114,7 @@ export default defineComponent({
   },
   mounted () {
     this.delay(1000).then(() => {
+      this.loading = true
       axios.get(`http://127.0.0.1:8000/api/orders/${this.dataMail}/`, {
         headers: {
           'Content-Type': 'application/json',
@@ -70,11 +125,12 @@ export default defineComponent({
           console.log(response)
           this.ordersData = response.data
         } else {
-          console.log('aaaaa')
+          console.log('error getting data')
         }
       }, function (err) {
         console.log('err', err)
       })
+      this.loading = false
     })
   },
   methods: {
@@ -104,10 +160,32 @@ export default defineComponent({
   font-weight: 400;
   line-height: 2rem;
   padding: 0 !important;
+  font-size: 100%;
+  margin-top: 15px;
+}
+.text-overline-special-2-not{
+  font-weight: 400;
+  line-height: 1.5rem;
+  padding: 0 !important;
+}
+.text-overline-special-2-top{
+  font-weight: 400;
+  line-height: 2rem;
+  padding: 0 !important;
+  font-size: 100%;
+  margin-top:25px;
+}
+.text-overline-special-2-not-top{
+  font-weight: 400;
+  line-height: 1.5rem;
+  padding: 0 !important;
+  margin-top:10px;
 }
 .bg-background{
-  background: rgba(255,255,255,0) !important;
+  background: rgba(255,255,255,0.8) !important;
+  margin: 15px;
   width:70% !important;
+  border-radius: 15px;
 }
 .custom-background{
   height: 100%;
@@ -129,5 +207,90 @@ export default defineComponent({
 }
 .active-order{
   height: 300px !important;
+}
+.not-active{
+  height: 150px !important;
+}
+.item-name{
+  font-size: 130%;
+}
+.item-name-sm{
+  font-size: 100%;
+}
+.ver-line{
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-bottom: 10px;
+  background-color: rgba(0,0,0,0.5);
+}
+.divider-sm-text{
+  font-size: 140%;
+}
+.divider-sm{
+  background: rgba(255,255,255,0);
+  box-shadow: 0px 25px 20px -20px rgba(0, 0, 0,0);
+  width: 50%;
+  margin: 0 auto !important;
+  margin-top: 25px  !important;
+}
+/* Media Query */
+@media (max-width: 1280px) {
+  .bg-background{
+  background: rgba(255,255,255,0.8) !important;
+  margin: 0px;
+  min-height: 150% !important;
+  padding-right: 0px;
+  width:100% !important;
+  border-radius: 0px;
+  overflow:visible;
+}
+}
+@media (max-width: 768px) {
+  .text-mobile{
+    font-size: 15px !important;
+  }
+  .text-mobile-allergen{
+    font-size: 10px !important;
+  }
+  .history-card{
+    height: 120px !important;
+  }
+  .active-order{
+    height: 200px !important;
+  }
+  .v-col-3{
+    display: none;
+  }
+  .v-col{
+    padding-left:5px;
+    padding-right: 5px;
+  }
+  .text-overline-special-2{
+  font-weight: 400;
+  line-height: 1.5rem;
+  padding: 0 !important;
+  font-size: 100%;
+  margin-top: 10px;
+}
+.text-overline-special-2-not{
+  font-weight: 400;
+  line-height: 1rem;
+  padding: 0 !important;
+}
+.text-overline-special-2-top{
+  font-weight: 400;
+  line-height: 1.5rem;
+  padding: 0 !important;
+  font-size: 100%;
+  margin-top:15px;
+}
+.text-overline-special-2-not-top{
+  font-weight: 400;
+  line-height: 1rem;
+  padding: 0 !important;
+  margin-top:10px;
+}
+
 }
 </style>
