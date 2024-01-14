@@ -28,9 +28,12 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/client_app" # App source code path
+          app_location: '/client_app'
+          api_location: 'api'
           app_build_command: 'npm install --force'
-          ###### End of Repository/Build Configurations ######
+          output_location: ''
+          api_build_command: 'npm install --force'
+          azure_static_web_apps_api_token: $(deployment_token)
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
