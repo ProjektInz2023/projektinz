@@ -62,7 +62,7 @@
           text="Zamknij"
           @click="isActive.value = false"
         ></v-btn>
-        <form @submit="newOrder(item.mainCourseId)" action="http://127.0.0.1:8000/api/create-checkout-session/" method="POST">
+        <form @submit="newOrder(item.mainCourseId)" action="http://34.118.43.161:8080/api/create-checkout-session/" method="POST">
       <v-btn type="submit">
         Zamów
       </v-btn>
@@ -144,7 +144,7 @@ export default defineComponent({
   },
   mounted () {
     this.$emit('otherPage')
-    axios.get('http://127.0.0.1:8000/api/maincourses', {
+    axios.get('http://34.118.43.161:8080/api/maincourses', {
       headers: {
         'Content-Type': 'application/json'
       }

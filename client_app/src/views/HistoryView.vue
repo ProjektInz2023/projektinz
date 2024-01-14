@@ -50,7 +50,7 @@ export default defineComponent({
     newOrder () {
       if ($cookie.get('cartitem')) {
         if ($cookie.get('cartuser')) {
-          axios.post('http://127.0.0.1:8000/api/addorder/', {
+          axios.post('http://34.118.43.161:8080/api/addorder/', {
             headers: {
               'Content-Type': 'application/json',
               Authorization: $cookie.get('token')

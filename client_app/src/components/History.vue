@@ -115,7 +115,7 @@ export default defineComponent({
   mounted () {
     this.delay(1000).then(() => {
       this.loading = true
-      axios.get(`http://127.0.0.1:8000/api/orders/${this.dataMail}/`, {
+      axios.get(`http://34.118.43.161:8080/api/orders/${this.dataMail}/`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'login'
