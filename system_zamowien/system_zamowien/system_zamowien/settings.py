@@ -5,9 +5,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
 
 
 
@@ -21,7 +21,7 @@ SECRET_KEY = 'django-insecure-ognuj2_(paaj+d!(+q7qxwsjkon=ang^&abp!@m9ly(%qva(!f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'https://kind-forest-09e09e903.4.azurestaticapps.net/', 'https://34.118.43.161:8080']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'kind-forest-09e09e903.4.azurestaticapps.net', '34.118.43.161:8080']
 
 AUTH_USER_MODEL = 'api.Staff'
 
@@ -74,7 +74,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
