@@ -1,6 +1,7 @@
 import os
 from .settings import BASE_DIR
 
+COLLECT_STATIC = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SECRET_KEY = os.environ['SECRET']
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else ['kantyna-backend.azurewebsites.net']
