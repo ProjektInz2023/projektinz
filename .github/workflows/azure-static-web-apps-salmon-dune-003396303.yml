@@ -33,7 +33,7 @@ jobs:
           app_build_command: 'npm install --force'
           output_location: ''
           api_build_command: 'npm install --force'
-          azure_static_web_apps_api_token: $(deployment_token)
+          
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
