@@ -24,8 +24,7 @@ jobs:
 
       - name: cd
         run: |
-          cd system_zamowien/
-          cd system_zamowien/
+          cd system_zamowien/system_zamowien
 
       - name: Create and start virtual environment
         run: |
