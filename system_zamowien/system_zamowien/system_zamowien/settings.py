@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-ognuj2_(paaj+d!(+q7qxwsjkon=ang^&abp!@m9ly(%qva(!f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'https://kind-forest-09e09e903.4.azurestaticapps.net/', 'http://34.118.43.161:8080']
 
 AUTH_USER_MODEL = 'api.Staff'
 
@@ -38,6 +38,8 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "https://192.168.0.69:8080",
     "https://192.168.0.69:8081",
+    "https://kind-forest-09e09e903.4.azurestaticapps.net",
+    "http://34.118.43.161:8080",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -46,6 +48,8 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "https://192.168.0.69:8080",
     "https://192.168.0.69:8081",
+    "https://kind-forest-09e09e903.4.azurestaticapps.net/",
+    "http://34.118.43.161:8080",
 ]
 
 INSTALLED_APPS = [
@@ -64,7 +68,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
