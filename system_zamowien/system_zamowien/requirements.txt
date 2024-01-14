@@ -9,6 +9,7 @@ protobuf==3.20.3
 PyJWT==2.7.0
 PyMySQL==1.0.3
 pyodbc==5.0.1
+pyodbc2
 python-dotenv==1.0.0
 pytz==2023.3
 SQLAlchemy==2.0.22
