@@ -254,7 +254,7 @@ export default defineComponent({
     font-size: 10px !important;
   }
   .history-card{
-    height: 120px !important;
+    height: 100px !important;
   }
   .active-order{
     height: 200px !important;
