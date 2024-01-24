@@ -114,12 +114,8 @@ from system_zamowien.config import DB_NAME, DB_PASSWORD, DB_URL, DB_USER, DB_POR
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "postgres",
-        'USER': "postgres",
-        'PASSWORD': "postgres",
-        'HOST': "kantyna.c5dhgq0j5peq.eu-north-1.rds.amazonaws.com",
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': "canteen",
     }
 }
 
